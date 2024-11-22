@@ -1,14 +1,76 @@
+<% @title = "Brands - Business" %>
 <p style="color: green"><%= notice %></p>
 
-<h1>Brands</h1>
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Brands</h6>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Business name:</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Business STRAPLINE:</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Website domain:</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Colours and fonts:</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Consistency:</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Workwear:</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Values:</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mision statement:</th>
+                  <th class="text-secondary opacity-7"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @brands.each do |brand| %>
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <span class="badge badge-sm <%= brand.business_name.present? ? 'bg-gradient-success' : 'bg-gradient-secondary'%>"><%=  brand.business_name.present? ? brand.business_name : "TODO" %></span>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                        <span class="badge badge-sm <%= brand.strapline.present? ? 'bg-gradient-success' : 'bg-gradient-secondary'%>"><%=  brand.strapline.present? ? "v" : "TODO" %></span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="d-flex px-2 py-1">
+                      <span class="badge badge-sm <%= brand.website_domain.present? ? 'bg-gradient-success' : 'bg-gradient-secondary'%>"><%=  brand.website_domain.present? ? "v" : "TODO" %></span>
+                      </div>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge badge-sm <%= brand.colours_fonts.present? ? 'bg-gradient-success' : 'bg-gradient-secondary'%>"><%=  brand.colours_fonts.present? ? "v" : "TODO" %></span>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge badge-sm <%= brand.consistency.present? ? 'bg-gradient-success' : 'bg-gradient-secondary'%>"><%=  brand.consistency.present? ? "v" : "TODO" %></span>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge badge-sm <%= brand.workwear.present? ? 'bg-gradient-success' : 'bg-gradient-secondary'%>"><%=  brand.workwear.present? ? "v" : "TODO" %></span>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge badge-sm <%= brand.values.present? ? 'bg-gradient-success' : 'bg-gradient-secondary'%>"><%=  brand.values.present? ? "v" : "TODO" %></span>
+                    </td>
+                    <td class="align-middle text-center text-sm">
+                      <span class="badge badge-sm <%= brand.mision_statement.present? ? 'bg-gradient-success' : 'bg-gradient-secondary'%>"><%=  brand.mision_statement.present? ? "v" : "TODO" %></span>
+                    </td>
+                    <td class="align-middle">
+                      <%= link_to "Show", brand, class: 'text-secondary font-weight-bold text-xs', 'data-toggle': "tooltip", 'data-original-title': "Show brand", 'data-turbo': false %>
+                      <%= link_to "Edit", edit_brand_path(brand), class: 'text-secondary font-weight-bold text-xs', 'data-toggle': "tooltip", 'data-original-title': "Edit idea", 'data-turbo': false %>
+                    </td>
+                  </tr>
 
-<div id="brands">
-  <% @brands.each do |brand| %>
-    <%= render brand %>
-    <p>
-      <%= link_to "Show this brand", brand %>
-    </p>
-  <% end %>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <%= link_to "New brand", new_brand_path %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-<%= link_to "New brand", new_brand_path %>

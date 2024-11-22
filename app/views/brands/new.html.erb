@@ -1,9 +1,16 @@
-<h1>New brand</h1>
+<div class="row">
+<div class="col p-4">
+  <div class="card">
+    <div class="card-header">
+    <h1>New brand</h1>
+    </div>
+    <div class="card-body">
+      <%= render "form", brand: @brand %>
+      <br>
 
-<%= render "form", brand: @brand %>
-
-<br>
-
-<div>
-  <%= link_to "Back to brands", brands_path %>
-</div>
+    <div>
+      <%= link_to "Back to brands", brands_path %>
+    </div>
+    </div>
+  </div>
+</div></div>

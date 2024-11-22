@@ -1,11 +1,11 @@
 class Idea < ApplicationRecord
 
-  enum status: {
+  enum :status, {
     pending: 0,
     in_progress: 1,
     completed: 2
   }
-  enum priority: {
+  enum :priority, {
     high: 0,
     low: 1,
     medium: 2

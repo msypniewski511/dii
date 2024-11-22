@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :articles
   resources :brands
   resources :ideas
   get 'home/index'

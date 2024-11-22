@@ -11,32 +11,32 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :due_date, style: "display: block" %>
-    <%= form.date_field :due_date %>
+  <div class="row">
+      <%= form.label :due_date, style: "display: block" %>
+      <%= form.date_field :due_date %>
   </div>
 
-  <div>
+  <div class="row">
     <%= form.label :priority, style: "display: block" %>
-    <%= select_tag :priority, options_for_select(Idea.priorities.map {|k, v| [k.humanize.capitalize, v]}) %>
+    <%= form.select :priority, Idea.priorities.keys.map {|p| [p.humanize.capitalize, p]} %>
   </div>
 
-  <div>
+  <div class="row">
     <%= form.label :action_point, style: "display: block" %>
     <%= form.text_field :action_point %>
   </div>
 
-  <div>
+  <div class="row">
     <%= form.label :status, style: "display: block" %>
-    <%= select_tag :status, options_for_select(Idea.statuses.map {|k, v| [k.humanize.capitalize, v]}) %>
+    <%= form.select :status, Idea.statuses.keys.map {|p| [p.humanize.capitalize, p]} %>
   </div>
 
-  <div>
+  <div class="row">
     <%= form.label :added_to_business_plan, style: "display: block" %>
     <%= form.check_box :added_to_business_plan %>
   </div>
 
-  <div>
+  <div class="row">
     <%= form.submit %>
   </div>
 <% end %>

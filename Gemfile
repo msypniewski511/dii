@@ -18,11 +18,19 @@ gem "bootsnap", require: false
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem 'rspec-rails', '~> 7.0.0'
+  gem 'capybara'
+
+  gem 'selenium-webdriver'
 end
 
 group :development do
   gem "web-console"
 end
 
+group :test do
+end
+
 
 gem "test", "~> 1.0", :group => :development
+gem "image_processing", "~> 1.2"
+gem "ruby-openai"
