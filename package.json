@@ -24,7 +24,7 @@
     "postcss": "^8.4.47",
     "postcss-cli": "^11.0.0",
     "sass": "^1.80.6",
-    "trix": "^2.1.8"
+    "trix": "^2.1.9"
   },
   "browserslist": [
     "defaults"
