@@ -4,5 +4,7 @@
     <strong>Content:</strong>
     <%= article.content %>
   </p>
-
+  <p>
+    <%= link_to "Download Audio", article.audio, download: true, class: "btn btn-seondary" %>
+  </p>
 </div>

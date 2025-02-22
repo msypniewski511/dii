@@ -61,6 +61,9 @@ class BrandsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_brand
       @brand = Brand.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      flash[:alert] = "The brand you are looking for could not be found."
+      redirect_to brands_path
     end
 
     # Only allow a list of trusted parameters through.

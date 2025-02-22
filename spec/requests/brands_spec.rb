@@ -18,11 +18,11 @@ RSpec.describe "/brands", type: :request do
   # Brand. As you add validations to Brand, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {business_name: 'DII', website_domain: "dii.co.uk"}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {business_name: '', website_domain: ""}
   }
 
   describe "GET /index" do
@@ -38,6 +38,15 @@ RSpec.describe "/brands", type: :request do
       brand = Brand.create! valid_attributes
       get brand_url(brand)
       expect(response).to be_successful
+    end
+
+    it "handle a missing brand correctly" do
+      get brand_path("not-here")
+
+      expect(response).to redirect_to brands_path
+
+      message = "The brand you are looking for could not be found."
+      expect(flash[:alert]).to eq message
     end
   end
 
@@ -87,14 +96,14 @@ RSpec.describe "/brands", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {business_name: 'Dhruvi Infinity Inspiration', website_domain: "dii.co.uk"}
       }
 
       it "updates the requested brand" do
         brand = Brand.create! valid_attributes
         patch brand_url(brand), params: { brand: new_attributes }
         brand.reload
-        skip("Add assertions for updated state")
+        expect(response).to redirect_to brand
       end
 
       it "redirects to the brand" do

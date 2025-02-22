@@ -398,6 +398,14 @@ module ApplicationHelper
     button + offcanvas
   end
 
+  def title(*parts)
+    unless parts.empty?
+      content_for :title do
+        (parts << "UK Business").join(" - ")
+      end
+    end
+  end
+
   private
 
   def render_breadcrumbs(items)

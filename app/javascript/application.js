@@ -10,7 +10,7 @@ import '@rails/actiontext'
 import './argon-dashboard'
 
 console.log('koewa')
-
+// Turbolinks.disable()
 var ctx1 = document.getElementById('chart-line').getContext('2d')
 
 var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50)
@@ -93,3 +93,4 @@ new Chart(ctx1, {
     },
   },
 })
+import '@hotwired/turbo-rails'
