@@ -1,0 +1,42 @@
+<canvas id="dummy-chart" style="display:none;"></canvas>
+<canvas id="chart-line" style="display:none;"></canvas>
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+
+      <%= render @business_idea %>
+      <div class="card-body">
+      <h2><%= @business_idea.title %></h2>
+      <p><%= @business_idea.description %></p>
+      <p>Country: <%= @business_idea.country %></p>
+
+      <%= form_with url: suggestions_business_idea_path(@business_idea), local: true, method: :post, data: { turbo: "false" } do %>
+        <%= hidden_field_tag :business_idea, value: @business_idea.title %>
+        <%= submit_tag "Get Suggestions" %>
+      <% end %>
+
+      <% if @suggestions.present? || @business_idea.suggestions %>
+        <div id="suggestions-output">
+          <h3>AI-Generated Suggestions</h3>
+          <p><%= @suggestions %></p>
+          <p><%= format_text_to_html @business_idea.suggestions %></p>
+        </div>
+      <% elsif @error.present? %>
+        <div id="suggestions-output">
+          <h3>Error</h3>
+          <p><%= @error %></p>
+        </div>
+      <% end %>
+      </div>
+
+      <div class="card-footer">
+        <%= link_to "Edit this business idea", edit_business_idea_path(@business_idea) %> |
+        <%= link_to "Back to business ideas", business_ideas_path %> | 
+         <%= link_to "PESTEL analize", business_idea_pestel_analysis_path(@business_idea, @business_idea.pestel_analysis), class: "btn btn-outline-primary" %>
+
+        <%= button_to "Destroy this business idea", @business_idea, method: :delete %>
+    </div>
+  </div>
+</div>

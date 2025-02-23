@@ -424,4 +424,19 @@ module ApplicationHelper
       content_tag(:h6, controller_name, class: "font-weight-bolder text-capitalize text-white mb-0").html_safe
     end
   end
+
+  def format_text_to_html(text)
+    return "" if text.nil? || text.strip.empty?
+  
+    formatted_text = text
+      .gsub(/\*\*(.*?)\*\*/, '<strong>\1</strong>') # Convert **bold** to <strong>
+      .gsub(/\*(.*?)\*/, '<h6 class="d-inline">\1</h6>') # Convert *italic* to inline <h6>
+      .gsub(/^(\d+)\.\s+/, '<li class="list-group-item">\1. ') # Convert numbered list items into list-group-item
+      .gsub(/\n- (.*)/, '<p>\1</p>') # Convert bullet points into paragraph inside list items
+      .gsub(/(<li class="list-group-item">.*?<\/p>)/m, '<ul class="list-group">\1</ul>') # Wrap list items inside <ul>
+      .gsub(/\n{2,}/, "</p><p>") # Convert double newlines to paragraphs
+      .gsub(/\n/, '<br>') # Convert single newlines to line breaks
+  
+    "<div>#{formatted_text}</div>".html_safe
+  end
 end

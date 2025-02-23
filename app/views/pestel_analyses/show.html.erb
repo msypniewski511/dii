@@ -1,0 +1,19 @@
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+
+        <p style="color: green"><%= notice %></p>
+
+        <%= render @pestel_analysis, locals: {busines_idea: @busines_idea} %>
+
+        <div>
+          <%= link_to "Edit this pestel analysis", edit_pestel_analysis_path(@pestel_analysis) %> |
+          <%= link_to "Back to pestel analyses", pestel_analyses_path %>
+
+          <%= button_to "Destroy this pestel analysis", @pestel_analysis, method: :delete %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

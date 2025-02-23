@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col p-4">
+    <div class="card">
+      <div class="card-header">
+        <p style="color: green"><%= notice %></p>
+
+        <h1>Business ideas</h1>
+      </div>
+
+        <div id="business_ideas" class="card-body">
+          <% @business_ideas.each do |business_idea| %>
+            <%= render business_idea %>
+            <p>
+              <%= link_to "Show this business idea", business_idea %>
+            </p>
+          <% end %>
+        </div>
+        <div class="card-footer">
+          <%= link_to "New business idea", new_business_idea_path %>
+        </div>
+      </div>
+    </div>
+  </div>
