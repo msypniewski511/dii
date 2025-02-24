@@ -8,7 +8,7 @@ class PestelAnalysesController < ApplicationController
 
   # GET /pestel_analyses/1 or /pestel_analyses/1.json
   def show
-    @busines_idea = @pestel_analysis.business_idea_id
+    @busines_idea = @pestel_analysis.business_idea
   end
 
   # GET /pestel_analyses/new

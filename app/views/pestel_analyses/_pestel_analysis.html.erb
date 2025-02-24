@@ -11,7 +11,7 @@
       <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "political" %> 
-        <%= submit_tag "Get AI Suggestions" %>
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
     </p>
 
@@ -21,7 +21,7 @@
       <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "economic" %> 
-        <%= submit_tag "Get AI Suggestions" %>
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
     </p>
 
@@ -31,7 +31,7 @@
         <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "social" %> 
-        <%= submit_tag "Get AI Suggestions" %>
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
     </p>
 
@@ -41,7 +41,7 @@
       <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "technological" %> 
-        <%= submit_tag "Get AI Suggestions" %>
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
     </p>
 
@@ -51,7 +51,7 @@
       <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "environmental" %> 
-        <%= submit_tag "Get AI Suggestions" %>
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
     </p>
 
@@ -61,7 +61,7 @@
       <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "legal" %> 
-        <%= submit_tag "Get AI Suggestions" %>
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
     </p>
   </div>
