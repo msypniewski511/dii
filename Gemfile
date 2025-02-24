@@ -34,3 +34,5 @@ end
 gem "test", "~> 1.0", :group => :development
 gem "image_processing", "~> 1.2"
 gem "ruby-openai"
+gem "sidekiq", "~> 7.3"
+gem 'country_select', '~> 8.0'

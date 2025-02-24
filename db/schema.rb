@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_11_17_063821) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_23_085150) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -62,6 +62,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_17_063821) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "business_ideas", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.string "country"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "suggestions"
+  end
+
   create_table "ideas", force: :cascade do |t|
     t.date "due_date"
     t.integer "priority"
@@ -72,6 +81,32 @@ ActiveRecord::Schema[7.1].define(version: 2024_11_17_063821) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "pestel_analyses", force: :cascade do |t|
+    t.integer "business_idea_id", null: false
+    t.text "political"
+    t.text "economic"
+    t.text "social"
+    t.text "technological"
+    t.text "environmental"
+    t.text "legal"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_idea_id"], name: "index_pestel_analyses_on_business_idea_id"
+  end
+
+  create_table "swot_analyses", force: :cascade do |t|
+    t.integer "business_idea_id", null: false
+    t.text "strengths"
+    t.text "weaknesses"
+    t.text "opportunities"
+    t.text "threats"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_idea_id"], name: "index_swot_analyses_on_business_idea_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "pestel_analyses", "business_ideas"
+  add_foreign_key "swot_analyses", "business_ideas"
 end

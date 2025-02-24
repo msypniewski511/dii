@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Pestel analyses</h1>
+
+<div id="pestel_analyses">
+  <% @pestel_analyses.each do |pestel_analysis| %>
+    <%= render pestel_analysis %>
+    <p>
+      <%= link_to "Show this pestel analysis", pestel_analysis %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New pestel analysis", new_pestel_analysis_path %>

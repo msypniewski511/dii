@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @swot_analysis %>
+
+<div>
+  <%= link_to "Edit this swot analysis", edit_swot_analysis_path(@swot_analysis) %> |
+  <%= link_to "Back to swot analyses", swot_analyses_path %>
+
+  <%= button_to "Destroy this swot analysis", @swot_analysis, method: :delete %>
+</div>
