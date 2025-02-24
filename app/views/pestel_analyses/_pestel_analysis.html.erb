@@ -1,0 +1,68 @@
+<div id="<%= dom_id pestel_analysis %>">
+  <div class="card-header">
+    <strong>Business idea:</strong>
+    <%= pestel_analysis.business_idea.title %>
+  </div>
+
+  <div class="card-body">
+    <p>
+      <strong>Political:</strong>
+      <%= format_text_to_html pestel_analysis.political %>
+      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+        
+        <%= hidden_field_tag :type, "political" %> 
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Economic:</strong>
+      <%= format_text_to_html pestel_analysis.economic %>
+      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+        
+        <%= hidden_field_tag :type, "economic" %> 
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Social:</strong>
+      <%= format_text_to_html pestel_analysis.social %>
+        <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+        
+        <%= hidden_field_tag :type, "social" %> 
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Technological:</strong>
+      <%= format_text_to_html pestel_analysis.technological %>
+      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+        
+        <%= hidden_field_tag :type, "technological" %> 
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Environmental:</strong>
+      <%= format_text_to_html pestel_analysis.environmental %>
+      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+        
+        <%= hidden_field_tag :type, "environmental" %> 
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+      <% end %>
+    </p>
+
+    <p>
+      <strong>Legal:</strong>
+      <%= format_text_to_html pestel_analysis.legal %>
+      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+        
+        <%= hidden_field_tag :type, "legal" %> 
+        <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+      <% end %>
+    </p>
+  </div>
+</div>

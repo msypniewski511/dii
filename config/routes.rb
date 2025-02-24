@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :swot_analyses
+  resources :pestel_analyses
+  # resources :business_ideas
+  resources :business_ideas do
+    member do
+      post 'suggestions', to: 'openai_suggestions#create'
+    end
+    resources :pestel_analyses
+  end
   resources :articles
   resources :brands
   resources :ideas

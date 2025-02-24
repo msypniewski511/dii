@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Swot analyses</h1>
+
+<div id="swot_analyses">
+  <% @swot_analyses.each do |swot_analysis| %>
+    <%= render swot_analysis %>
+    <p>
+      <%= link_to "Show this swot analysis", swot_analysis %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New swot analysis", new_swot_analysis_path %>

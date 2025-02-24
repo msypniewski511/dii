@@ -1,11 +1,20 @@
 <div class="container">
-  <h1>New idea</h1>
+  <div class="row">
+    <div class="col p-4">
+      <div class="card">
+        <div class="card-header">
+          <h1>New idea</h1>
+        </div>
+        <div class="card-body">
 
-<%= render "form", idea: @idea %>
+          <%= render "form", idea: @idea %>
 
-<br>
+          <br>
 
-<div>
-  <%= link_to "Back to ideas", ideas_path %>
-</div>
+        <div>
+          <%= link_to "Back to ideas", ideas_path %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
