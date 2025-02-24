@@ -17,11 +17,23 @@ module ApplicationHelper
       new: ["Dashboard", ["Brand", brands_path], "New brand"],
       edit: ["Dashboard", ["Brand", brands_path], -> { "Edit: #{@brand.business_name}" }]
     },
+    "business_ideas" => {
+      index: ["Dashboard", ["Business Ideas", business_ideas_path]],
+      show: ["Dashboard", ["Business Ideas", business_ideas_path], -> { @business_idea.title }],
+      new: ["Dashboard", ["Business Ideas", business_ideas_path], "New idea"],
+      edit: ["Dashboard", ["Business Ideas", business_ideas_path], -> { "Edit: #{@business_idea.title}" }]
+    },
     "ideas" => {
       index: ["Dashboard", ["Ideas", ideas_path]],
       show: ["Dashboard", ["Ideas", ideas_path], -> { @idea.due_date }],
       new: ["Dashboard", ["Ideas", ideas_path], "New idea"],
       edit: ["Dashboard", ["Ideas", ideas_path], -> { "Edit: #{@idea.due_date}" }]
+    },
+    "pestel_analyses" => {
+      index: ["Dashboard", ["Business Ideas", business_ideas_path]],
+      show: ["Dashboard", ["Business Ideas", business_ideas_path], ["#{@busines_idea ? @busines_idea.title : ''}", @busines_idea], -> { "PETSEL/SWOT" }],
+      new: ["Dashboard", ["Business Ideas", business_ideas_path], "New idea"],
+      edit: ["Dashboard", ["Business Ideas", business_ideas_path], -> { "Edit: #{""}" }]
     },
     "users" => {
       index: ["Dashboard", ["Users", brands_path]],
@@ -398,6 +410,14 @@ module ApplicationHelper
     button + offcanvas
   end
 
+  def title(*parts)
+    unless parts.empty?
+      content_for :title do
+        (parts << "UK Business").join(" - ")
+      end
+    end
+  end
+
   private
 
   def render_breadcrumbs(items)
@@ -415,5 +435,23 @@ module ApplicationHelper
       end)+
       content_tag(:h6, controller_name, class: "font-weight-bolder text-capitalize text-white mb-0").html_safe
     end
+  end
+
+  def format_text_to_html(text)
+    return "" if text.nil? || text.strip.empty?
+  
+    formatted_text = text
+      .gsub(/\*\*(.*?)\*\*/, '<strong>\1</strong>') # Convert **bold** to <strong>
+      .gsub(/\*(.*?)\*/, '<h6 class="d-inline">\1</h6>') # Convert *italic* to inline <h6>
+      .gsub(/^(\d+)\.\s+/, '<li class="list-group-item">\1. ') # Convert numbered list items into list-group-item
+      .gsub(/\n- (.*)/, '<p>\1</p>') # Convert bullet points into paragraph inside list items
+      .gsub(/(<li class="list-group-item">.*?<\/p>)/m, '<ul class="list-group">\1</ul>') # Wrap list items inside <ul>
+      .gsub(/\n{2,}/, "</p><p>") # Convert double newlines to paragraphs
+      .gsub(/\n/, '<br>') # Convert single newlines to line breaks
+  
+      # match = formatted_text.match(/^(\d+)\.\s([\w\s]+):\s(.*)$/)
+      # puts match
+      # formatted_text = "<li class='list-group-item'>#{match[1]}. <h6 class='d-inline'>#{match[2]}:</h6> #{match[3]}</li>"
+    "<div>#{formatted_text}</div>".html_safe
   end
 end

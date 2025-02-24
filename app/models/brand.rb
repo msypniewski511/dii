@@ -5,4 +5,5 @@ class Brand < ApplicationRecord
   has_rich_text :workwear
   has_rich_text :values
   has_rich_text :mision_statement
+  validates :business_name, presence: true
 end
