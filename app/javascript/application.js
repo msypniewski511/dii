@@ -94,3 +94,6 @@ new Chart(ctx1, {
   },
 })
 import '@hotwired/turbo-rails'
+
+import "trix"
+import "@rails/actiontext"

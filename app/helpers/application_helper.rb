@@ -31,7 +31,7 @@ module ApplicationHelper
     },
     "pestel_analyses" => {
       index: ["Dashboard", ["Business Ideas", business_ideas_path]],
-      show: ["Dashboard", ["Business Ideas", business_ideas_path], ["#{@busines_idea ? @busines_idea.title : ''}", @busines_idea], -> { "PETSEL/SWOT" }],
+      show: ["Dashboard", ["Business Ideas", business_ideas_path], ["#{@busines_idea ? @busines_idea.title : ''}", @busines_idea], -> { "PETSEL/SWOT" } ],
       new: ["Dashboard", ["Business Ideas", business_ideas_path], "New idea"],
       edit: ["Dashboard", ["Business Ideas", business_ideas_path], -> { "Edit: #{""}" }]
     },

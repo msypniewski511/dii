@@ -1,5 +1,6 @@
 class Article < ApplicationRecord
   has_one_attached :audio
+  has_rich_text :body
 
   before_save :generate_audio_mp3
 
