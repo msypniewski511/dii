@@ -265,10 +265,10 @@
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-7.2.200.tgz#7f56b3313762dbb85b64490aa33c5f431419aafd"
   integrity sha512-gVmi3MabEa+Bkatvw0/k1Y3WTidcIf3qNbb9L8qc+AmT2UmkVqUZhJpSLvKmH10twCYIGzn7yySW/lOpg81Duw==
 
-"@rails/actiontext@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@rails/actiontext/-/actiontext-8.0.0.tgz#01133b7bbb2eb541890bf3a8bdc761fc27f9a649"
-  integrity sha512-8pvXDEHqlVHptzfYDUXmBpstHsfHAVacYxO47cWDRjRmp1zdVXusLcom8UvqkRdTcAPXpte+LkjcfpD9S4DSSQ==
+"@rails/actiontext@^8.0.100":
+  version "8.0.100"
+  resolved "https://registry.yarnpkg.com/@rails/actiontext/-/actiontext-8.0.100.tgz#251d7c2aa0747541897c6dd805147eadf4fa162f"
+  integrity sha512-/Q1m6owfmRsVQ6xL/pyRtJiSgQxE3LMsqVk5/6d+H7om5E9xmjZNr2fGy5n3PZfrpAuJhFjWZZjTPLYrMqTaKA==
   dependencies:
     "@rails/activestorage" ">= 8.0.0-alpha"
 
@@ -283,6 +283,11 @@
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/merge-streams/-/merge-streams-2.3.0.tgz#719df7fb41766bc143369eaa0dd56d8dc87c9958"
   integrity sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==
+
+"@types/trusted-types@^2.0.7":
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/@types/trusted-types/-/trusted-types-2.0.7.tgz#baccb07a970b91707df3a3e8ba6896c57ead2d11"
+  integrity sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==
 
 ansi-regex@^5.0.1:
   version "5.0.1"
@@ -437,6 +442,13 @@ detect-libc@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==
+
+dompurify@^3.2.3:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-3.2.4.tgz#af5a5a11407524431456cf18836c55d13441cd8e"
+  integrity sha512-ysFSFEDVduQpyhzAob/kkuJjf5zWkZD8/A9ywSp1byueyuCfHamrCBa14/Oc2iiB0e51B+NpxSl5gmzn+Ms/mg==
+  optionalDependencies:
+    "@types/trusted-types" "^2.0.7"
 
 electron-to-chromium@^1.5.41:
   version "1.5.51"
@@ -887,10 +899,12 @@ touch@^3.1.0:
   resolved "https://registry.yarnpkg.com/touch/-/touch-3.1.1.tgz#097a23d7b161476435e5c1344a95c0f75b4a5694"
   integrity sha512-r0eojU4bI8MnHr8c5bNo7lJDdI2qXlWWJk6a9EAFG7vbhTjElYhBVS3/miuE0uOuoLdb8Mc/rVfsmm6eo5o9GA==
 
-trix@^2.1.8:
-  version "2.1.8"
-  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.8.tgz#b9383af8cd9c1a0a0818d6b4e0c9e771bf7fd564"
-  integrity sha512-y1h5mKQcjMsZDsUOqOgyIUfw+Z31u4Fe9JqXtKGUzIC7FM9cTpxZFFWxQggwXBo18ccIKYx1Fn9toVO5mCpn9g==
+trix@^2.1.12:
+  version "2.1.12"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.12.tgz#102306c3a90afcc5b66815ce8d631ee43048a477"
+  integrity sha512-0hQvJdy257XuzRdCzSQ/QvcqyTp+8ixMxVLWxSbWvEzD2kgKFlcrMjgWZbtVkJENaod+jm2sBTOWAZVNWK+DMA==
+  dependencies:
+    dompurify "^3.2.3"
 
 undefsafe@^2.0.5:
   version "2.0.5"
