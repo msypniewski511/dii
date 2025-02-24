@@ -27,9 +27,6 @@ group :development do
   gem "web-console"
 end
 
-group :test do
-end
-
 
 gem "test", "~> 1.0", :group => :development
 gem "image_processing", "~> 1.2"
