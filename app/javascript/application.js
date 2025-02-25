@@ -1,4 +1,7 @@
 // Entry point for the build script in your package.json
+//= require rails-ujs
+import Rails from '@rails/ujs'
+Rails.start()
 import '@hotwired/turbo-rails'
 import './controllers'
 import * as bootstrap from 'bootstrap'
@@ -9,8 +12,9 @@ import 'trix'
 import '@rails/actiontext'
 import './argon-dashboard'
 
-console.log('koewa')
-// Turbolinks.disable()
+import { Turbo } from '@hotwired/turbo-rails'
+Turbo.session.drive = false
+
 var ctx1 = document.getElementById('chart-line').getContext('2d')
 
 var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50)
@@ -93,7 +97,3 @@ new Chart(ctx1, {
     },
   },
 })
-import '@hotwired/turbo-rails'
-
-import "trix"
-import "@rails/actiontext"

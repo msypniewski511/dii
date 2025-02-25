@@ -1,4 +1,5 @@
 class Idea < ApplicationRecord
+  belongs_to :user
 
   enum :status, {
     pending: 0,

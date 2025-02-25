@@ -4,4 +4,6 @@ class BusinessIdea < ApplicationRecord
 
   accepts_nested_attributes_for :pestel_analysis
   accepts_nested_attributes_for :swot_analysis
+
+  belongs_to :user
 end

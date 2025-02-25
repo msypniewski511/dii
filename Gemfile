@@ -25,6 +25,7 @@ end
 
 group :development do
   gem "web-console"
+  gem "letter_opener"
 end
 
 
@@ -33,3 +34,4 @@ gem "image_processing", "~> 1.2"
 gem "ruby-openai"
 gem "sidekiq", "~> 7.3"
 gem 'country_select', '~> 8.0'
+gem "devise", "~> 4.9"

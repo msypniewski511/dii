@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :swot_analyses
   resources :pestel_analyses
   # resources :business_ideas
@@ -7,6 +8,7 @@ Rails.application.routes.draw do
       post 'suggestions', to: 'openai_suggestions#create'
     end
     resources :pestel_analyses
+    resources :swot_analyses
   end
   resources :articles
   resources :brands
