@@ -1,9 +1,11 @@
 class BusinessIdeasController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_business_idea, only: %i[ show edit update destroy ]
+
 
   # GET /business_ideas or /business_ideas.json
   def index
-    @business_ideas = BusinessIdea.all
+    @business_ideas = current_user.business_ideas
   end
 
   # GET /business_ideas/1 or /business_ideas/1.json
@@ -12,29 +14,29 @@ class BusinessIdeasController < ApplicationController
 
   # GET /business_ideas/new
   def new
-    @business_idea = BusinessIdea.new
+    @business_idea = current_user.business_ideas.build
     @business_idea.build_pestel_analysis
     @business_idea.build_swot_analysis
   end
 
   # GET /business_ideas/1/edit
   def edit
-    @business_idea = BusinessIdea.find(params[:id])
     @business_idea.build_pestel_analysis unless @business_idea.pestel_analysis
     @business_idea.build_swot_analysis unless @business_idea.swot_analysis
   end
 
   # POST /business_ideas or /business_ideas.json
   def create
-    @business_idea = BusinessIdea.new(business_idea_params)
+    @business_idea = current_user.business_ideas.new(business_idea_params)
 
     respond_to do |format|
       if @business_idea.save
         format.html { redirect_to @business_idea, notice: "Business idea was successfully created." }
         format.json { render :show, status: :created, location: @business_idea }
       else
+        Rails.logger.error "Business Idea Save Error: #{@business_idea.errors.full_messages}"
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @business_idea.errors, status: :unprocessable_entity }
+        format.json { render json: { errors: @business_idea.errors.full_messages }, status: :unprocessable_entity }
       end
     end
   end
@@ -65,7 +67,12 @@ class BusinessIdeasController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_business_idea
-      @business_idea = BusinessIdea.find(params[:id])
+      @business_idea = current_user.business_ideas.find_by(id: params[:id])
+
+      unless @business_idea
+        flash[:alert] = "You are not authorized to access this business idea."
+        redirect_to user_root_path # Redirects to sign-in page
+      end
     end
 
     # Only allow a list of trusted parameters through.

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "swot_analyses/edit", type: :view do
   let(:swot_analysis) {
     SwotAnalysis.create!(
-      business_idea: nil,
+      business_idea: FactoryBot.create(:business_idea),
       strengths: "MyText",
       weaknesses: "MyText",
       opportunities: "MyText",

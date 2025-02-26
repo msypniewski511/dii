@@ -1,5 +1,6 @@
 class Idea < ApplicationRecord
   belongs_to :user
+  validates :action_point, presence: true
 
   enum :status, {
     pending: 0,

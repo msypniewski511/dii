@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "pestel_analyses/show", type: :view do
   before(:each) do
     assign(:pestel_analysis, PestelAnalysis.create!(
-      business_idea: nil,
+      business_idea: FactoryBot.create(:business_idea),
       political: "MyText",
       economic: "MyText",
       social: "MyText",

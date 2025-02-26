@@ -1,9 +1,10 @@
 class BrandsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_brand, only: %i[ show edit update destroy ]
 
   # GET /brands or /brands.json
   def index
-    @brands = Brand.all
+    @brands = current_user.brands
   end
 
   # GET /brands/1 or /brands/1.json
@@ -12,7 +13,7 @@ class BrandsController < ApplicationController
 
   # GET /brands/new
   def new
-    @brand = Brand.new
+    @brand = current_user.brands.new
   end
 
   # GET /brands/1/edit
@@ -21,7 +22,7 @@ class BrandsController < ApplicationController
 
   # POST /brands or /brands.json
   def create
-    @brand = Brand.new(brand_params)
+    @brand = current_user.brands.new(brand_params)
 
     respond_to do |format|
       if @brand.save
@@ -60,7 +61,7 @@ class BrandsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_brand
-      @brand = Brand.find(params[:id])
+      @brand = current_user.brands.find(params[:id])
     rescue ActiveRecord::RecordNotFound
       flash[:alert] = "The brand you are looking for could not be found."
       redirect_to brands_path

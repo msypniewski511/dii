@@ -12,8 +12,9 @@
             <% @business_ideas.each do |business_idea| %>
               <div class="card mb-4">
                 <%= render business_idea %>
-                <div class="card-footer">
+                <div class="card-footer d-flex justify-content-between">
                   <%= link_to "Show this business idea", business_idea, class: "card-link" %>
+                  <%= link_to "Delete this business idea", business_idea, method: :delete, data: { confirm: "Are you sure you want to delete this business idea?" }, class: "card-link text-danger text-end" %>
                 </div>
               </div>
             <% end %>

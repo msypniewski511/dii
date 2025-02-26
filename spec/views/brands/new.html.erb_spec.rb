@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "brands/new", type: :view do
   before(:each) do
     assign(:brand, Brand.new(
+      user: FactoryBot.create(:user),
       business_name: "MyString",
       website_domain: "MyString"
     ))

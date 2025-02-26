@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "brands/edit", type: :view do
   let(:brand) {
     Brand.create!(
+      user: FactoryBot.create(:user),
       business_name: "MyString",
       website_domain: "MyString"
     )
