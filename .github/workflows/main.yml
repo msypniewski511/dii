@@ -16,7 +16,7 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DATABASE_URL: sqlite3:///:memory: # Use in-memory SQLite database
+      DATABASE_URL: sqlite3:///:memory
 
     steps:
       - name: Checkout Code
