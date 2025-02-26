@@ -1,0 +1,26 @@
+<div class="card card-plain">
+  <div class="card-header pb-0 text-start">
+    <h4 class="font-weight-bolder">Sign In</h4>
+    <p class="mb-0">Enter your email and password to sign in</p>
+  </div>
+  <div class="card-body">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { role: "form", method: :post }) do |f| %>
+      <div class="mb-3">
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control form-control-lg", placeholder: "Email", "aria-label": "Email" %>
+      </div>
+      <div class="mb-3">
+        <%= f.password_field :password, autocomplete: "current-password", class: "form-control form-control-lg", placeholder: "Password", "aria-label": "Password" %>
+      </div>
+      <div class="form-check form-switch">
+        <%= f.check_box :remember_me, class: "form-check-input" %>
+        <label class="form-check-label" for="rememberMe">Remember me</label>
+      </div>
+      <div class="text-center">
+        <%= f.submit "Sign in", class: "btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0" %>
+      </div>
+    <% end %>
+  </div>
+  <div class="card-footer text-center pt-0 px-lg-2 px-1">
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

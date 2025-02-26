@@ -8,33 +8,30 @@ class OpenaiSuggestionsController < ApplicationController
       return
     end
     @business_idea = BusinessIdea.find(params[:id])
-
-
     prompt = build_prompt(@business_idea)
 
-    puts prompt
-
     client = OpenAI::Client.new
+    begin
+      response = call_openai_api
+      if response["error"]
+        @suggestions = response["error"]["message"]
+        render "business_ideas/show"
+        # render json: { error: response["error"]["message"] }, status: :unprocessable_entity
+      else
+        suggestions = response.dig("choices", 0, "text")
+        @suggestions = suggestions
+        # Render the business idea's show view with the suggestions available
+        @business_idea.update(suggestions: response["choices"].first["message"]["content"])
+        @business_idea.reload
+        render "business_ideas/show"
+        # render json: { suggestions: @business_idea.suggestions }
+      end
 
-    response = call_openai_api
-    puts response
 
-    if response["error"]
-      render json: { error: response["error"]["message"] }, status: :unprocessable_entity
-    else
-      suggestions = response.dig("choices", 0, "text")
-      @suggestions = suggestions
-      puts @suggestions
-      # Render the business idea's show view with the suggestions available
-      render "business_ideas/show"
-      @business_idea.update(suggestions: response["choices"].first["message"]["content"])
-      # render json: { suggestions: @business_idea.suggestions }
+    rescue StandardError => e
+      Rails.logger.error "AI Error: #{e.message}"
+      render json: { error: "AI analysis failed. Please try again." }, status: :unprocessable_entity
     end
-
-
-  rescue StandardError => e
-    @error = e.message
-    render "business_ideas/show", status: :unprocessable_entity
   end
 
   private
@@ -46,7 +43,7 @@ class OpenaiSuggestionsController < ApplicationController
         model: "gpt-4",
         messages: [
           { role: "system", content: "You are a business analysis expert. Please provide" },
-          { role: "user", content: "Analyze detailed this business idea using PESTEL and SWOT frameworks. Target Country: USA" },
+          { role: "user", content: "Analyze detailed this business idea using PESTEL and SWOT frameworks. Target Country: #{@business_idea.country}." },
           { role: "user", content: @business_idea.title },
           { role: "user", content: @business_idea.description },
           { role: "user", content: "Format your response in a clear and structured way." },

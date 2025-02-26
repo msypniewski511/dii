@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Startup Business Builder App</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+    @import url('https://unpkg.com/normalize.css') layer(normalize);
+
+    @layer normalize, base, demo, stick, effect, srollbar, debug;
+
+    @layer debug {
+      [data-debug='true'] li {
+        outline: 0.05em dashed currentColor;
+      }
+      [data-debug='true'] :is(h2, li:last-of-type) {
+        outline: 0.05em dashed canvasText;
+      }
+    }
+
+    @layer scrollbar {
+      @property --hue {
+        initial-value: 0;
+        syntax: '<number>';
+        inherits: false;
+      }
+      @property --chroma {
+        initial-value: 0;
+        syntax: '<number>';
+        inherits: true;
+      }
+
+      [data-sync-scrollbar='true'] {
+        scrollbar-color: oklch(var(--lightness) var(--chroma) var(--hue)) #0000;
+      }
+      @supports (animation-timeline: scroll()) and (animation-range: 0% 100%) {
+        [data-sync-scrollbar='true'][data-animate='true'] {
+          timeline-scope: --list;
+          scrollbar-color: oklch(var(--lightness) var(--chroma, 0) var(--hue)) #0000;
+          animation-name: change, chroma-on, chroma-off;
+          animation-fill-mode: both;
+          animation-timing-function: linear;
+          /* animation-timeline: scroll(root); */
+          animation-range: entry 50% exit 50%, entry 40% entry 50%,
+            exit 30% exit 40%;
+          animation-timeline: --list;
+          ul {
+            view-timeline: --list;
+          }
+        }
+      }
+
+      @keyframes change {
+        to {
+          --hue: var(--end);
+        }
+      }
+      @keyframes chroma-on {
+        to {
+          --chroma: 0.3;
+        }
+      }
+      @keyframes chroma-off {
+        to {
+          --chroma: 0;
+        }
+      }
+    }
+
+    @layer effect {
+      :root {
+        --start: 0;
+        --end: 360;
+        --lightness: 65%;
+        --base-chroma: 0.3;
+      }
+      [data-theme='dark'] {
+        --lightness: 75%;
+      }
+      [data-theme='light'] {
+        --lightness: 65%;
+      }
+      @media (prefers-color-scheme: dark) {
+        --lightness: 75%;
+      }
+      ul {
+        --step: calc((var(--end) - var(--start)) / (var(--count) - 1));
+      }
+      li:not(:last-of-type) {
+        color: oklch(
+          var(--lightness) var(--base-chroma)
+            calc(var(--start) + (var(--step) * var(--i)))
+        );
+      }
+
+      @supports (animation-timeline: scroll()) and (animation-range: 0% 100%) {
+        [data-animate='true'] {
+          li {
+            opacity: 0.2;
+            animation-name: brighten;
+
+            &:first-of-type {
+              --start-opacity: 1;
+            }
+            &:last-of-type {
+              --brightness: 1;
+              --end-opacity: 1;
+            }
+            animation-fill-mode: both;
+            animation-timing-function: linear;
+            animation-range: cover calc(50% - 1lh) calc(50% + 1lh);
+            animation-timeline: view();
+          }
+        }
+
+        @keyframes brighten {
+          0% {
+            opacity: var(--start-opacity, 0.2);
+          }
+          50% {
+            opacity: 1;
+            filter: brightness(var(--brightness, 1.2));
+          }
+          100% {
+            opacity: var(--end-opacity, 0.2);
+          }
+        }
+      }
+    }
+
+    @layer stick {
+      section:first-of-type {
+        --font-level: 6;
+        display: flex;
+        line-height: 1.25;
+        width: 100%;
+        padding-left: 5rem;
+      }
+      section:last-of-type {
+        min-height: 100vh;
+        display: flex;
+        place-items: center;
+        width: 100%;
+        justify-content: center;
+
+        h2 {
+          --font-level: 6;
+        }
+      }
+      main {
+        width: 100%;
+      }
+      section:first-of-type h2 {
+        position: sticky;
+        top: calc(50% - 0.5lh);
+        font-size: inherit;
+        margin: 0;
+        display: inline-block;
+        height: fit-content;
+        font-weight: 600;
+      }
+      ul {
+        font-weight: 600;
+        padding-inline: 0;
+        margin: 0;
+        list-style-type: none;
+      }
+
+      [data-snap='true'] {
+        scroll-snap-type: y proximity;
+
+        li {
+          scroll-snap-align: center;
+        }
+      }
+
+      h2,
+      li:last-of-type {
+        background: linear-gradient(
+          canvasText 50%,
+          color-mix(in oklch, canvas, canvasText 25%)
+        );
+        background-clip: text;
+        color: #0000;
+      }
+    }
+
+    @layer demo {
+      header {
+        min-height: 100vh;
+        display: flex;
+        place-items: center;
+        width: 100%;
+        padding-inline: 5rem;
+      }
+
+      footer {
+        padding-block: 2rem;
+        opacity: 0.5;
+      }
+
+      h1 {
+        --font-size-min: 24;
+        --font-level: 8;
+        text-wrap: pretty;
+        line-height: 0.8;
+        margin: 0;
+        background: linear-gradient(
+          canvasText 60%,
+          color-mix(in oklch, canvas, canvasText)
+        );
+        background-clip: text;
+        color: #0000;
+      }
+    }
+
+    @layer base {
+      :root {
+        --font-size-min: 14;
+        --font-size-max: 20;
+        --font-ratio-min: 1.1;
+        --font-ratio-max: 1.33;
+        --font-width-min: 375;
+        --font-width-max: 1500;
+      }
+
+      html {
+        color-scheme: light dark;
+      }
+
+      [data-theme='light'] {
+        color-scheme: light only;
+      }
+
+      [data-theme='dark'] {
+        color-scheme: dark only;
+      }
+
+      :where(.fluid) {
+        --fluid-min: calc(
+          var(--font-size-min) * pow(var(--font-ratio-min), var(--font-level, 0))
+        );
+        --fluid-max: calc(
+          var(--font-size-max) * pow(var(--font-ratio-max), var(--font-level, 0))
+        );
+        --fluid-preferred: calc(
+          (var(--fluid-max) - var(--fluid-min)) /
+            (var(--font-width-max) - var(--font-width-min))
+        );
+        --fluid-type: clamp(
+          (var(--fluid-min) / 16) * 1rem,
+          ((var(--fluid-min) / 16) * 1rem) -
+            (((var(--fluid-preferred) * var(--font-width-min)) / 16) * 1rem) +
+            (var(--fluid-preferred) * var(--variable-unit, 100vi)),
+          (var(--fluid-max) / 16) * 1rem
+        );
+        font-size: var(--fluid-type);
+      }
+
+      *,
+      *:after,
+      *:before {
+        box-sizing: border-box;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+        background: light-dark(white, black);
+        min-height: 100vh;
+        font-family: 'Geist', 'SF Pro Text', 'SF Pro Icons', 'AOS Icons',
+          'Helvetica Neue', Helvetica, Arial, sans-serif, system-ui;
+      }
+
+      body::before {
+        --size: 45px;
+        --line: color-mix(in hsl, canvasText, transparent 70%);
+        content: '';
+        height: 100vh;
+        width: 100vw;
+        position: fixed;
+        background: linear-gradient(
+              90deg,
+              var(--line) 1px,
+              transparent 1px var(--size)
+            )
+            50% 50% / var(--size) var(--size),
+          linear-gradient(var(--line) 1px, transparent 1px var(--size)) 50% 50% /
+            var(--size) var(--size);
+        mask: linear-gradient(-20deg, transparent 50%, white);
+        top: 0;
+        transform-style: flat;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .bear-link {
+        color: canvasText;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        width: 48px;
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+        opacity: 0.8;
+      }
+
+      :where(.x-link, .bear-link):is(:hover, :focus-visible) {
+        opacity: 1;
+      }
+
+      .bear-link svg {
+        width: 75%;
+      }
+
+      /* Utilities */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+    }
+
+    div.tp-dfwv {
+      position: fixed;
+    }
+
+    /*
+    CSS @property and the New Style
+    https://ryanmulligan.dev/blog/css-property-new-style/
+    */
+    @import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,500&display=swap");
+
+    :root {
+      --shiny-cta-bg: #000000;
+      --shiny-cta-bg-subtle: #1a1818;
+      --shiny-cta-fg: #ffffff;
+      --shiny-cta-highlight: blue;
+      --shiny-cta-highlight-subtle: #8484ff;
+    }
+
+    @property --gradient-angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @property --gradient-angle-offset {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    @property --gradient-percent {
+      syntax: "<percentage>";
+      initial-value: 5%;
+      inherits: false;
+    }
+
+    @property --gradient-shine {
+      syntax: "<color>";
+      initial-value: white;
+      inherits: false;
+    }
+
+    .shiny-cta {
+      --animation: gradient-angle linear infinite;
+      --duration: 3s;
+      --shadow-size: 2px;
+      isolation: isolate;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      outline-offset: 4px;
+      padding: 1.25rem 2.5rem;
+      font-family: inherit;
+      font-size: 2.125rem;
+      line-height: 1.2;
+      border: 1px solid transparent;
+      border-radius: 360px;
+      color: var(--shiny-cta-fg);
+      background: linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg))
+          padding-box,
+        conic-gradient(
+            from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+            transparent,
+            var(--shiny-cta-highlight) var(--gradient-percent),
+            var(--gradient-shine) calc(var(--gradient-percent) * 2),
+            var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
+            transparent calc(var(--gradient-percent) * 4)
+          )
+          border-box;
+      box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle);
+
+      &::before,
+      &::after,
+      span::before {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        inset-inline-start: 50%;
+        inset-block-start: 50%;
+        translate: -50% -50%;
+        z-index: -1;
+      }
+
+      &:active {
+        translate: 0 1px;
+      }
+    }
+
+    /* Dots pattern */
+    .shiny-cta::before {
+      --size: calc(100% - var(--shadow-size) * 3);
+      --position: 2px;
+      --space: calc(var(--position) * 2);
+      width: var(--size);
+      height: var(--size);
+      background: radial-gradient(
+          circle at var(--position) var(--position),
+          white calc(var(--position) / 4),
+          transparent 0
+        )
+        padding-box;
+      background-size: var(--space) var(--space);
+      background-repeat: space;
+      mask-image: conic-gradient(
+        from calc(var(--gradient-angle) + 45deg),
+        black,
+        transparent 10% 90%,
+        black
+      );
+      border-radius: inherit;
+      opacity: 0.4;
+      z-index: -1;
+    }
+
+    /* Inner shimmer */
+    .shiny-cta::after {
+      --animation: shimmer linear infinite;
+      width: 100%;
+      aspect-ratio: 1;
+      background: linear-gradient(
+        -50deg,
+        transparent,
+        var(--shiny-cta-highlight),
+        transparent
+      );
+      mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+      opacity: 0.6;
+    }
+
+    .shiny-cta span {
+      z-index: 1;
+
+      &::before {
+        --size: calc(100% + 1rem);
+        width: var(--size);
+        height: var(--size);
+        box-shadow: inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);
+        opacity: 0;
+      }
+    }
+
+    /* Animate */
+    .shiny-cta {
+      --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+      transition: var(--transition);
+      transition-property: --gradient-angle-offset, --gradient-percent,
+        --gradient-shine;
+
+      &,
+      &::before,
+      &::after {
+        animation: var(--animation) var(--duration),
+          var(--animation) calc(var(--duration) / 0.4) reverse paused;
+        animation-composition: add;
+      }
+
+      span::before {
+        transition: opacity var(--transition);
+        animation: calc(var(--duration) * 1.5) breathe linear infinite;
+      }
+    }
+
+    .shiny-cta:is(:hover, :focus-visible) {
+      --gradient-percent: 20%;
+      --gradient-angle-offset: 95deg;
+      --gradient-shine: var(--shiny-cta-highlight-subtle);
+
+      &,
+      &::before,
+      &::after {
+        animation-play-state: running;
+      }
+
+      span::before {
+        opacity: 1;
+      }
+    }
+
+    @keyframes gradient-angle {
+      to {
+        --gradient-angle: 360deg;
+      }
+    }
+
+    @keyframes shimmer {
+      to {
+        rotate: 360deg;
+      }
+    }
+
+    @keyframes breathe {
+      from,
+      to {
+        scale: 1;
+      }
+      50% {
+        scale: 1.2;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <span class="sr-only">Turn your startup dream into a thriving business.</span>
+  <header>
+      <h1 class="fluid">Turn Ideas<br />Into Reality.</h1>
+    </header>
+    <main>
+      <section class="content fluid">
+        
+        <h2><span aria-hidden="true">Start, Scale &&nbsp;&nbsp;<br /> Succeed.</span><br />
+        <%= button_to new_user_session_path, class: "shiny-cta" do %>
+          <span>Start Building Your Startup with AI</span>
+        <% end %>
+        </h2>
+        <ul aria-hidden="true" style="--count: 23">
+          <li style="--i: 0">create.</li>
+          <li style="--i: 1">innovate.</li>
+          <li style="--i: 2">plan.</li>
+          <li style="--i: 3">build.</li>
+          <li style="--i: 4">launch.</li>
+          <li style="--i: 5">pitch.</li>
+          <li style="--i: 6">market.</li>
+          <li style="--i: 7">analyze.</li>
+          <li style="--i: 8">monetize.</li>
+          <li style="--i: 9">scale.</li>
+          <li style="--i: 10">invest.</li>
+          <li style="--i: 11">validate.</li>
+          <li style="--i: 12">optimize.</li>
+          <li style="--i: 13">lead.</li>
+          <li style="--i: 14">connect.</li>
+          <li style="--i: 15">fund.</li>
+          <li style="--i: 16">design.</li>
+          <li style="--i: 17">develop.</li>
+          <li style="--i: 18">collaborate.</li>
+          <li style="--i: 19">automate.</li>
+          <li style="--i: 20">grow.</li>
+          <li style="--i: 21">succeed.</li>
+          <li style="--i: 22"></li>
+        </ul>
+      </section>
+      <section>
+        <button class="shiny-cta">
+          <span>Start Building Your Startup</span>
+        </button>
+      </section>
+    </main>
+    <footer>Startup Business Builder &copy; 2025</footer>
+
+
+    <script type="module">
+      console.log(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        console.log('ciemny')
+
+      } else {
+        console.log('jasny')
+        document.documentElement.style.setProperty('--shiny-cta-bg', '#201cc1cf');
+        document.documentElement.style.setProperty('--shiny-cta-bg-subtle', '#150db1');
+        document.documentElement.style.setProperty('--shiny-cta-fg', '#ffffff');
+        document.documentElement.style.setProperty('--shiny-cta-highlight', '#9c27b0');
+        document.documentElement.style.setProperty('--shiny-cta-highlight-subtle', '#ffc0fc');
+      }
+      import { Pane } from 'https://cdn.skypack.dev/tweakpane@4.0.4'
+      import gsap from 'https://cdn.skypack.dev/gsap@3.12.0'
+      import ScrollTrigger from 'https://cdn.skypack.dev/gsap@3.12.0/ScrollTrigger'
+
+      const config = {
+        theme: 'system',
+        animate: true,
+        snap: true,
+        start: gsap.utils.random(0, 100, 1),
+        end: gsap.utils.random(900, 1000, 1),
+        scroll: true,
+        debug: false,
+      }
+
+      const ctrl = new Pane({
+        title: 'Config',
+        expanded: false,
+      })
+
+      let items
+      let scrollerScrub
+      let dimmerScrub
+      let chromaEntry
+      let chromaExit
+
+      console.log('dziala')
+      console.log(config.theme)
+      console.log(document.documentElement.dataset.theme)
+
+      const update = () => {
+        document.documentElement.dataset.theme = config.theme
+        document.documentElement.dataset.syncScrollbar = config.scroll
+        document.documentElement.dataset.animate = config.animate
+        document.documentElement.dataset.snap = config.snap
+        document.documentElement.dataset.debug = config.debug
+        document.documentElement.style.setProperty('--start', config.start)
+        document.documentElement.style.setProperty('--hue', config.start)
+        document.documentElement.style.setProperty('--end', config.end)
+
+        if (!config.animate) {
+          chromaEntry?.scrollTrigger.disable(true, false)
+          chromaExit?.scrollTrigger.disable(true, false)
+          dimmerScrub?.disable(true, false)
+          scrollerScrub?.disable(true, false)
+          gsap.set(items, { opacity: 1 })
+          gsap.set(document.documentElement, { '--chroma': 0 })
+        } else {
+          gsap.set(items, { opacity: (i) => (i !== 0 ? 0.2 : 1) })
+          dimmerScrub.enable(true, true)
+          scrollerScrub.enable(true, true)
+          chromaEntry.scrollTrigger.enable(true, true)
+          chromaExit.scrollTrigger.enable(true, true)
+        }
+      }
+
+      const sync = (event) => {
+        if (
+          !document.startViewTransition ||
+          event.target.controller.view.labelElement.innerText !== 'Theme'
+        )
+          return update()
+        document.startViewTransition(() => update())
+      }
+      ctrl.addBinding(config, 'animate', {
+        label: 'Animate',
+      })
+      ctrl.addBinding(config, 'snap', {
+        label: 'Snap',
+      })
+      ctrl.addBinding(config, 'start', {
+        label: 'Hue Start',
+        min: 0,
+        max: 1000,
+        step: 1,
+      })
+      ctrl.addBinding(config, 'end', {
+        label: 'Hue End',
+        min: 0,
+        max: 1000,
+        step: 1,
+      })
+      ctrl.addBinding(config, 'scroll', {
+        label: 'Scrollbar',
+      })
+      ctrl.addBinding(config, 'debug', {
+        label: 'Debug',
+      })
+
+      ctrl.addBinding(config, 'theme', {
+        label: 'Theme',
+        options: {
+          System: 'system',
+          Light: 'light',
+          Dark: 'dark',
+        },
+      })
+
+      ctrl.on('change', sync)
+
+      // backfill the scroll functionality with GSAP
+      if (
+        !CSS.supports('(animation-timeline: scroll()) and (animation-range: 0% 100%)')
+      ) {
+        gsap.registerPlugin(ScrollTrigger)
+
+        // animate the items with GSAP if there's no CSS support
+        items = gsap.utils.toArray('ul li')
+
+        gsap.set(items, { opacity: (i) => (i !== 0 ? 0.2 : 1) })
+
+        const dimmer = gsap
+          .timeline()
+          .to(items.slice(1), {
+            opacity: 1,
+            stagger: 0.5,
+          })
+          .to(
+            items.slice(0, items.length - 1),
+            {
+              opacity: 0.2,
+              stagger: 0.5,
+            },
+            0
+          )
+
+        dimmerScrub = ScrollTrigger.create({
+          trigger: items[0],
+          endTrigger: items[items.length - 1],
+          start: 'center center',
+          end: 'center center',
+          animation: dimmer,
+          scrub: 0.2,
+        })
+
+        // register scrollbar changer
+        const scroller = gsap.timeline().fromTo(
+          document.documentElement,
+          {
+            '--hue': config.start,
+          },
+          {
+            '--hue': config.end,
+            ease: 'none',
+          }
+        )
+
+        scrollerScrub = ScrollTrigger.create({
+          trigger: items[0],
+          endTrigger: items[items.length - 1],
+          start: 'center center',
+          end: 'center center',
+          animation: scroller,
+          scrub: 0.2,
+        })
+
+        chromaEntry = gsap.fromTo(
+          document.documentElement,
+          {
+            '--chroma': 0,
+          },
+          {
+            '--chroma': 0.3,
+            ease: 'none',
+            scrollTrigger: {
+              scrub: 0.2,
+              trigger: items[0],
+              start: 'center center+=40',
+              end: 'center center',
+            },
+          }
+        )
+        chromaExit = gsap.fromTo(
+          document.documentElement,
+          {
+            '--chroma': 0.3,
+          },
+          {
+            '--chroma': 0,
+            ease: 'none',
+            scrollTrigger: {
+              scrub: 0.2,
+              trigger: items[items.length - 2],
+              start: 'center center',
+              end: 'center center-=40',
+            },
+          }
+        )
+      }
+      // run it
+      update()
+
+
+    </script>
+</body>
+</html>

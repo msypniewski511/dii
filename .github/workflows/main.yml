@@ -1,0 +1,125 @@
+name: PR Review and Confirmation for Ruby on Rails
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  test:
+    name: Run Tests and Linting
+    runs-on: ubuntu-latest
+
+    env:
+      RAILS_ENV: test
+      DATABASE_URL: sqlite3:///:memory: # Use in-memory SQLite database
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Print Branch
+        run: git status
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.2.2 # Ensure this matches your Ruby version
+          bundler-cache: true
+
+      - name: Install Dependencies
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+
+      - name: Setup Database
+        run: |
+          bundle exec rails db:prepare # Creates & migrates SQLite DB
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Install node dependencies
+        run: yarn install
+
+      - name: Update Browserslist
+        run: yes | npx update-browserslist-db@latest
+
+      - name: Precompile assets
+        run: bundle exec rails assets:precompile --trace
+
+      - name: Run RuboCop (Rails Only)
+        run: |
+          echo "Running RuboCop for Rails-specific checks..."
+          bundle exec rubocop --only Rails --format simple --display-cop-names
+        continue-on-error: true # Optional: Does not fail the pipeline if there are warnings
+
+      - name: Run Tests with RSpec
+        run: bundle exec rspec -f d
+
+      - name: Upload Test Results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results.txt
+
+  approve:
+    name: Approve PR
+    runs-on: ubuntu-latest
+    needs: test
+    if: ${{ success() }}
+
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Print Hello Message
+        run: echo "Hello! Git status:" && git status
+
+      - name: Approve Pull Request
+        uses: hmarr/auto-approve-action@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add Automerge Label
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: automerge
+
+      - name: Add Comment if All Checks Passed
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -d '{"body": "All checks have passed! PR is approved for merge."}' \
+          https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/comments
+
+  auto-merge:
+    runs-on: ubuntu-latest
+    needs: approve
+    if: ${{ success() }}
+
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Check Git Status
+        run: git status
+
+      - id: automerge
+        name: Auto Merge
+        uses: pascalgn/automerge-action@v0.16.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Ensure GitHub token is properly set

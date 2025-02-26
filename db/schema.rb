@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_23_085150) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_25_115527) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -60,6 +60,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_23_085150) do
     t.string "website_domain"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_brands_on_user_id"
   end
 
   create_table "business_ideas", force: :cascade do |t|
@@ -69,16 +71,20 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_23_085150) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "suggestions"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_business_ideas_on_user_id"
   end
 
   create_table "ideas", force: :cascade do |t|
     t.date "due_date"
-    t.integer "priority"
+    t.integer "priority", default: 0
     t.string "action_point"
-    t.integer "status"
+    t.integer "status", default: 0
     t.boolean "added_to_business_plan"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_ideas_on_user_id"
   end
 
   create_table "pestel_analyses", force: :cascade do |t|
@@ -105,8 +111,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_23_085150) do
     t.index ["business_idea_id"], name: "index_swot_analyses_on_business_idea_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "brands", "users"
+  add_foreign_key "business_ideas", "users"
   add_foreign_key "pestel_analyses", "business_ideas"
   add_foreign_key "swot_analyses", "business_ideas"
 end

@@ -16,20 +16,28 @@ gem "bootsnap", require: false
 
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri windows ]
-  gem 'rspec-rails', '~> 7.0.0'
-  gem 'capybara'
-
-  gem 'selenium-webdriver'
+  gem "capybara"
+  gem "debug", platforms: %i[mri windows]
+  gem "factory_bot"
+  gem "guard-rspec", require: false
+  gem "rspec-rails", "~> 6.1.0"
+  gem "selenium-webdriver", "~> 4.4"
+  gem 'database_cleaner-active_record' # Cleans test database
 end
 
 group :development do
   gem "web-console"
+  gem "letter_opener"
 end
 
+group :test do
+  gem 'rails-controller-testing'
+  gem 'faker'          # Generates random test data
+end
 
 gem "test", "~> 1.0", :group => :development
 gem "image_processing", "~> 1.2"
 gem "ruby-openai"
 gem "sidekiq", "~> 7.3"
 gem 'country_select', '~> 8.0'
+gem "devise", "~> 4.9"

@@ -1,17 +1,29 @@
 Rails.application.routes.draw do
+  get '/dashboard', to: 'home#dashboard', as: :user_root
+  devise_for :users
   resources :swot_analyses
   resources :pestel_analyses
-  # resources :business_ideas
   resources :business_ideas do
     member do
       post 'suggestions', to: 'openai_suggestions#create'
     end
     resources :pestel_analyses
+    resources :swot_analyses
   end
   resources :articles
   resources :brands
   resources :ideas
   get 'home/index'
+
+  namespace :api do
+    namespace :v1 do
+      resources :business_ideas do
+        post 'suggestions', to: 'openai_suggestions#create'
+        resources :pestel_analyses
+        resources :swot_analyses
+      end
+    end
+  end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

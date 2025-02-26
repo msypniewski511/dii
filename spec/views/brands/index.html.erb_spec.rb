@@ -4,10 +4,12 @@ RSpec.describe "brands/index", type: :view do
   before(:each) do
     assign(:brands, [
       Brand.create!(
+        user: FactoryBot.create(:user),
         business_name: "Business Name",
         website_domain: "Website Domain"
       ),
       Brand.create!(
+        user: FactoryBot.create(:user),
         business_name: "Business Name",
         website_domain: "Website Domain"
       )

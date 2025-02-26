@@ -6,4 +6,6 @@ class Brand < ApplicationRecord
   has_rich_text :values
   has_rich_text :mision_statement
   validates :business_name, presence: true
+
+  belongs_to :user
 end

@@ -26,8 +26,8 @@ class PestelAnalysesController < ApplicationController
 
     respond_to do |format|
       if params[:type]
-        response = call_openai_api_params
-        @pestel_analysis = PestelAnalysis.new(params[:type].to_sym :resonse, pestel_analysis_params)
+        response = call_openai_api_params.dig("choices", 0, "message", "content")
+        @pestel_analysis[params[:type].to_sym] = response
       end
       if @pestel_analysis.save
         format.html { redirect_to @pestel_analysis, notice: "Pestel analysis was successfully created." }
@@ -43,15 +43,8 @@ class PestelAnalysesController < ApplicationController
   def update
     respond_to do |format|
       if params[:type]
-        puts "Object 1"
-        p @pestel_analysis
         response = call_openai_api_params.dig("choices", 0, "message",  "content")
-        puts response
-        # @pestel_analysis.political = response
         @pestel_analysis[params[:type].to_sym] = response
-        
-        puts "Object 2"
-        p @pestel_analysis
         @pestel_analysis.save
         redirect_to @pestel_analysis, notice: "Pestel analysis was successfully updated."
         return 

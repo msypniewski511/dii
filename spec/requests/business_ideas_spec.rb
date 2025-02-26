@@ -17,6 +17,7 @@ RSpec.describe "/business_ideas", type: :request do
   # This should return the minimal set of attributes required to create a valid
   # BusinessIdea. As you add validations to BusinessIdea, be sure to
   # adjust the attributes here as well.
+  let(:user) { FactoryBot.create(:user) }
   let(:valid_attributes) {
     skip("Add a hash of attributes valid for your model")
   }
@@ -43,6 +44,7 @@ RSpec.describe "/business_ideas", type: :request do
 
   describe "GET /new" do
     it "renders a successful response" do
+      sign_in user
       get new_business_idea_url
       expect(response).to be_successful
     end
