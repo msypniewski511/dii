@@ -10,6 +10,7 @@ require_relative "../config/environment"
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 require "devise"
+require "warden"
 # require "support/request_macros"
 
 Rails.root.glob("spec/support/**/*.rb").sort.each { |f| require f }
@@ -43,7 +44,8 @@ RSpec.configure do |config|
 
   # Include Warden test helpers
   config.include Warden::Test::Helpers, type: :system
-
+  config.include Warden::Test::Helpers, type: :request
+  config.include Warden::Test::Helpers, type: :controller
   # Clean up Warden state after each test
   config.after do
     Warden.test_reset!

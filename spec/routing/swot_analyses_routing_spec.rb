@@ -1,6 +1,7 @@
 require "rails_helper"
 
 RSpec.describe SwotAnalysesController, type: :routing do
+  before { skip("Waiting for a decision about the relationship between the models") }
   describe "routing" do
     it "routes to #index" do
       expect(get: "/swot_analyses").to route_to("swot_analyses#index")

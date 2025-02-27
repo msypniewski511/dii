@@ -1,14 +1,13 @@
 Rails.application.routes.draw do
   get '/dashboard', to: 'home#dashboard', as: :user_root
   devise_for :users
-  resources :swot_analyses
-  resources :pestel_analyses
+  
   resources :business_ideas do
     member do
       post 'suggestions', to: 'openai_suggestions#create'
     end
-    resources :pestel_analyses
-    resources :swot_analyses
+    resource :pestel_analyses
+    resource :swot_analyses
   end
   resources :articles
   resources :brands
@@ -19,8 +18,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :business_ideas do
         post 'suggestions', to: 'openai_suggestions#create'
-        resources :pestel_analyses
-        resources :swot_analyses
+        resource :pestel_analyses
+        resource :swot_analyses
       end
     end
   end

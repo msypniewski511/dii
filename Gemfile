@@ -4,7 +4,6 @@ ruby "3.2.2"
 
 gem "rails", "~> 7.1.5"
 gem "sprockets-rails"
-gem "sqlite3", ">= 1.4"
 gem "puma", ">= 5.0"
 gem "jsbundling-rails"
 gem "turbo-rails"
@@ -26,6 +25,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "sqlite3", ">= 1.4"
   gem "web-console"
   gem "letter_opener"
 end
@@ -34,6 +34,11 @@ group :test do
   gem 'rails-controller-testing'
   gem 'faker'          # Generates random test data
 end
+
+group :production, :test do
+  gem 'pg'
+end
+
 
 gem "test", "~> 1.0", :group => :development
 gem "image_processing", "~> 1.2"

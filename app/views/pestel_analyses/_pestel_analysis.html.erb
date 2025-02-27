@@ -1,68 +1,259 @@
+<div class="card shadow-lg mx-4 card-profile">
+  <div class="card-body p-3">
+    <div class="row gx-4">
+      <div class="col-auto">
+        <div class="avatar avatar-xl position-relative">
+          <%= image_tag 'th.jpg', alt: "profile_image", class: "w-100 border-radius-lg shadow-sm" %>
+        </div>
+      </div>
+      <div class="col-auto my-auto">
+        <div class="h-100">
+          <h5 class="mb-1">
+            <%= @business_idea.title %>
+          </h5>
+          <p class="mb-0 font-weight-bold text-sm">
+            PESTEL
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-8 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+        <div class="nav-wrapper position-relative end-0">
+          <ul class="nav nav-pills nav-fill p-1" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center " id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" href="javascript:;" role="tab" aria-selected="true">
+                <i class="fa fa-landmark"></i>
+                <span class="ms-2">Political</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " id="nav-economic-tab" data-bs-toggle="tab" data-bs-target="#nav-economic" href='#' role="tab" aria-selected="false">
+                <i class="fa fa-money-bill-wave"></i>
+                <span class="ms-2">Economic</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-social-tab" data-bs-toggle="tab" data-bs-target="#nav-social" href="javascript:;" role="tab" aria-selected="false">
+                <i class="fa fa-users"></i>
+                <span class="ms-2">Social</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-technological-tab" data-bs-toggle="tab" data-bs-target="#nav-technological" href="javascript:;" role="tab" aria-selected="false">
+                <i class="fa fa-lightbulb"></i>
+                <span class="ms-2">Technological</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-env-tab" data-bs-toggle="tab" data-bs-target="#nav-env" href="javascript:;" role="tab" aria-selected="false">
+                <i class="fa fa-globe"></i>
+                <span class="ms-2">Environmental</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-legal-tab" data-bs-toggle="tab" data-bs-target="#nav-legal" href="javascript:;" role="tab" aria-selected="false">
+                <i class="fa fa-scale-balanced"></i>
+                <span class="ms-2">Legal</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-lg mx-4 my-2">
+  <div class="tab-content" id="nav-tabContent">
+    <%# To jest powtarzajace sie %>
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col">
+          <fieldset class="border rounded-3 p-3">
+            <legend class="float-none w-auto px-3">Political:</legend>
+            <%= format_text_to_html pestel_analysis.political %>
+            <hr />
+            <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
+              
+              <%= hidden_field_tag :type, "political" %> 
+              <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+            <% end %>
+          </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%# Koniec powtarzania %>
+    <div class="tab-pane fade show" id="nav-economic" role="tabpanel" aria-labelledby="nav-economic-tab">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col">
+            <fieldset class="border rounded-3 p-3">
+              <legend class="float-none w-auto px-3">Economic:</legend>
+              <%= format_text_to_html pestel_analysis.economic %>
+              <hr />
+              <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
+                
+                <%= hidden_field_tag :type, "economic" %> 
+                <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+              <% end %>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="tab-pane fade show" id="nav-social" role="tabpanel" aria-labelledby="nav-social-tab">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col">
+            <fieldset class="border rounded-3 p-3">
+              <legend class="float-none w-auto px-3">Social:</legend>
+              <%= format_text_to_html pestel_analysis.social %>
+                <hr />
+                <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
+                
+                <%= hidden_field_tag :type, "social" %> 
+                <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+              <% end %>
+            </fieldset>           
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade show" id="nav-technological" role="tabpanel" aria-labelledby="nav-technological-tab">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col">
+            <fieldset class="border rounded-3 p-3">
+              <legend class="float-none w-auto px-3">Technological:</legend>
+              <%= format_text_to_html pestel_analysis.technological %>
+              <hr />
+              <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
+                
+                <%= hidden_field_tag :type, "technological" %> 
+                <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+              <% end %>
+            </fieldset>           
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade show" id="nav-env" role="tabpanel" aria-labelledby="nav-env-tab">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col">
+            <fieldset class="border rounded-3 p-3">
+              <legend class="float-none w-auto px-3">Environmental:</legend>
+              <%= format_text_to_html pestel_analysis.environmental %>
+              <hr>
+              <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
+                
+                <%= hidden_field_tag :type, "environmental" %> 
+                <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+              <% end %>
+            </fieldset>            
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane fade show" id="nav-legal" role="tabpanel" aria-labelledby="nav-legal-tab">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col">
+            <fieldset class="border rounded-3 p-3">
+              <legend class="float-none w-auto px-3">Legal:</legend>
+              <%= format_text_to_html pestel_analysis.legal %>
+              <hr>
+              <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
+                
+                <%= hidden_field_tag :type, "legal" %> 
+                <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
+              <% end %>
+            </fieldset>            
+          </div>
+        </div>
+      </div>
+    </div>
+    <%# petla %>
+  </div>
+</div>
+
+
 <div id="<%= dom_id pestel_analysis %>">
   <div class="card-header">
-    <strong>Business idea:</strong>
-    <%= pestel_analysis.business_idea.title %>
+    <h2>PETSEL for: <%= @business_idea.title %></h2>
   </div>
 
   <div class="card-body">
-    <p>
-      <strong>Political:</strong>
+    <fieldset class="border rounded-3 p-3">
+      <legend class="float-none w-auto px-3">Political:</legend>
       <%= format_text_to_html pestel_analysis.political %>
-      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+      <hr />
+      <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "political" %> 
         <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
-    </p>
+    </fieldset>
 
-    <p>
-      <strong>Economic:</strong>
+    <fieldset class="border rounded-3 p-3">
+      <legend class="float-none w-auto px-3">Economic:</legend>
       <%= format_text_to_html pestel_analysis.economic %>
-      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+      <hr />
+      <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "economic" %> 
         <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
-    </p>
+    </fieldset>
 
-    <p>
-      <strong>Social:</strong>
+    <fieldset class="border rounded-3 p-3">
+      <legend class="float-none w-auto px-3">Social:</legend>
       <%= format_text_to_html pestel_analysis.social %>
-        <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+        <hr />
+        <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "social" %> 
         <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
-    </p>
+    </fieldset>
 
-    <p>
-      <strong>Technological:</strong>
+    <fieldset class="border rounded-3 p-3">
+      <legend class="float-none w-auto px-3">Technological:</legend>
       <%= format_text_to_html pestel_analysis.technological %>
-      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+      <hr />
+      <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "technological" %> 
         <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
-    </p>
+    </fieldset>
 
-    <p>
-      <strong>Environmental:</strong>
+    <fieldset class="border rounded-3 p-3">
+      <legend class="float-none w-auto px-3">Environmental:</legend>
       <%= format_text_to_html pestel_analysis.environmental %>
-      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+      <hr>
+      <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "environmental" %> 
         <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
-    </p>
+    </fieldset>
 
-    <p>
-      <strong>Legal:</strong>
+    <fieldset class="border rounded-3 p-3">
+      <legend class="float-none w-auto px-3">Legal:</legend>
       <%= format_text_to_html pestel_analysis.legal %>
-      <%= form_with url: "/pestel_analyses/#{pestel_analysis.id}", local: true, method: :patch, data: { turbo: "false" } do %>
+      <hr>
+      <%= form_with url: "/business_ideas/#{@business_idea.id}/pestel_analyses", local: true, method: :patch, data: { turbo: "false" } do %>
         
         <%= hidden_field_tag :type, "legal" %> 
         <%= submit_tag "Get AI Suggestions", class: "btn btn-outline-secondary" %>
       <% end %>
-    </p>
+    </fieldset>   
   </div>
 </div>

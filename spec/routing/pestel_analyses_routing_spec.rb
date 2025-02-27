@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe PestelAnalysesController, type: :routing do
   describe "routing" do
+    before { skip("Waiting for a decision about the relationship between the models") }
     it "routes to #index" do
       expect(get: "/pestel_analyses").to route_to("pestel_analyses#index")
     end

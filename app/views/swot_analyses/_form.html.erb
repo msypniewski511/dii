@@ -1,4 +1,4 @@
-<%= form_with(model: swot_analysis) do |form| %>
+<%= form_with(model: swot_analysis, url: business_idea_swot_analyses_path) do |form| %>
   <% if swot_analysis.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(swot_analysis.errors.count, "error") %> prohibited this swot_analysis from being saved:</h2>
@@ -11,32 +11,27 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :business_idea_id, style: "display: block" %>
-    <%= form.text_field :business_idea_id %>
-  </div>
-
-  <div>
+  <div class="form-group">
     <%= form.label :strengths, style: "display: block" %>
-    <%= form.text_area :strengths %>
+    <%= form.text_area :strengths, class: 'form-control', rows: 5 %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :weaknesses, style: "display: block" %>
-    <%= form.text_area :weaknesses %>
+    <%= form.text_area :weaknesses, class: 'form-control', rows: 5 %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :opportunities, style: "display: block" %>
-    <%= form.text_area :opportunities %>
+    <%= form.text_area :opportunities, class: 'form-control', rows: 5 %>
   </div>
 
-  <div>
+  <div class="form-group">
     <%= form.label :threats, style: "display: block" %>
-    <%= form.text_area :threats %>
+    <%= form.text_area :threats, class: 'form-control', rows: 5 %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

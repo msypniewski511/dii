@@ -31,9 +31,15 @@ module ApplicationHelper
     },
     "pestel_analyses" => {
       index: ["Dashboard", ["Business Ideas", business_ideas_path]],
-      show: ["Dashboard", ["Business Ideas", business_ideas_path], ["#{@busines_idea ? @busines_idea.title : ''}", @busines_idea], -> { "PETSEL/SWOT" } ],
+      show: ["Dashboard", ["Business Ideas", business_ideas_path], ["#{@business_idea ? @business_idea.title : ""}", @business_idea], -> { "PETSEL" } ],
       new: ["Dashboard", ["Business Ideas", business_ideas_path], "New idea"],
-      edit: ["Dashboard", ["Business Ideas", business_ideas_path], -> { "Edit: #{""}" }]
+      edit: ["Dashboard", ["Business Ideas", business_ideas_path], ["#{@business_idea ? @business_idea.title : ""}", @business_idea], ["PETSE", @business_idea&.persisted? ? business_idea_pestel_analyses_path(@business_idea) : nil], -> { "Edit" }]
+    },
+    "swot_analyses" => {
+      index: ["Dashboard", ["Business Ideas", business_ideas_path]],
+      show: ["Dashboard", ["Business Ideas", business_ideas_path], ["#{@business_idea ? @business_idea.title : ""}", @business_idea], -> { "SWOT matrix" } ],
+      new: ["Dashboard", ["Business Ideas", business_ideas_path], "New idea"],
+      edit: ["Dashboard", ["Business Ideas", business_ideas_path], ["#{@business_idea ? @business_idea.title : ""}", @business_idea], ["SWOT matrix", @business_idea&.persisted? ? business_idea_pestel_analyses_path(@business_idea) : nil], -> { "Edit" }]
     },
     "users" => {
       index: ["Dashboard", ["Users", brands_path]],
@@ -331,7 +337,7 @@ module ApplicationHelper
       ],
       mision_statement: [
         'Mission Statement',
-        ['p>Creating a strong mission statement is an essential step in the process of establishing a new business. It serves as a guiding light for your organization, helping to define its purpose and direction. Here are some key pieces of advice for crafting an effective mission statement:</p>
+        ['<p>Creating a strong mission statement is an essential step in the process of establishing a new business. It serves as a guiding light for your organization, helping to define its purpose and direction. Here are some key pieces of advice for crafting an effective mission statement:</p>
 
           <ol>
           <li><p><strong>Define Your Purpose:</strong> Clearly articulate the primary purpose of your business. Ask yourself what problem your business solves and why it exists beyond just making a profit.</p></li>
@@ -360,7 +366,76 @@ module ApplicationHelper
 
           <p>By following these guidelines, you can create a mission statement that effectively communicates your business&#39;s purpose and sets the stage for its future success.</p>
           '
+        ],
+      ],
+      title: [
+        'Business Idea Title/Name',
+        ['<p>The title you choose for your business idea is important because it acts as a unique reference point for all your analyses and final business plan. It will be used to connect your PESTEL analysis, SWOT analysis, and other insights. Here’s how to choose a good title:</p>
+
+          <ol>
+            <li><strong>Be Descriptive:</strong> Choose a title that clearly reflects the nature of your business idea. Avoid vague names.</li>
+            <li><strong>Think About Future Use:</strong> This title will be used later when compiling your full business plan, so pick something meaningful.</li>
+            <li><strong>Keep It Concise:</strong> The title should be short yet descriptive enough to help you recognize your idea at a glance.</li>
+            <li><strong>Avoid Generic Titles:</strong> Titles like “My Startup” or “New Business” don’t help in distinguishing your ideas.</li>
+          </ol>
+
+          <p><strong>Examples of Good Titles:</strong></p>
+
+          <ul>
+            <li>Eco-Friendly Packaging Solutions</li>
+            <li>AI-Powered HR Software</li>
+            <li>London-Based Mobile Coffee Truck</li>
+          </ul>
+
+          <p>By choosing a strong and relevant title, you ensure a smooth process for connecting your business idea with AI-driven analyses and the final business plan.</p>'
         ]
+      ],
+      description: [
+        'Business Description',
+        ['<p>Providing a clear and detailed business description is essential. This helps you define your business model, set expectations, and allows AI to generate better recommendations. Here’s why it matters:</p>
+
+          <ol>
+            <li><strong>Clarifies Your Vision:</strong> Writing a detailed description forces you to think through your business model, products, and services.</li>
+            <li><strong>Improves AI Recommendations:</strong> The more details you provide about your business goals, target audience, and industry, the better AI-generated insights will be.</li>
+            <li><strong>Helps in Business Planning:</strong> Investors, partners, and financial institutions often review business descriptions to understand feasibility and potential growth.</li>
+            <li><strong>Focuses Market Research:</strong> A well-defined description ensures that market research aligns with your specific industry and niche.</li>
+          </ol>
+
+          <p><strong>What to Include in Your Business Description?</strong></p>
+
+          <ul>
+            <li>What products or services do you offer?</li>
+            <li>Who is your target audience?</li>
+            <li>What problems does your business solve?</li>
+            <li>What makes your business unique?</li>
+          </ul>
+
+          <p>For best results, provide as much information as possible when filling in this section. The more details you give, the better AI-driven insights and market analysis you will receive.</p>']
+      ],
+      country: [
+        'Business Location',
+        ['<p>Selecting the right country for your business is a key decision that affects everything from legal regulations to market opportunities. Here’s why choosing the correct country is crucial:</p>
+
+          <ol>
+            <li><strong>Legal & Tax Regulations:</strong> Business laws, tax structures, and registration requirements vary by country. Make sure to research local regulations before proceeding.</li>
+            <li><strong>PESTEL & SWOT Analysis:</strong> The business environment is different for each country. AI will generate PESTEL (Political, Economic, Social, Technological, Environmental, and Legal) and SWOT (Strengths, Weaknesses, Opportunities, Threats) analyses based on your selected location.</li>
+            <li><strong>Market Potential:</strong> Some countries may have a higher demand for your product or service, while others may be saturated or highly competitive.</li>
+            <li><strong>Funding & Support:</strong> Many governments offer grants, incentives, and startup programs. The country you choose could impact access to financial resources.</li>
+          </ol>
+
+          <p><strong>Examples of Country-Specific Differences:</strong></p>
+
+          <ul>
+            <li><strong>UK:</strong> Strong regulatory framework, access to government funding, and an established financial market.</li>
+            <li><strong>USA:</strong> Large market potential, strong startup ecosystem, but state-specific tax laws.</li>
+            <li><strong>Canada:</strong> Business-friendly policies, immigration support for entrepreneurs, and access to North American markets.</li>
+          </ul>
+
+          <p>Make sure to select the correct country when setting up your business, as it will directly impact financial, operational, and strategic decisions.</p>']
+      ],
+      todo: [
+        'TODO',
+        ['<h1>TODO</h1>']
       ]
     }
     element = element.to_sym

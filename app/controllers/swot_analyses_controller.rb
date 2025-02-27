@@ -1,4 +1,5 @@
 class SwotAnalysesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_swot_analysis, only: %i[ show edit update destroy ]
 
   # GET /swot_analyses or /swot_analyses.json
@@ -25,7 +26,7 @@ class SwotAnalysesController < ApplicationController
 
     respond_to do |format|
       if @swot_analysis.save
-        format.html { redirect_to @swot_analysis, notice: "Swot analysis was successfully created." }
+        format.html { redirect_to business_idea_swot_analyses_path(@business_idea), notice: "Swot analysis was successfully created." }
         format.json { render :show, status: :created, location: @swot_analysis }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,8 +38,15 @@ class SwotAnalysesController < ApplicationController
   # PATCH/PUT /swot_analyses/1 or /swot_analyses/1.json
   def update
     respond_to do |format|
+      if params[:type]
+        response = call_openai_api_params.dig("choices", 0, "message",  "content")
+        @swot_analysis[params[:type].to_sym] = response
+        @swot_analysis.save
+        redirect_to business_idea_swot_analyses_path(@business_idea), notice: "Swot analysis was successfully updated."
+        return
+      end
       if @swot_analysis.update(swot_analysis_params)
-        format.html { redirect_to @swot_analysis, notice: "Swot analysis was successfully updated." }
+        format.html { redirect_to business_idea_swot_analyses_path(@business_idea), notice: "Swot analysis was successfully updated." }
         format.json { render :show, status: :ok, location: @swot_analysis }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,11 +68,32 @@ class SwotAnalysesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_swot_analysis
-      @swot_analysis = SwotAnalysis.find(params[:id])
+      @business_idea = BusinessIdea.find(params[:business_idea_id])
+      @swot_analysis = @business_idea.swot_analysis
     end
 
     # Only allow a list of trusted parameters through.
     def swot_analysis_params
       params.require(:swot_analysis).permit(:business_idea_id, :strengths, :weaknesses, :opportunities, :threats)
+    end
+
+    def call_openai_api_params
+      puts "insilde openai call"
+      @business_idea = @swot_analysis.business_idea
+      client = OpenAI::Client.new
+      client.chat(
+        parameters: {
+          model: "gpt-4",
+          messages: [
+            { role: "system", content: "You are a business analysis expert. Please provide" },
+            { role: "user", content: "Analyze #{params[:type]} part and only this part of this business idea of SWOT frameworks and " },
+            { role: "user", content: @business_idea.title },
+            { role: "user", content: @business_idea.description },
+            { role: "user", content: "Target Country: #{@business_idea.country}" },
+            { role: "user", content: "Format your response in a clear and structured way." },
+          ],
+          max_tokens: 500
+        }
+      )
     end
 end

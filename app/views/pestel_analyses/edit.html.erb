@@ -1,10 +1,20 @@
-<h1>Editing pestel analysis</h1>
+<div class="row">
+  <div class="col p-4">
+    <div class="card">
+      <div class="card-header">
+        <h1>Editing pestel analysis</h1>
+      </div>
 
-<%= render "form", pestel_analysis: @pestel_analysis %>
+      <div class="card-body">
+        <%= render "form", pestel_analysis: @pestel_analysis %>
+      </div>
+    </div>
 
-<br>
+    <br>
 
-<div>
-  <%= link_to "Show this pestel analysis", @pestel_analysis %> |
-  <%= link_to "Back to pestel analyses", pestel_analyses_path %>
+    <div>
+      <%= link_to "Show this business idea", @business_idea %> |
+      <%= link_to "Back to business ideas", business_ideas_path %>
+    </div>
+  </div>
 </div>

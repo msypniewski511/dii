@@ -1,10 +1,17 @@
-<p style="color: green"><%= notice %></p>
+<div class="container-fluid p-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        
+        <%= render @swot_analysis %>
 
-<%= render @swot_analysis %>
+        <div class="card-footer">
+          <%= link_to "Edit this swot analysis", edit_business_idea_swot_analyses_path(@business_idea) %> |
+          <%= link_to "Back to business idea", @business_idea %>
 
-<div>
-  <%= link_to "Edit this swot analysis", edit_swot_analysis_path(@swot_analysis) %> |
-  <%= link_to "Back to swot analyses", swot_analyses_path %>
-
-  <%= button_to "Destroy this swot analysis", @swot_analysis, method: :delete %>
+          <%# button_to "Destroy this swot analysis", @swot_analysis, method: :delete %>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -31,6 +31,8 @@ class BusinessIdeasController < ApplicationController
 
     respond_to do |format|
       if @business_idea.save
+        @business_idea.create_pestel_analysis!
+        @business_idea.create_swot_analysis!
         format.html { redirect_to @business_idea, notice: "Business idea was successfully created." }
         format.json { render :show, status: :created, location: @business_idea }
       else

@@ -28,7 +28,7 @@ RSpec.feature "Business Ideas Management", type: :feature do
       within("form") do
         fill_in "Title", with: "New Business Idea"
         fill_in "Description", with: "This is a test idea"
-        select "United States", from: "Country"
+        select "Poland", from: "Country"
         click_button "Create Business idea"
       end
 

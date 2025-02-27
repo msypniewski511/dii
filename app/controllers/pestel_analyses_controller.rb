@@ -1,4 +1,5 @@
 class PestelAnalysesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_pestel_analysis, only: %i[ show edit update destroy ]
 
   # GET /pestel_analyses or /pestel_analyses.json
@@ -8,7 +9,6 @@ class PestelAnalysesController < ApplicationController
 
   # GET /pestel_analyses/1 or /pestel_analyses/1.json
   def show
-    @busines_idea = @pestel_analysis.business_idea
   end
 
   # GET /pestel_analyses/new
@@ -46,11 +46,11 @@ class PestelAnalysesController < ApplicationController
         response = call_openai_api_params.dig("choices", 0, "message",  "content")
         @pestel_analysis[params[:type].to_sym] = response
         @pestel_analysis.save
-        redirect_to @pestel_analysis, notice: "Pestel analysis was successfully updated."
+        redirect_to business_idea_pestel_analyses_path(@business_idea), notice: "Pestel analysis was successfully updated."
         return 
       end
       if @pestel_analysis.update(pestel_analysis_params)
-        format.html { redirect_to @pestel_analysis, notice: "Pestel analysis was successfully updated." }
+        format.html { redirect_to business_idea_pestel_analyses_path(@business_idea), notice: "Pestel analysis was successfully updated." }
         format.json { render :show, status: :ok, location: @pestel_analysis }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -72,7 +72,8 @@ class PestelAnalysesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pestel_analysis
-      @pestel_analysis = PestelAnalysis.find(params[:id])
+      @business_idea = BusinessIdea.find(params[:business_idea_id]) if params[:business_idea_id].present?
+      @pestel_analysis = @business_idea.pestel_analysis
     end
 
     # Only allow a list of trusted parameters through.

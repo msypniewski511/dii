@@ -1,10 +1,17 @@
-<h1>Editing swot analysis</h1>
+<div class="row">
+  <div class="col p-4">
+    <div class="card">
+      <div class="card-header">
+        <h1>Editing swot analysis</h1>
+      </div>
 
-<%= render "form", swot_analysis: @swot_analysis %>
-
-<br>
-
-<div>
-  <%= link_to "Show this swot analysis", @swot_analysis %> |
-  <%= link_to "Back to swot analyses", swot_analyses_path %>
+      <div class="card-body">
+        <%= render "form", swot_analysis: @swot_analysis %>
+      </div>
+      <div class="card-footer">
+        <%= link_to "Show this business idea", @business_idea %> |
+        <%= link_to "Back to business ideas", business_ideas_path %>
+      </div>
+    </div>
+  </div>
 </div>
