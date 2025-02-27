@@ -3,7 +3,6 @@ module OpenAI
     def initialize
       @client = OpenAI::Client.new(access_token: Rails.credentials.open_ai_access_token!)
     end
-
     def speech(text)
       @client.audio.speech(
         parameters: {
