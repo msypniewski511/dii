@@ -1,0 +1,2 @@
+module EntrepreneurialSkillsUserResponsesHelper
+end

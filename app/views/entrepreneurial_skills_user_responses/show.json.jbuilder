@@ -1,0 +1,1 @@
+json.partial! "entrepreneurial_skills_user_responses/entrepreneurial_skills_user_response", entrepreneurial_skills_user_response: @entrepreneurial_skills_user_response

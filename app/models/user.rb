@@ -7,4 +7,6 @@ class User < ApplicationRecord
   has_many :brands
   has_many :business_ideas
   has_many :ideas
+
+  has_many :user_responses
 end
