@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :assessments, only: [:new, :create, :show]
+  resources :entrepreneurial_skills_user_responses
   get '/dashboard', to: 'home#dashboard', as: :user_root
   devise_for :users
   

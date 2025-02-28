@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Entrepreneurial skills user responses</h1>
+
+<div id="entrepreneurial_skills_user_responses">
+  <% @entrepreneurial_skills_user_responses.each do |entrepreneurial_skills_user_response| %>
+    <%= render entrepreneurial_skills_user_response %>
+    <p>
+      <%= link_to "Show this entrepreneurial skills user response", entrepreneurial_skills_user_response %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New entrepreneurial skills user response", new_entrepreneurial_skills_user_response_path %>

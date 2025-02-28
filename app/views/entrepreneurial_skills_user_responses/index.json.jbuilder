@@ -1,0 +1,1 @@
+json.array! @entrepreneurial_skills_user_responses, partial: "entrepreneurial_skills_user_responses/entrepreneurial_skills_user_response", as: :entrepreneurial_skills_user_response

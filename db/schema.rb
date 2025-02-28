@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_25_115527) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_28_113035) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,10 +49,29 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_115527) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "answers", force: :cascade do |t|
+    t.integer "question_id", null: false
+    t.string "text"
+    t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_answers_on_question_id"
+  end
+
   create_table "articles", force: :cascade do |t|
     t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "assessments", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "total_score"
+    t.string "level"
+    t.text "ai_insights"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_assessments_on_user_id"
   end
 
   create_table "brands", force: :cascade do |t|
@@ -73,6 +92,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_115527) do
     t.text "suggestions"
     t.integer "user_id"
     t.index ["user_id"], name: "index_business_ideas_on_user_id"
+  end
+
+  create_table "entrepreneurial_skills_user_responses", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "question_id", null: false
+    t.integer "answer_id", null: false
+    t.datetime "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_entrepreneurial_skills_user_responses_on_answer_id"
+    t.index ["question_id"], name: "index_entrepreneurial_skills_user_responses_on_question_id"
+    t.index ["user_id"], name: "index_entrepreneurial_skills_user_responses_on_user_id"
   end
 
   create_table "ideas", force: :cascade do |t|
@@ -100,6 +131,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_115527) do
     t.index ["business_idea_id"], name: "index_pestel_analyses_on_business_idea_id"
   end
 
+  create_table "questions", force: :cascade do |t|
+    t.string "category"
+    t.string "text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "swot_analyses", force: :cascade do |t|
     t.integer "business_idea_id", null: false
     t.text "strengths"
@@ -109,6 +147,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_115527) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["business_idea_id"], name: "index_swot_analyses_on_business_idea_id"
+  end
+
+  create_table "user_responses", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "question_id", null: false
+    t.integer "answer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_user_responses_on_answer_id"
+    t.index ["question_id"], name: "index_user_responses_on_question_id"
+    t.index ["user_id"], name: "index_user_responses_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -125,8 +174,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_25_115527) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "answers", "questions"
+  add_foreign_key "assessments", "users"
   add_foreign_key "brands", "users"
   add_foreign_key "business_ideas", "users"
+  add_foreign_key "entrepreneurial_skills_user_responses", "answers"
+  add_foreign_key "entrepreneurial_skills_user_responses", "questions"
+  add_foreign_key "entrepreneurial_skills_user_responses", "users"
   add_foreign_key "pestel_analyses", "business_ideas"
   add_foreign_key "swot_analyses", "business_ideas"
+  add_foreign_key "user_responses", "answers"
+  add_foreign_key "user_responses", "questions"
+  add_foreign_key "user_responses", "users"
 end

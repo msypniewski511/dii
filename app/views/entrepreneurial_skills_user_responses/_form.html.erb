@@ -1,0 +1,37 @@
+<%= form_with(model: entrepreneurial_skills_user_response) do |form| %>
+  <% if entrepreneurial_skills_user_response.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(entrepreneurial_skills_user_response.errors.count, "error") %> prohibited this entrepreneurial_skills_user_response from being saved:</h2>
+
+      <ul>
+        <% entrepreneurial_skills_user_response.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :user_id, style: "display: block" %>
+    <%= form.text_field :user_id %>
+  </div>
+
+  <div>
+    <%= form.label :question_id, style: "display: block" %>
+    <%= form.text_field :question_id %>
+  </div>
+
+  <div>
+    <%= form.label :answer_id, style: "display: block" %>
+    <%= form.text_field :answer_id %>
+  </div>
+
+  <div>
+    <%= form.label :time, style: "display: block" %>
+    <%= form.datetime_field :time %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
