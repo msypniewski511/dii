@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_28_113035) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_01_001043) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -131,6 +131,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_28_113035) do
     t.index ["business_idea_id"], name: "index_pestel_analyses_on_business_idea_id"
   end
 
+  create_table "pswot_analyses", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.text "strengths"
+    t.text "weaknesses"
+    t.text "opportunities"
+    t.text "threats"
+    t.text "analysis"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_pswot_analyses_on_user_id"
+  end
+
   create_table "questions", force: :cascade do |t|
     t.string "category"
     t.string "text"
@@ -182,6 +194,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_28_113035) do
   add_foreign_key "entrepreneurial_skills_user_responses", "questions"
   add_foreign_key "entrepreneurial_skills_user_responses", "users"
   add_foreign_key "pestel_analyses", "business_ideas"
+  add_foreign_key "pswot_analyses", "users"
   add_foreign_key "swot_analyses", "business_ideas"
   add_foreign_key "user_responses", "answers"
   add_foreign_key "user_responses", "questions"

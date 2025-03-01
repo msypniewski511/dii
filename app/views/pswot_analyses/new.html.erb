@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col p-4">
+    <div class="card">
+      <div class="card-header">
+        <h1>Personal SWOT Assessment</h1>
+      </div>
+      <div class="card-body">
+        <%= form_with(model: @swot, local: true) do |form| %>
+          <h3>Strengths</h3>
+          <p>What are your key strengths that help you as an entrepreneur?</p>
+          <%= form.text_area :strengths, placeholder: "List your unique skills, experiences, or characteristics that give you an advantage as an entrepreneur. Consider leadership abilities, financial acumen, creativity, or networking strengths.", rows: 5, class: "form-control" %>
+
+          <h3>Weaknesses</h3>
+          <p>What challenges or areas for improvement could hold you back?</p>
+          <%= form.text_area :weaknesses, placeholder: "Identify areas where you need improvement or challenges that might hold you back. Think about skills gaps, mindset barriers, or past business mistakes.", rows: 5, class: "form-control" %>
+
+          <h3>Opportunities</h3>
+          <p>What external factors can help you grow?</p>
+          <%= form.text_area :opportunities, placeholder: "Explore external factors that could help you grow your business or improve your personal skills. Think about market trends, technology, education, or networking opportunities.", rows: 5, class: "form-control" %>
+
+          <h3>Threats</h3>
+          <p>What external risks or challenges might impact you?</p>
+          <%= form.text_area :threats, placeholder: "Consider external challenges that may pose risks to your entrepreneurial journey. These could be industry competition, economic conditions, or personal constraints.", rows: 5, class: "form-control" %>
+
+
+          <%= form.submit "Analyze" %>
+        <% end %>
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

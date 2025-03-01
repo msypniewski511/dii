@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :pswot_analyses, only: [:new, :create, :show]
   resources :assessments, only: [:new, :create, :show]
   resources :entrepreneurial_skills_user_responses
   get '/dashboard', to: 'home#dashboard', as: :user_root
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   resources :brands
   resources :ideas
   get 'home/index'
+  get 'home/personal'
 
   namespace :api do
     namespace :v1 do

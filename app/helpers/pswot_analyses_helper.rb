@@ -1,0 +1,2 @@
+module PswotAnalysesHelper
+end
