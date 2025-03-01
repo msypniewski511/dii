@@ -1,0 +1,98 @@
+<div class="container-fluid p-3">
+  <div class="row">
+    <div class="col-6">
+      <div class="card">
+        <div class="card-header p-3">
+          <h6 class="text-muted">
+            Your SWOT Analysis
+          </h6>
+        </div>
+        <div class="card-body p-3">
+          <h3>Strengths:</h3>
+          <p><%= @swot.strengths %></p>
+
+          <h3>Weaknesses:</h3>
+          <p><%= @swot.weaknesses %></p>
+
+          <h3>Opportunities:</h3>
+          <p><%= @swot.opportunities %></p>
+
+          <h3>Threats:</h3>
+          <p><%= @swot.threats %></p>
+
+          <h2>AI-Powered Analysis:</h2>
+          <p><%= @swot.analysis %></p>
+
+          <%= link_to "Start a New Analysis", new_pswot_analysis_path %>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card p-3">
+        <div class="card-header">
+          <h2>SWOT Visualization</h2>
+        </div>
+        <div class="card-body">
+          <!-- Ensure these elements exist in your ERB file -->
+          <div id="strengths" style="display: none;"><%= @strengths %></div>
+          <div id="weaknesses" style="display: none;"><%= @weaknesses %></div>
+          <div id="opportunities" style="display: none;"><%= @opportunities %></div>
+          <div id="threats" style="display: none;"><%= @threats %></div>
+
+          <!-- Canvas for the chart -->
+          <canvas id="swotChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const ctx = document.getElementById('swotChart');
+
+    if (ctx) {
+      const swotData = {
+        labels: ['Strengths', 'Weaknesses', 'Opportunities', 'Threats'],
+        datasets: [
+          {
+            label: 'SWOT Analysis',
+            data: [
+              document.getElementById('strengths')?.textContent.length || 10,
+              document.getElementById('weaknesses')?.textContent.length || 20,
+              document.getElementById('opportunities')?.textContent.length || 30,
+              document.getElementById('threats')?.textContent.length || 10,
+            ],
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.6)', // Strengths (Green)
+              'rgba(255, 99, 132, 0.6)', // Weaknesses (Red)
+              'rgba(54, 162, 235, 0.6)', // Opportunities (Blue)
+              'rgba(255, 206, 86, 0.6)', // Threats (Yellow)
+            ],
+            borderColor: [
+              'rgba(75, 192, 192, 1)',
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      new Chart(ctx, {
+        type: 'bar', // You can change this to 'pie' or 'radar'
+        data: swotData,
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  });
+</script>
+

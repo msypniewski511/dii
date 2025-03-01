@@ -12,6 +12,9 @@ import 'trix'
 import '@rails/actiontext'
 import './argon-dashboard'
 
+import './plugins/fullcalendar.min.js'
+import './plugins/swot_chart.js'
+
 import { Turbo } from '@hotwired/turbo-rails'
 Turbo.session.drive = false
 

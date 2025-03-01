@@ -9,4 +9,6 @@ class User < ApplicationRecord
   has_many :ideas
 
   has_many :user_responses
+  has_many :assessments
+  has_many :pswot_analyses
 end
