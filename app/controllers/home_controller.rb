@@ -10,7 +10,11 @@ class HomeController < ApplicationController
   def personal
     @swot = current_user.pswot_analyses.last
     @assessment = current_user.assessments.last
-    Rails.logger.debug "Raw ai_insights: #{@assessment.ai_insights.inspect}"
-    @ai_insights = @assessment.ai_insights
+    unless @assessment.nil?
+      Rails.logger.debug "Raw ai_insights: #{@assessment.ai_insights.inspect}"
+      @ai_insights = @assessment.ai_insights
+    else
+      @ai_insights = ""
+    end
   end
 end
