@@ -53,7 +53,7 @@
 </div>
 <div class="container-fluid py-4">
   <div class="row">
-    <div class="col-12">
+    <div class="col-6">
       <div class="card mb-4">
         <div class="card-header">
           <h2><%= @business_idea.title %></h2>
@@ -83,7 +83,31 @@
             </div>
           <% end %>
         </div>
-
+      </div>
+      </div>
+          <div class="col-6">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h2 class="text-muted">
+            Porter's Five Forces Analysis
+          </h2>
+        </div>
+        <div class="card-body">
+          <% if @porters_five_force.persisted? %>
+            <!-- <p><strong>Threat of New Entrants:</strong> --> <%= format_text_to_html @porters_five_force.threat_of_new_entrants %></p>
+            <!-- <p><strong>Bargaining Power of Suppliers:</strong>  --> <%= format_text_to_html @porters_five_force.bargaining_power_of_suppliers %></p>
+            <!-- <p><strong>Bargaining Power of Buyers:</strong>  --> <%= format_text_to_html @porters_five_force.bargaining_power_of_buyers %></p>
+            <!-- <p><strong>Threat of Substitutes:</strong> --> <%= format_text_to_html @porters_five_force.threat_of_substitutes %></p>
+            <!-- <p><strong>Industry Rivalry:</strong>  --> <%= format_text_to_html @porters_five_force.industry_rivalry %></p>
+            <!-- <p><strong>Overall Analysis:</strong>  --> <%= format_text_to_html @porters_five_force.analysis %></p>
+            <%= render "porters_five_forces/form", porters_five_force: @porters_five_force, business_idea: @business_idea  %>
+          <% else %>
+            <%= render "porters_five_forces/form", porters_five_force: @porters_five_force, business_idea: @business_idea  %> |
+            <%= button_to "Generate AI Analysis", generate_ai_analysis_business_idea_porters_five_force_path(@business_idea), method: :post, class: "btn btn-primary", data: { confirm: "Are you sure? This will replace existing analysis." } %>
+          <% end %>
+        </div>
+      </div>
+    </div>
       <div class="card-footer">
         <%= link_to "Edit this business idea", edit_business_idea_path(@business_idea) %> |
         <%= link_to "Back to business ideas", business_ideas_path %> | 
