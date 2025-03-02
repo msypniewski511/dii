@@ -436,7 +436,97 @@ module ApplicationHelper
       todo: [
         'TODO',
         ['<h1>TODO</h1>']
-      ]
+      ],
+      p_strengths: [
+        'Personal SWOT Assessment - Strengths',
+        ['<p>Identifying your strengths is a crucial part of self-assessment. Understanding what you do well can help you maximize your potential and make informed business decisions. Here’s why assessing your strengths is important:</p>
+
+          <ol>
+            <li><strong>Self-Awareness:</strong> Knowing your strengths allows you to leverage them effectively in business and personal development.</li>
+            <li><strong>Competitive Advantage:</strong> Your unique skills, expertise, and personal attributes set you apart from others in the market.</li>
+            <li><strong>Confidence & Motivation:</strong> Recognizing what you excel at can boost self-confidence and keep you motivated to achieve your goals.</li>
+            <li><strong>Strategic Decision-Making:</strong> Aligning your strengths with business opportunities increases the likelihood of success and minimizes risks.</li>
+          </ol>
+
+          <p><strong>Examples of Personal Strengths:</strong></p>
+
+          <ul>
+            <li><strong>Leadership:</strong> Ability to inspire and guide a team toward a common goal.</li>
+            <li><strong>Problem-Solving:</strong> Strong analytical thinking and the ability to find solutions to challenges.</li>
+            <li><strong>Adaptability:</strong> Quickly adjusting to new situations, industries, or technologies.</li>
+            <li><strong>Communication Skills:</strong> Effectively conveying ideas, building relationships, and persuading stakeholders.</li>
+            <li><strong>Resilience:</strong> Staying determined and focused even in the face of setbacks.</li>
+          </ul>
+
+          <p>Understanding and utilizing your strengths will help you build a successful business and become a more effective entrepreneur. Be honest in your self-assessment and continuously develop your strong points.</p>']
+      ],
+      p_weaknesses: [
+        'Personal SWOT Assessment - Weaknesses',
+        ["<p>Identifying your weaknesses is a crucial step in self-improvement and business success. Being aware of your limitations allows you to develop strategies to overcome them and seek support where needed.</p>
+
+          <ol>
+            <li><strong>Skill Gaps:</strong> You might lack certain technical, financial, or leadership skills required for entrepreneurship. Recognizing these gaps helps in planning for training or finding co-founders with complementary strengths.</li>
+            <li><strong>Limited Experience:</strong> If you're new to entrepreneurship or a specific industry, a lack of hands-on experience can be a challenge. Gaining mentorship or starting small can mitigate this risk.</li>
+            <li><strong>Risk Aversion:</strong> Some individuals struggle with decision-making under uncertainty, which can slow down progress in a dynamic business environment. Developing confidence and risk assessment skills is key.</li>
+            <li><strong>Time Management:</strong> Poor prioritization and productivity habits can lead to missed opportunities. Learning to delegate, automate tasks, and maintain a structured schedule can help.</li>
+            <li><strong>Financial Constraints:</strong> Limited personal funds, poor budgeting skills, or lack of access to capital can be significant barriers. Exploring funding options like grants, loans, or partnerships is essential.</li>
+          </ol>
+
+          <p><strong>Examples of Personal Weaknesses in Business:</strong></p>
+
+          <ul>
+            <li><strong>Confidence Issues:</strong> Hesitation in networking, pitching ideas, or making decisions can slow business growth.</li>
+            <li><strong>Lack of Technical Knowledge:</strong> Not knowing how to build a website, use financial tools, or leverage marketing platforms can put you at a disadvantage.</li>
+            <li><strong>Struggles with Delegation:</strong> Trying to do everything yourself can lead to burnout and inefficiency.</li>
+          </ul>
+
+          <p>Recognizing your weaknesses isn’t about self-criticism; it’s about taking proactive steps to improve and grow as an entrepreneur.</p>"]
+      ],
+      p_opportunities: [
+        'Personal SWOT Assessment - Opportunities',
+        ['<p>Opportunities refer to external factors that can support your entrepreneurial journey. These are elements outside of your direct control but can be leveraged to accelerate business success. Identifying and taking advantage of these opportunities can give you a strategic edge.</p>
+      
+          <ol>
+            <li><strong>Market Trends & Emerging Industries:</strong> If your skills or business idea align with growing trends such as AI, sustainability, or digital transformation, you have an opportunity to enter a high-demand market.</li>
+            <li><strong>Networking & Mentorship:</strong> Having access to experienced mentors, business networks, and industry experts can provide valuable insights, partnerships, and funding opportunities.</li>
+            <li><strong>Funding & Grants:</strong> Various organizations, governments, and venture capitalists offer funding, grants, and incubator programs to support new entrepreneurs. Research what’s available in your location.</li>
+            <li><strong>Technology & Automation:</strong> Advancements in AI, automation, and digital tools make it easier and more affordable to start and scale a business than ever before.</li>
+            <li><strong>Flexible Work & Remote Opportunities:</strong> The rise of remote work and global collaboration allows entrepreneurs to tap into international talent, reduce operational costs, and access wider markets.</li>
+          </ol>
+      
+          <p><strong>Examples of External Opportunities for Entrepreneurs:</strong></p>
+      
+          <ul>
+            <li><strong>UK:</strong> Government startup loans, incubators like Tech Nation, and strong fintech and AI sectors.</li>
+            <li><strong>USA:</strong> Access to venture capital, startup accelerators (Y Combinator, Techstars), and a culture that supports risk-taking.</li>
+            <li><strong>Canada:</strong> Startup visa programs, government-backed grants for innovation, and entrepreneur-friendly immigration policies.</li>
+          </ul>
+      
+          <p>Recognizing and leveraging these external opportunities can help you navigate challenges and build a successful business with a strong foundation.</p>']
+      ],
+      p_threats: [
+        'Threats in Personal SWOT Assessment',
+        ['<p>Identifying potential threats in your personal SWOT analysis is crucial for mitigating risks and preparing for challenges that might impact your entrepreneurial journey. Here’s why understanding threats is important:</p>
+      
+          <ol>
+            <li><strong>Market Competition:</strong> Other businesses might already dominate the market. If you lack a strong unique value proposition, you may struggle to gain traction.</li>
+            <li><strong>Financial Constraints:</strong> Limited savings, lack of funding, or unstable financial conditions can make it difficult to sustain your business in its early stages.</li>
+            <li><strong>Skill Gaps:</strong> If you lack critical skills in business management, marketing, or technology, you may face difficulties in running and scaling your business.</li>
+            <li><strong>External Economic & Political Factors:</strong> Recessions, policy changes, or unstable economic conditions can create obstacles for entrepreneurs, making it harder to secure funding or grow a business.</li>
+            <li><strong>Work-Life Balance Challenges:</strong> Entrepreneurship demands time and energy. If you have personal responsibilities or struggle with stress management, maintaining productivity and motivation could become difficult.</li>
+          </ol>
+      
+          <p><strong>Examples of Personal Threats:</strong></p>
+      
+          <ul>
+            <li><strong>Lack of Experience:</strong> If you’re new to entrepreneurship, making costly mistakes due to inexperience is a potential risk.</li>
+            <li><strong>Limited Professional Network:</strong> Having a small or weak network can slow down your business growth, as connections often lead to partnerships, funding, and opportunities.</li>
+            <li><strong>Fear of Failure:</strong> Self-doubt and risk aversion may prevent you from making bold decisions necessary for business success.</li>
+            <li><strong>Time Management Issues:</strong> Struggling to prioritize tasks effectively can lead to burnout or missed opportunities.</li>
+          </ul>
+      
+          <p>By recognizing these threats early, you can take steps to minimize their impact, whether by improving skills, seeking mentorship, or strengthening financial planning.</p>']
+      ],
     }
     element = element.to_sym
 

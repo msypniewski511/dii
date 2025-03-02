@@ -11,6 +11,11 @@ Rails.application.routes.draw do
     end
     resource :pestel_analyses
     resource :swot_analyses
+    resource :porters_five_force, only: [:new, :create, :edit, :update, :show] do
+      member do
+        post :generate_ai_analysis
+      end
+    end
   end
   resources :articles
   resources :brands

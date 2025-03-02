@@ -13,7 +13,7 @@
     <div class="row gx-4">
       <div class="col-auto">
         <div class="avatar avatar-xl position-relative">
-          <%= image_tag 'th.jpg', alt: "profile_image", class: "w-100 border-radius-lg shadow-sm" %>
+          <%= image_tag 'maciej_sypniewski.jpg', alt: "profile_image", class: "w-100 border-radius-lg shadow-sm" %>
         </div>
       </div>
       <div class="col-auto my-auto">
@@ -94,20 +94,20 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Strap Line:</label>
-                      <textarea class="form-control" type="text" value="Dhruvi Infinity Inspiration">Dhruvi Infinity Inspiration</textarea>
+                      <textarea class="form-control" type="text" value="From Heart to Innovation: Empowering Your Business Journey.">From Heart to Innovation: Empowering Your Business Journey.</textarea>
                     </div>
                   </div>
 
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Email address</label>
-                      <input class="form-control" type="email" value="jesse@example.com">
+                      <input class="form-control" type="email" value="msypniewski511@gmail.com">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Website domain:</label>
-                      <input class="form-control" type="text" value="Dhruvi Infinity Inspiration">
+                      <input class="form-control" type="text" value="dii.ltd">
                     </div>
                   </div>
                 </div>
@@ -117,25 +117,25 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Address</label>
-                      <input class="form-control" type="text" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">
+                      <input class="form-control" type="text" value="86-90 Paul Street">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">City</label>
-                      <input class="form-control" type="text" value="New York">
+                      <input class="form-control" type="text" value="London">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Country</label>
-                      <input class="form-control" type="text" value="United States">
+                      <input class="form-control" type="text" value="United Kingdom">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">Postal code</label>
-                      <input class="form-control" type="text" value="437300">
+                      <input class="form-control" type="text" value="EC2A 4NE">
                     </div>
                   </div>
                 </div>
@@ -145,7 +145,7 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label for="example-text-input" class="form-control-label">About me</label>
-                      <input class="form-control" type="text" value="A beautiful Dashboard for Bootstrap 5. It is Free and Open Source.">
+                      <input class="form-control" type="text" value="CEO Dhruvi Infinity Inspiration">
                     </div>
                   </div>
                 </div>
@@ -222,9 +222,9 @@
         <!-- -->
         
         
-<div class="container-fluid py-4">
+<div class="container-fluid">
 
-<div class="row">
+<div class="row mb-3">
   <div class="col-md-3">
     <div class="card">
       <div class="card-body p-3">
@@ -270,7 +270,7 @@
           </div>
         </div>
         <h4>Status</h4>
-        <h2><%= @assessment ? "Completed" : "Not Done" %></h2>
+        <h2><%= @assessment.persisted? ? "Completed" : "Not Done" %></h2>
       </div>
     </div>
   </div>
@@ -291,31 +291,61 @@
 
 
 <div class="row mt-4">
-    <div class="col-xl-6 col-lg-6">
+  <div class="col-xl-6 col-lg-6">
+    <div class="card h-100">
+      <div class="card-header p-3 pb-0">
+        <h6 class="mb-0 text-muted">Your Entrepreneurial Skill Analises AI Insights</h6>
+      </div>
+      <div class="card-body p-3">
+        <% if @assessment.persisted? %>
+          <%= format_text_to_html @ai_insights %>
+        <% else %>
+          <%# link_to "Take assessment", new_pswot_analysis_path, class: "btn btn-outline-success" %>
+          <%# render "assessments/form", questions: @questions  %>
+
+
+          <!-- Button trigger modal -->
+          <button type="button" class="btn bg-gradient-info btn-block" data-bs-toggle="modal" data-bs-target="#exampleModalSignUp">
+            Take Assessment
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalSignTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document" style="max-width: 70vw !important;margin-left: 20vw !important;">
+              <div class="modal-content">
+                <div class="modal-body p-0">
+                  <div class="card card-plain">
+                    <div class="card-header pb-0 text-left">
+                        <h3 class="font-weight-bolder text-primary text-gradient">Entrepreneurial</h3>
+                        <p class="mb-0">Skills Assessment</p>
+                    </div>
+                    <div class="card-body pb-3">
+                      <%= render "assessments/form", questions: @questions  %>
+                    </div>
+                    <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-6 col-lg-6">
     <div class="card widget-calendar h-100">
       <div class="card-header p-3 pb-0">
         <h6 class="mb-0">Calendar</h6>
       </div>
       <div class="card-body p-3">
-        <div class="calendar" data-bs-toggle="calendar" id="calendar"></div>
-      </div>
-    </div>
-  </div>
-    <div class="col-xl-6 col-lg-6">
-    <div class="card widget-calendar h-100">
-      <div class="card-header p-3 pb-0">
-        <h6 class="mb-0">AI Insights</h6>
-      </div>
-      <div class="card-body p-3">
-        <%= format_text_to_html @ai_insights %>
+        <div class="calendar" id="calendar" style="display: block; overflow: visible;height: 600px;min-height: 500px;"></div>
       </div>
     </div>
   </div>
 </div>
 
 </div>
-
-<%= link_to 'Personal SWOT', new_pswot_analysis_path %>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -331,6 +361,11 @@
         }]
       },
     });
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
     var calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
@@ -439,7 +474,7 @@
     });
 
     calendar.render();
-  });
+  })
 </script>
 
 
@@ -452,7 +487,71 @@
         <div class="row">
 
 
-<div class="container-fluid p-3">
+<div class="container-fluid">
+  <div class="row mb-3">
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+              <p class="text-sm mb-0 text-uppercase font-weight-bold">Your Entrepreneurial Level</p>
+              <h5 class="font-weight-bolder"><%= @swot.persisted? ? "SWOT" : "Not Assessed" %></h5>
+              <p class="mb-0">
+                <span class="text-success text-sm font-weight-bolder"><%= @assessment&.total_score || "No Score" %></span>
+                Latest Score on 65
+              </p>
+            </div>
+            <div class="col-4 text-end d-flex justify-content-end">
+              <div class="icon-shape bg-gradient-primary shadow-primary text-center rounded-circle d-flex align-items-center justify-content-center">
+                <i class="fa fa-rocket text-white opacity-10" aria-hidden="true"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+
+            </div>
+          </div>
+          <h4>Latest Score</h4>
+          <h2><%= "No Score TODO" %></h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-8">
+
+            </div>
+          </div>
+          <h4>Status</h4>
+          <h2><%= @swot.persisted? ? "Completed" : "Not Done" %></h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 mb-lg-0 mb-0">
+      <div class="card">
+        <div class="card-header p-3 d-flex justify-content-between align-items-center">
+          <h6 class="text-capitalize m-0">SWOT Visualization</h6>
+        </div>
+        <div class="card-body p-3">
+          <div class="chart">
+            <canvas id="skillsChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-6">
       <div class="card">
@@ -462,22 +561,50 @@
           </h6>
         </div>
         <div class="card-body p-3">
-          <h3>Strengths:</h3>
-          <p><%= @swot.strengths %></p>
+          <% if @swot.persisted? %>
+            <h3>Strengths:</h3>
+            <p><%= @swot.strengths %></p>
 
-          <h3>Weaknesses:</h3>
-          <p><%= @swot.weaknesses %></p>
+            <h3>Weaknesses:</h3>
+            <p><%= @swot.weaknesses %></p>
 
-          <h3>Opportunities:</h3>
-          <p><%= @swot.opportunities %></p>
+            <h3>Opportunities:</h3>
+            <p><%= @swot.opportunities %></p>
 
-          <h3>Threats:</h3>
-          <p><%= @swot.threats %></p>
+            <h3>Threats:</h3>
+            <p><%= @swot.threats %></p>
 
-          <h2>AI-Powered Analysis:</h2>
-          <p><%= @swot.analysis %></p>
+            <h2>AI-Powered Analysis:</h2>
+            <p><%= format_text_to_html @swot.analysis %></p>
+          <% else %>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn bg-gradient-info btn-block" data-bs-toggle="modal" data-bs-target="#pswotModal">
+              Start a New PSWOT Analysis
+            </button>
 
-          <%= link_to "Start a New Analysis", new_pswot_analysis_path %>
+            <!-- Modal -->
+            <div class="modal fade" id="pswotModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalSignTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered modal-md" role="document" style="max-width: 70vw !important;margin-left: 20vw !important;">
+                <div class="modal-content">
+                  <div class="modal-body p-0">
+                    <div class="card card-plain">
+                      <div class="card-header pb-0 text-left">
+                          <h3 class="font-weight-bolder text-primary text-gradient">Entrepreneurial</h3>
+                          <p class="mb-0">Personal SWOT Assessment</p>
+                      </div>
+                      <div class="card-body pb-3">
+                        <%= render "pswot_analyses/form", swot: @swot %>
+                      </div>
+                      <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <%= render "pswot_analyses/form", swot: @swot %>
+            <%= link_to "Start a New Analysis", new_pswot_analysis_path, class: "btn btn-outline-success" %>
+          <% end %>
         </div>
       </div>
     </div>
@@ -499,6 +626,7 @@
       </div>
     </div>
   </div>
+  <a href="/pswot_analyses/new">Retake</a>
 </div>
 
 <script>
@@ -546,11 +674,10 @@
           },
         },
       });
-    }
+    }else{}
   });
 </script>
 
-<a href="/pswot_analyses/new">Retake</a>
 
 
 

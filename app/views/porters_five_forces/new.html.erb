@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col p-4">
+      <div class="card">
+        <div class="card-header">
+          <h1>New analise</h1>
+        </div>
+        <div class="card-body">
+
+          <%= render "form", porters_five_force: @porters_five_force  %>
+
+          <br>
+
+        <div>
+          <%= link_to "Back to ideas", ideas_path %> |
+          <%= button_to "Generate AI Analysis", generate_ai_analysis_business_idea_porters_five_force_path(@business_idea), method: :post, class: "btn btn-primary", data: { confirm: "Are you sure? This will replace existing analysis." } %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

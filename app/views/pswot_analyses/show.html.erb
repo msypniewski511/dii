@@ -21,7 +21,7 @@
           <p><%= @swot.threats %></p>
 
           <h2>AI-Powered Analysis:</h2>
-          <p><%= @swot.analysis %></p>
+          <p><%= format_text_to_html @swot.analysis %></p>
 
           <%= link_to "Start a New Analysis", new_pswot_analysis_path %>
         </div>
