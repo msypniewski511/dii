@@ -33,7 +33,7 @@ class PortersFiveForcesController < ApplicationController
     client = OpenAI::Client.new
 
     prompt = <<~PROMPT
-      Analyze the business idea "#{@business_idea.title}" in #{@business_idea.country} using Porter's Five Forces:
+      Analyze the business idea "#{@business_idea.title}" in #{@business_idea.country} with business description #{@business_idea.description} using Porter's Five Forces:
       
       1. Threat of New Entrants
       2. Bargaining Power of Suppliers
@@ -41,7 +41,9 @@ class PortersFiveForcesController < ApplicationController
       4. Threat of Substitutes
       5. Industry Rivalry
       
-      Provide a detailed analysis for each force.
+      Provide a detailed analysis for each force. 
+      Format your response in a clear and structured way.
+      Return formated text to display on webpage please.
     PROMPT
 
     response = client.chat(
@@ -53,7 +55,7 @@ class PortersFiveForcesController < ApplicationController
     )
 
     ai_analysis = response.dig("choices", 0, "message", "content")
-    Rails.logger("AI: #{ai_analysis}")
+    Rails.logger.info("AI: #{ai_analysis}")
     puts ai_analysis
 
     if ai_analysis.present?
