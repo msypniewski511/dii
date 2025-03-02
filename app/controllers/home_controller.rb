@@ -8,8 +8,9 @@ class HomeController < ApplicationController
   end
 
   def personal
-    @swot = current_user.pswot_analyses.last
-    @assessment = current_user.assessments.last
+    @swot = current_user.pswot_analyses.last || current_user.pswot_analyses.build
+    @assessment = current_user.assessments.last || current_user.assessments.build
+    @questions = Question.includes(:answers).all
     unless @assessment.nil?
       Rails.logger.debug "Raw ai_insights: #{@assessment.ai_insights.inspect}"
       @ai_insights = @assessment.ai_insights

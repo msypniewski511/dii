@@ -27,7 +27,8 @@ class AssessmentsController < ApplicationController
 
     responses.each(&:save)
     puts qa
-    redirect_to assessment_path(assessment)
+    # redirect_to assessment_path(assessment)
+    redirect_to home_personal_path
   end
 
   def show
