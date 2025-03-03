@@ -365,7 +365,8 @@
 </script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("turbo:load", function () {
+    console.log("turbo:load")
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
     var calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
@@ -546,7 +547,7 @@
         </div>
         <div class="card-body p-3">
           <div class="chart">
-            <canvas id="skillsChart"></canvas>
+            <canvas id="skillsChart_a"></canvas>
           </div>
         </div>
       </div>
