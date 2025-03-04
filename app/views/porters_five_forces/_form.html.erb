@@ -1,29 +1,35 @@
 <%= form_with(model: [@business_idea, @porters_five_force], local: true, url: business_idea_porters_five_force_path(@business_idea)) do |form| %>
-  <div class="card">
-    <div class="card-header">
-      <h4>Porter's Five Forces Analysis</h4>
-    </div>
-    <div class="card-body">
-      <%= form.label :threat_of_new_entrants, "Threat of New Entrants" %>
-      <%= form.text_area :threat_of_new_entrants, class: "form-control", rows: 3 %>
 
-      <%= form.label :bargaining_power_of_suppliers, "Bargaining Power of Suppliers" %>
-      <%= form.text_area :bargaining_power_of_suppliers, class: "form-control", rows: 3 %>
-
-      <%= form.label :bargaining_power_of_buyers, "Bargaining Power of Buyers" %>
-      <%= form.text_area :bargaining_power_of_buyers, class: "form-control", rows: 3 %>
-
-      <%= form.label :threat_of_substitutes, "Threat of Substitutes" %>
-      <%= form.text_area :threat_of_substitutes, class: "form-control", rows: 3 %>
-
-      <%= form.label :industry_rivalry, "Industry Rivalry" %>
-      <%= form.text_area :industry_rivalry, class: "form-control", rows: 3 %>
-
-      <%= form.label :analysis, "Overall Analysis" %>
-      <%= form.text_area :analysis, class: "form-control", rows: 3 %>
-    </div>
-    <div class="card-footer">
-      <%= form.submit class: "btn btn-primary" %>
-    </div>
+  <div class="form-group">
+    <%= form.label :threat_of_new_entrants, "Threat of New Entrants" %>
+    <%= form.text_area :threat_of_new_entrants, class: "form-control", rows: 10 %>
   </div>
+
+  <div class="form-group">
+    <%= form.label :bargaining_power_of_suppliers, "Bargaining Power of Suppliers" %>
+    <%= form.text_area :bargaining_power_of_suppliers, class: "form-control", rows: 10 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :bargaining_power_of_buyers, "Bargaining Power of Buyers" %>
+    <%= form.text_area :bargaining_power_of_buyers, class: "form-control", rows: 10 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :threat_of_substitutes, "Threat of Substitutes" %>
+    <%= form.text_area :threat_of_substitutes, class: "form-control", rows: 10 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :industry_rivalry, "Industry Rivalry" %>
+    <%= form.text_area :industry_rivalry, class: "form-control", rows: 10 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :analysis, "Overall Analysis" %>
+    <%= form.text_area :analysis, class: "form-control", rows: 10 %>
+  </div>
+
+  <%= form.submit class: "btn btn-primary" %>
+
 <% end %>

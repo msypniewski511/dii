@@ -69,10 +69,9 @@ class PortersFiveForcesController < ApplicationController
         industry_rivalry: sections[4] || "No data available",
         analysis: sections.join("\n\n")
       )
-
-      redirect_to business_idea_porters_five_force_path(@business_idea), notice: "AI-generated analysis added successfully."
+      redirect_to @business_idea, notice: "AI-generated analysis added successfully."
     else
-      redirect_to business_idea_porters_five_force_path(@business_idea), alert: "Failed to generate AI analysis."
+      redirect_to @business_idea, alert: "Failed to generate AI analysis."
     end
   end
 

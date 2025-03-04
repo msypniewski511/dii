@@ -69,7 +69,7 @@ class SwotAnalysesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_swot_analysis
       @business_idea = BusinessIdea.find(params[:business_idea_id])
-      @swot_analysis = @business_idea.swot_analysis
+      @swot_analysis = @business_idea.swot_analysis || @business_idea.build_swot_analysis
     end
 
     # Only allow a list of trusted parameters through.
