@@ -10,8 +10,9 @@ class BusinessIdeasController < ApplicationController
 
   # GET /business_ideas/1 or /business_ideas/1.json
   def show
-    
     @porters_five_force = @business_idea.porters_five_force || @business_idea.build_porters_five_force
+    @pestel_analysis = @business_idea.pestel_analysis || @business_idea.build_pestel_analysis
+    @swot_analysis = @business_idea.swot_analysis || @business_idea.build_swot_analysis
   end
 
   # GET /business_ideas/new

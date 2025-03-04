@@ -1,120 +1,190 @@
 <canvas id="dummy-chart" style="display:none;"></canvas>
 <canvas id="chart-line" style="display:none;"></canvas>
-<div class="card shadow-lg m-4 card-profile">
-  <div class="card-body p-3">
-    <div class="row gx-4">
-      <div class="col-auto">
-        <div class="avatar avatar-xl position-relative">
-          <%= image_tag 'th.jpg', alt: "profile_image", class: "w-100 border-radius-lg shadow-sm" %>
-        </div>
-      </div>
-      <div class="col-auto my-auto">
-        <div class="h-100">
-          <h5 class="mb-1">
-            <%= @business_idea.title %>
-          </h5>
-          <p class="mb-0 font-weight-bold text-sm">
-            Basic details
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-8 col-md-8 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
-        <div class="nav-wrapper position-relative end-0">
-          <ul class="nav nav-pills nav-fill p-1" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center " id="nav-strength-tab" aria-selected="true" href="/business_ideas/<%= @business_idea.id %>/pestel_analyses">
-                <i class="fa fa-globe"></i>
-                <span class="ms-2">PESTEL</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " id="nav-weaknesses-tab" href="/business_ideas/<%= @business_idea.id %>/swot_analyses" role="tab" aria-selected="false">
-                <i class="fa-solid fa-balance-scale"></i>
-                <span class="ms-2">SWOT</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-opportunities-tab" data-bs-toggle="tab" data-bs-target="#nav-opportunities" href="javascript:;" role="tab" aria-selected="false">
-                <i class="fa-solid fa-people-arrows"></i>
-                <span class="ms-2">N/A</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-threats-tab" data-bs-toggle="tab" data-bs-target="#nav-threats" href="javascript:;" role="tab" aria-selected="false">
-                <i class="fa-solid fa-people-arrows"></i>
-                <span class="ms-2">N/A</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 <div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-6">
-      <div class="card mb-4">
-        <div class="card-header">
-          <h2><%= @business_idea.title %></h2>
+  <div class="card shadow-lg m-x-0 my-4 card-profile">
+    <div class="card-body p-3">
+      <div class="row gx-4">
+        <div class="col-auto">
+          <div class="avatar avatar-xl position-relative">
+            <%= image_tag 'th.jpg', alt: "profile_image", class: "w-100 border-radius-lg shadow-sm" %>
+          </div>
         </div>
-        <div class="card-body">
-          
-          <p><strong>Description:</strong>
-          <br /><%= @business_idea.description %>
-          </p>
-          <p><strong>Country:</strong> <%= @business_idea.country %></p>
-
-          <%= form_with url: suggestions_business_idea_path(@business_idea), local: true, method: :post, data: { turbo: "false" } do %>
-            <%= hidden_field_tag :business_idea, value: @business_idea.title %>
-            <%= submit_tag "Get basic AI Suggestions", class: "btn btn-outline-success" %>
-          <% end %>
-
-          <% if @suggestions.present? || @business_idea.suggestions %>
-            <div id="suggestions-output">
-              <h3>AI-Generated Suggestions</h3>
-              <p><%= @suggestions %></p>
-              <p><%= format_text_to_html @business_idea.suggestions %></p>
-            </div>
-          <% elsif @error.present? %>
-            <div id="suggestions-output">
-              <h3>Error</h3>
-              <p><%= @error %></p>
-            </div>
-          <% end %>
+        <div class="col-auto my-auto">
+          <div class="h-100">
+            <h5 class="mb-1">
+              <%= @business_idea.title %>
+            </h5>
+            <p class="mb-0 font-weight-bold text-sm">
+              Basic details
+            </p>
+          </div>
         </div>
-      </div>
-      </div>
-          <div class="col-6">
-      <div class="card mb-4">
-        <div class="card-header">
-          <h2 class="text-muted">
-            Porter's Five Forces Analysis
-          </h2>
-        </div>
-        <div class="card-body">
-          <% if @porters_five_force.persisted? %>
-            <!-- <p><strong>Threat of New Entrants:</strong> --> <%= format_text_to_html @porters_five_force.threat_of_new_entrants %></p>
-            <!-- <p><strong>Bargaining Power of Suppliers:</strong>  --> <%= format_text_to_html @porters_five_force.bargaining_power_of_suppliers %></p>
-            <!-- <p><strong>Bargaining Power of Buyers:</strong>  --> <%= format_text_to_html @porters_five_force.bargaining_power_of_buyers %></p>
-            <!-- <p><strong>Threat of Substitutes:</strong> --> <%= format_text_to_html @porters_five_force.threat_of_substitutes %></p>
-            <!-- <p><strong>Industry Rivalry:</strong>  --> <%= format_text_to_html @porters_five_force.industry_rivalry %></p>
-            <!-- <p><strong>Overall Analysis:</strong>  --> <%= format_text_to_html @porters_five_force.analysis %></p>
-            <%= render "porters_five_forces/form", porters_five_force: @porters_five_force, business_idea: @business_idea  %>
-          <% else %>
-            <%= render "porters_five_forces/form", porters_five_force: @porters_five_force, business_idea: @business_idea  %> |
-            <%= button_to "Generate AI Analysis", generate_ai_analysis_business_idea_porters_five_force_path(@business_idea), method: :post, class: "btn btn-primary", data: { confirm: "Are you sure? This will replace existing analysis." } %>
-          <% end %>
+        <div class="col-lg-8 col-md-8 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+          <div class="nav-wrapper position-relative end-0">
+            <ul class="nav nav-pills nav-fill p-1" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center " id="nav-pestel-tab" data-bs-toggle="tab" data-bs-target="#nav-pestel" href="javascript:;" role="tab" aria-selected="false">
+                  <i class="fa fa-globe"></i>
+                  <span class="ms-2">PESTEL</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " id="nav-swot-tab" data-bs-toggle="tab" data-bs-target="#nav-swot" href="javascript:;" role="tab" aria-selected="false">
+                  <i class="fa-solid fa-balance-scale"></i>
+                  <span class="ms-2">SWOT</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-posters-tab" data-bs-toggle="tab" data-bs-target="#nav-posters" href="javascript:;" role="tab" aria-selected="false">
+                  <i class="fa-solid fa-people-arrows"></i>
+                  <span class="ms-2">Porter's Five Forces</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-strength-tab" data-bs-toggle="tab" data-bs-target="#nav-strength" href="javascript:;" role="tab" aria-selected="false">
+                  <i class="fa-solid fa-people-arrows"></i>
+                  <span class="ms-2">N/A</span>
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-      <div class="card-footer">
-        <%= link_to "Edit this business idea", edit_business_idea_path(@business_idea) %> |
-        <%= link_to "Back to business ideas", business_ideas_path %> | 
-        <%= link_to "PESTEL analize", business_idea_pestel_analyses_path(@business_idea), class: "btn btn-outline-primary" %>
-        <%= link_to "SWOT analize", business_idea_swot_analyses_path(@business_idea), class: "btn btn-outline-primary" %>
-
-        <%= button_to "Destroy this business idea", @business_idea, method: :delete, class: "btn bg-gradient-danger mt-3" %>
     </div>
   </div>
+  <div class="card shadow-lg">
+    <div class="row p-3">
+      <div class="col-6">
+        <div class="card p-4">
+          <fieldset class="border rounded-3 p-3">
+            <legend class="float-none w-auto px-3"><%= @business_idea.title %></legend>
+            
+            <p><strong>Description:</strong>
+            <br /><%= format_text_to_html @business_idea.description %>
+            </p>
+            <p><strong>Country:</strong> <%= @business_idea.country %></p>
+
+            <%= form_with url: suggestions_business_idea_path(@business_idea), local: true, method: :post, data: { turbo: "false" } do %>
+              <%= hidden_field_tag :business_idea, value: @business_idea.title %>
+              <%= submit_tag "Get basic AI Suggestions", class: "btn btn-outline-success" %>
+            <% end %>
+
+            <% if @suggestions.present? || @business_idea.suggestions %>
+              <div id="suggestions-output">
+                <h3>AI-Generated Suggestions</h3>
+                <p><%= @suggestions %></p>
+                <p><%= format_text_to_html @business_idea.suggestions %></p>
+              </div>
+            <% elsif @error.present? %>
+              <div id="suggestions-output">
+                <h3>Error</h3>
+                <p><%= @error %></p>
+              </div>
+            <% end %>
+          </fieldset>
+        </div>
+        </div>
+      <!-- To tu zmieniasz zawartosc prawej strony -->
+      <div class="col-6">
+        <div class="tab-content" id="nav-tabContent">
+          <%# To jest powtarzajace sie %>
+          <div class="tab-pane fade show active" id="nav-pestel" role="tabpanel" aria-labelledby="nav-pestel-tab">
+
+              <div class="row">
+
+                  <div class="card p-3">
+                      <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">PESTEL Analysis:</legend>
+                        <%= render @pestel_analysis, locals: {busines_idea: @busines_idea} %>
+                      </fieldset>
+
+                  </div>
+
+                </div>
+              </div>
+
+
+
+          <div class="tab-pane fade" id="nav-swot" role="tabpanel" aria-labelledby="nav-swot-tab">
+
+              <div class="row">
+
+                  <div class="card p-3">
+   
+                      <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">SWOT matrix:</legend>
+                        <%= render @swot_analysis, locals: {busines_idea: @busines_idea} %>
+                      </fieldset>
+
+                  </div>
+
+              </div>
+            </div>
+
+
+          <div class="tab-pane fade" id="nav-posters" role="tabpanel" aria-labelledby="nav-posters-tab">
+
+              <div class="row">
+
+
+                  <div class="card p-3">
+   
+                      <fieldset class="border rounded-3 p-3">
+                        <legend class="float-none w-auto px-3">Porter's Five Forces Analysis:</legend>
+                        <%= render "porters_five_forces/porters_five_forces",  porters_five_force: @porters_five_force, business_idea: @business_idea %>
+                      </fieldset>
+
+                  </div>
+
+              </div>
+          </div>
+
+          <div class="tab-pane fade" id="nav-strength" role="tabpanel" aria-labelledby="nav-strength-tab">
+            <div class="container-fluid py-4">
+              <div class="row">
+                <div class="col">
+                  <fieldset class="border rounded-3 p-3">
+                    <legend class="float-none w-auto px-3">Strengths:</legend>
+
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+
+
+
+      <!-- -->
+
+    </div>
+          <div class="card-footer d-flex">
+        <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form1">Edit this business idea</button> 
+        <%= link_to "Back to business ideas", business_ideas_path, class: "btn bg-gradient-info mt-3 mx-3" %> 
+        <div class="ms-auto">
+          <%= button_to "Destroy this business idea", @business_idea, method: :delete, class: "btn bg-gradient-danger mt-3" %>
+        </div>
+      </div>
+  </div>
 </div>
+  <div class="col-md-4">
+
+    <div class="modal fade" id="modal-form1" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-info text-gradient">Edit this Business Idea</h3>
+                <p class="mb-0"><%= @business_idea.title %></p>
+              </div>
+              <div class="card-body">
+                <%= render "form", business_idea: @business_idea %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

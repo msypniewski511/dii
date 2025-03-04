@@ -73,7 +73,7 @@ class PestelAnalysesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_pestel_analysis
       @business_idea = BusinessIdea.find(params[:business_idea_id]) if params[:business_idea_id].present?
-      @pestel_analysis = @business_idea.pestel_analysis
+      @pestel_analysis = @business_idea.pestel_analysis ||  @business_idea.build_pestel_analysis
     end
 
     # Only allow a list of trusted parameters through.

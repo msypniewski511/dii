@@ -31,7 +31,7 @@
   <div class="form-group">
     <%=  bootstrap_offcanvas_hash('description') %>
     <%= form.label :description %>
-    <%= form.text_area :description, class: 'form-control' %>
+    <%= form.text_area :description, class: 'form-control', rows: 10 %>
   </div>
 
   <div class="form-group">
@@ -39,69 +39,9 @@
     <%= form.label :country %>
     <%= form.country_select("country", { priority_countries: ["GB", "US"], selected: "GB" }, { class: 'form-control', data: { attribute: "value" } }) %>
   </div>
-
-  <h3>PESTEL Analysis</h3>
-  <%= form.fields_for :pestel_analysis do |pestel| %>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= pestel.label :political, title: "How stable is the political climate in [Country]? Are there upcoming elections or policy shifts that could affect your industry?" %>
-      <%= pestel.text_area :political, placeholder: "How stable is the political climate in [Country]? Are there upcoming elections or policy shifts that could affect your industry?", class: 'form-control' %>
-    </div>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= pestel.label :economic %>
-      <%= pestel.text_area :economic, class: 'form-control', placeholder: "What is the current economic climate in [Country]? Consider GDP gform-groupth, inflation, and consumer spending trends." %>
-    </div>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= pestel.label :social %>
-      <%= pestel.text_area :social, class: 'form-control', placeholder: "How do cultural trends in [Country] impact the demand for your product/service? What are the demographic shifts?" %>
-    </div>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= pestel.label :technological %>
-      <%= pestel.text_area :technological, class: 'form-control', placeholder: "What is the level of technological advancement in [Country]? How might innovation affect your idea?" %>
-    </div>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= pestel.label :environmental %>
-      <%= pestel.text_area :environmental, class: 'form-control', placeholder: "What environmental factors (e.g., climate change regulations) could impact your business in [Country]?" %>
-    </div>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= pestel.label :legal %>
-      <%= pestel.text_area :legal, class: 'form-control', placeholder: "What are the legal and regulatory requirements that your business idea must meet in [Country]?" %>
-    </div>
-  <% end %>
-
-  <h3>SWOT Analysis</h3>
-  <%= form.fields_for :swot_analysis do |swot| %>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= swot.label :strengths %>
-      <%= swot.text_area :strengths, class: 'form-control', placeholder: "What are the unique advantages of your business idea in the context of [Country]?" %>
-    </div>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= swot.label :weaknesses %>
-      <%= swot.text_area :weaknesses, class: 'form-control', placeholder: "What internal factors might hinder your success?" %>
-    </div>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= swot.label :opportunities %>
-      <%= swot.text_area :opportunities, class: 'form-control', placeholder: "What external opportunities can you exploit in the market?" %>
-    </div>
-    <div class="form-group">
-      <%=  bootstrap_offcanvas_hash('todo') %>
-      <%= swot.label :threats %>
-      <%= swot.text_area :threats, class: 'form-control', placeholder: "What external challenges or competitors might pose a risk?" %>
-    </div>
-  <% end %>
-
-
   <br>
 
-  <div class="row">
-    <%= form.submit class: "btn bg-gradient-primary" %>
+  <div class="form-group">
+    <%= form.submit class: "btn btn-round bg-gradient-primary" %>
   </div>
 <% end %>

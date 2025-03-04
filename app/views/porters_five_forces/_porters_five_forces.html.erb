@@ -1,0 +1,35 @@
+
+<% if @porters_five_force.persisted? %>
+  <!-- <p><strong>Threat of New Entrants:</strong> --> <%= format_text_to_html @porters_five_force.threat_of_new_entrants %></p>
+  <!-- <p><strong>Bargaining Power of Suppliers:</strong>  --> <%= format_text_to_html @porters_five_force.bargaining_power_of_suppliers %></p>
+  <!-- <p><strong>Bargaining Power of Buyers:</strong>  --> <%= format_text_to_html @porters_five_force.bargaining_power_of_buyers %></p>
+  <!-- <p><strong>Threat of Substitutes:</strong> --> <%= format_text_to_html @porters_five_force.threat_of_substitutes %></p>
+  <!-- <p><strong>Industry Rivalry:</strong>  --> <%= format_text_to_html @porters_five_force.industry_rivalry %></p>
+  <!-- <p><strong>Overall Analysis:</strong>  --> <%= format_text_to_html @porters_five_force.analysis %></p>
+  <div class="d-flex">
+    <button type="button" class="btn btn-block btn-default mb-3" data-bs-toggle="modal" data-bs-target="#modal-form">Update Porter's Five Forces Analysis</button>
+    <%= button_to "Generate AI Analysis", generate_ai_analysis_business_idea_porters_five_force_path(@business_idea), method: :post, class: "btn btn-block btn-outline-primary ms-3 mb-3 d-inline", data: { confirm: "Are you sure? This will replace existing analysis." } %>
+  </div>
+<% else %>
+  <%= render "porters_five_forces/form", porters_five_force: @porters_five_force, business_idea: @business_idea  %>
+  <%= button_to "Generate AI Analysis", generate_ai_analysis_business_idea_porters_five_force_path(@business_idea), method: :post, class: "btn btn-primary", data: { confirm: "Are you sure? This will replace existing analysis." } %>
+<% end %>
+
+
+<div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <div class="card card-plain">
+          <div class="card-header pb-0 text-left">
+            <h3 class="font-weight-bolder text-info text-gradient">Porter's Five Forces</h3>
+            <p class="mb-0">Analysis</p>
+          </div>
+          <div class="card-body">
+            <%= render "porters_five_forces/form", porters_five_force: @porters_five_force, business_idea: @business_idea  %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
