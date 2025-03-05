@@ -30,7 +30,7 @@ class PestelAnalysesController < ApplicationController
         @pestel_analysis[params[:type].to_sym] = response
       end
       if @pestel_analysis.save
-        format.html { redirect_to @pestel_analysis, notice: "Pestel analysis was successfully created." }
+        format.html { redirect_to business_idea_path(@business_idea), notice: "Pestel analysis was successfully created." }
         format.json { render :show, status: :created, location: @pestel_analysis }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -46,11 +46,11 @@ class PestelAnalysesController < ApplicationController
         response = call_openai_api_params.dig("choices", 0, "message",  "content")
         @pestel_analysis[params[:type].to_sym] = response
         @pestel_analysis.save
-        redirect_to business_idea_pestel_analyses_path(@business_idea), notice: "Pestel analysis was successfully updated."
+        redirect_to business_idea_path(@business_idea), notice: "Pestel analysis was successfully updated."
         return 
       end
       if @pestel_analysis.update(pestel_analysis_params)
-        format.html { redirect_to business_idea_pestel_analyses_path(@business_idea), notice: "Pestel analysis was successfully updated." }
+        format.html { redirect_to business_idea_path(@business_idea), notice: "Pestel analysis was successfully updated." }
         format.json { render :show, status: :ok, location: @pestel_analysis }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,7 +64,7 @@ class PestelAnalysesController < ApplicationController
     @pestel_analysis.destroy!
 
     respond_to do |format|
-      format.html { redirect_to pestel_analyses_path, status: :see_other, notice: "Pestel analysis was successfully destroyed." }
+      format.html { redirect_to business_idea_path(@business_idea), status: :see_other, notice: "Pestel analysis was successfully destroyed." }
       format.json { head :no_content }
     end
   end

@@ -16,7 +16,11 @@
               <%= @business_idea.title %>
             </h5>
             <p class="mb-0 font-weight-bold text-sm">
-              Basic details
+              <p><strong>Status:</strong> 
+                <span class="badge bg-gradient-<%= @business_idea.status == 'Approved' ? 'success' : @business_idea.status == 'Submitted' ? 'warning' : @business_idea.status == 'In Progress' ? 'danger' : 'secondary' %>">
+                  <%= @business_idea.status %>
+                </p>
+              </span>
             </p>
           </div>
         </div>
@@ -86,7 +90,7 @@
         </div>
         </div>
       <!-- To tu zmieniasz zawartosc prawej strony -->
-      <div class="col-6">
+      <div class="col-6 pe-4">
         <div class="tab-content" id="nav-tabContent">
           <%# To jest powtarzajace sie %>
           <div class="tab-pane fade show active" id="nav-pestel" role="tabpanel" aria-labelledby="nav-pestel-tab">
