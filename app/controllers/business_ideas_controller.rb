@@ -26,6 +26,7 @@ class BusinessIdeasController < ApplicationController
   def edit
     @business_idea.build_pestel_analysis unless @business_idea.pestel_analysis
     @business_idea.build_swot_analysis unless @business_idea.swot_analysis
+    @business_idea.build_porters_five_force unless @business_idea.porters_five_force    
   end
 
   # POST /business_ideas or /business_ideas.json
@@ -75,15 +76,15 @@ class BusinessIdeasController < ApplicationController
       @business_idea = current_user.business_ideas.find_by(id: params[:id])
 
       unless @business_idea
-        flash[:alert] = "You are not authorized to access this business idea."
-        redirect_to user_root_path # Redirects to sign-in page
+        flash[:alert] = "Business idea not found or unauthorized."
+        redirect_to business_ideas_path
       end
     end
 
     # Only allow a list of trusted parameters through.
     def business_idea_params
       params.require(:business_idea).permit(
-        :title, :description, :country,
+        :title, :description, :country, :status,
         pestel_analysis_attributes: [:political, :economic, :social, :technological, :environmental, :legal],
         swot_analysis_attributes: [:strengths, :weaknesses, :opportunities, :threats]
       )

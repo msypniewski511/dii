@@ -20,7 +20,10 @@
             <% end %>
         </div>
         <div class="card-footer">
-          <%= link_to "New business idea", new_business_idea_path %>
+          <%= link_to new_business_idea_path, class: "btn btn-icon btn-3 btn-outline-success" do %>
+            <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
+            <span class="btn-inner--text">New Business Idea</span>
+          <% end %>
         </div>
       </div>
     </div>

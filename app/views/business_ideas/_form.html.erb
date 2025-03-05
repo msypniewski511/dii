@@ -39,6 +39,12 @@
     <%= form.label :country %>
     <%= form.country_select("country", { priority_countries: ["GB", "US"], selected: "GB" }, { class: 'form-control', data: { attribute: "value" } }) %>
   </div>
+
+  <div class="form-group">
+    <%= form.label :status, "Status" %>
+    <%= form.select :status, BusinessIdea::VALID_STATUSES, {}, class: "form-control" %>
+  </div>
+
   <br>
 
   <div class="form-group">

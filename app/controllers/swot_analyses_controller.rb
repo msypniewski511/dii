@@ -26,7 +26,7 @@ class SwotAnalysesController < ApplicationController
 
     respond_to do |format|
       if @swot_analysis.save
-        format.html { redirect_to business_idea_swot_analyses_path(@business_idea), notice: "Swot analysis was successfully created." }
+        format.html { redirect_to business_idea_path(@business_idea), notice: "Swot analysis was successfully created." }
         format.json { render :show, status: :created, location: @swot_analysis }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -42,11 +42,11 @@ class SwotAnalysesController < ApplicationController
         response = call_openai_api_params.dig("choices", 0, "message",  "content")
         @swot_analysis[params[:type].to_sym] = response
         @swot_analysis.save
-        redirect_to business_idea_swot_analyses_path(@business_idea), notice: "Swot analysis was successfully updated."
+        redirect_to business_idea_path(@business_idea), notice: "Swot analysis was successfully updated."
         return
       end
       if @swot_analysis.update(swot_analysis_params)
-        format.html { redirect_to business_idea_swot_analyses_path(@business_idea), notice: "Swot analysis was successfully updated." }
+        format.html { redirect_to business_idea_path(@business_idea), notice: "Swot analysis was successfully updated." }
         format.json { render :show, status: :ok, location: @swot_analysis }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -60,7 +60,7 @@ class SwotAnalysesController < ApplicationController
     @swot_analysis.destroy!
 
     respond_to do |format|
-      format.html { redirect_to swot_analyses_path, status: :see_other, notice: "Swot analysis was successfully destroyed." }
+      format.html { redirect_to business_idea_path(@business_idea), status: :see_other, notice: "Swot analysis was successfully destroyed." }
       format.json { head :no_content }
     end
   end
