@@ -1,102 +1,130 @@
+// // Entry point for the build script in your package.json
+// //= require rails-ujs
+// import Rails from '@rails/ujs'
+// Rails.start()
+// import '@hotwired/turbo-rails'
+// import './controllers'
+// import $ from 'jquery'
+
+// // Bootstrap & other plugins
+// import * as bootstrap from 'bootstrap'
+// import '@popperjs/core' // Ensure Popper.js is loaded
+// import { createPopper } from '@popperjs/core'
+// import 'bootstrap'
+// import 'bootstrap/dist/js/bootstrap.bundle.min'
+// import 'bootstrap-icons/font/bootstrap-icons.css'
+
+// // FullCalendar
+// import { Calendar } from '@fullcalendar/core'
+// import dayGridPlugin from '@fullcalendar/daygrid'
+// import interactionPlugin from '@fullcalendar/interaction'
+
+// import Chart from 'chart.js/auto'
+// import 'trix'
+// import '@rails/actiontext'
+
+// import './plugins/fullcalendar.min.js'
+// import './plugins/fullcalendar' // <-- Make sure this is correct
+// import './plugins/swot_chart.js'
+// import './plugins/line_chart.js'
+
+// import { Turbo } from '@hotwired/turbo-rails'
+// Turbo.session.drive = false
+
+// import './argon-dashboard'
+
+// document.addEventListener('turbo:load', function () {
+//   document.querySelectorAll('.dropdown-toggle').forEach((dropdown) => {
+//     new bootstrap.Dropdown(dropdown)
+//   })
+// })
 // Entry point for the build script in your package.json
 //= require rails-ujs
+
+// Rails & Turbo Setup
 import Rails from '@rails/ujs'
 Rails.start()
 import '@hotwired/turbo-rails'
-import './controllers'
-import * as bootstrap from 'bootstrap'
-// import 'popper'
-// import 'bootstrap'
-import Chart from 'chart.js/auto'
-import 'trix'
-import '@rails/actiontext'
-import './argon-dashboard'
-
-import './plugins/fullcalendar.min.js'
-import './plugins/swot_chart.js'
-
 import { Turbo } from '@hotwired/turbo-rails'
 Turbo.session.drive = false
 
-var ctx1 = document.getElementById('chart-line').getContext('2d')
+import './controllers'
+import $ from 'jquery'
 
-var gradientStroke1 = ctx1.createLinearGradient(0, 230, 0, 50)
+// ✅ Use only this Bootstrap import (includes Popper.js)
+import 'bootstrap/dist/js/bootstrap.bundle.min'
+import 'bootstrap-icons/font/bootstrap-icons.css' // Keep this if you use Bootstrap Icons
 
-gradientStroke1.addColorStop(1, 'rgba(94, 114, 228, 0.2)')
-gradientStroke1.addColorStop(0.2, 'rgba(94, 114, 228, 0.0)')
-gradientStroke1.addColorStop(0, 'rgba(94, 114, 228, 0)')
-new Chart(ctx1, {
-  type: 'line',
-  data: {
-    labels: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    datasets: [
-      {
-        label: 'Mobile apps',
-        tension: 0.4,
-        borderWidth: 0,
-        pointRadius: 0,
-        borderColor: '#5e72e4',
-        backgroundColor: gradientStroke1,
-        borderWidth: 3,
-        fill: true,
-        data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-        maxBarThickness: 6,
-      },
-    ],
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-    interaction: {
-      intersect: false,
-      mode: 'index',
-    },
-    scales: {
-      y: {
-        grid: {
-          drawBorder: false,
-          display: true,
-          drawOnChartArea: true,
-          drawTicks: false,
-          borderDash: [5, 5],
-        },
-        ticks: {
-          display: true,
-          padding: 10,
-          color: '#fbfbfb',
-          font: {
-            size: 11,
-            family: 'Open Sans',
-            style: 'normal',
-            lineHeight: 2,
-          },
-        },
-      },
-      x: {
-        grid: {
-          drawBorder: false,
-          display: false,
-          drawOnChartArea: false,
-          drawTicks: false,
-          borderDash: [5, 5],
-        },
-        ticks: {
-          display: true,
-          color: '#ccc',
-          padding: 20,
-          font: {
-            size: 11,
-            family: 'Open Sans',
-            style: 'normal',
-            lineHeight: 2,
-          },
-        },
-      },
-    },
-  },
+// ✅ FullCalendar Imports (Ensure Plugins Load Correctly)
+import { Calendar } from '@fullcalendar/core'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import interactionPlugin from '@fullcalendar/interaction'
+
+// ✅ Other JavaScript Plugins
+import Chart from 'chart.js/auto'
+import 'trix'
+import '@rails/actiontext'
+
+// ✅ Plugin Files (Ensure These Files Exist in `app/javascript/plugins/`)
+import './plugins/fullcalendar'
+import './plugins/swot_chart'
+import './plugins/line_chart'
+
+// ✅ Argon Dashboard (Ensure This Is Loaded)
+import './argon-dashboard'
+import './argon-dashboard.js'
+
+// ✅ Fix Bootstrap Dropdowns on Turbo Navigation
+document.addEventListener('turbo:load', function () {
+  document.querySelectorAll('.dropdown-toggle').forEach((dropdown) => {
+    new bootstrap.Dropdown(dropdown)
+  })
+})
+document.addEventListener('turbo:load', function () {
+  document
+    .querySelectorAll('[data-bs-toggle="dropdown"]')
+    .forEach((dropdown) => {
+      dropdown.addEventListener('show.bs.dropdown', function (event) {
+        const dropdownInstance = bootstrap.Dropdown.getOrCreateInstance(
+          event.target
+        )
+
+        if (dropdownInstance._popper && dropdownInstance._popper.state) {
+          const preventOverflowModifier =
+            dropdownInstance._popper.state.options.modifiers.find(
+              (modifier) => modifier.name === 'preventOverflow'
+            )
+
+          if (preventOverflowModifier) {
+            preventOverflowModifier.enabled = false
+            dropdownInstance._popper.update()
+          }
+        }
+      })
+    })
+
+  // Reinitialize all dropdowns for Turbo Drive
+  document.querySelectorAll('.dropdown-toggle').forEach((dropdownToggleEl) => {
+    new bootstrap.Dropdown(dropdownToggleEl)
+  })
+})
+document.addEventListener('DOMContentLoaded', function () {
+  const darkModeToggle = document.getElementById('dark-version')
+  const savedDarkMode = localStorage.getItem('darkMode')
+
+  if (savedDarkMode === 'enabled') {
+    document.body.classList.add('dark-version')
+    document.getElementById('sidenav-main').classList.remove('bg-white')
+    document.getElementById('sidenav-main').classList.add('bg-dark')
+    document.getElementById('sidenav-main').classList.add('bg-default')
+
+    if (darkModeToggle) {
+      darkModeToggle.setAttribute('checked', 'true')
+    }
+  } else {
+    document.body.classList.remove('dark-version')
+    if (darkModeToggle) {
+      darkModeToggle.removeAttribute('checked')
+    }
+  }
 })
