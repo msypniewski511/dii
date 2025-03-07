@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_07_175302) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_07_180330) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -167,6 +167,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_07_175302) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "stage_methods", force: :cascade do |t|
+    t.integer "method_type"
+    t.bigint "stage_id", null: false
+    t.jsonb "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["stage_id"], name: "index_stage_methods_on_stage_id"
+  end
+
   create_table "stages", force: :cascade do |t|
     t.string "name"
     t.integer "stage_type"
@@ -223,6 +232,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_07_175302) do
   add_foreign_key "pestel_analyses", "business_ideas"
   add_foreign_key "porters_five_forces", "business_ideas"
   add_foreign_key "pswot_analyses", "users"
+  add_foreign_key "stage_methods", "stages"
   add_foreign_key "stages", "business_ideas"
   add_foreign_key "swot_analyses", "business_ideas"
   add_foreign_key "user_responses", "answers"
