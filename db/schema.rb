@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_05_073758) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_07_173915) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -164,6 +164,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_05_073758) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "stages", force: :cascade do |t|
+    t.string "name"
+    t.string "stage_type"
+    t.integer "business_idea_id", null: false
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_idea_id"], name: "index_stages_on_business_idea_id"
+  end
+
   create_table "swot_analyses", force: :cascade do |t|
     t.integer "business_idea_id", null: false
     t.text "strengths"
@@ -210,6 +220,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_05_073758) do
   add_foreign_key "pestel_analyses", "business_ideas"
   add_foreign_key "porters_five_forces", "business_ideas"
   add_foreign_key "pswot_analyses", "users"
+  add_foreign_key "stages", "business_ideas"
   add_foreign_key "swot_analyses", "business_ideas"
   add_foreign_key "user_responses", "answers"
   add_foreign_key "user_responses", "questions"
