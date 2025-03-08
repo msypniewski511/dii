@@ -10,6 +10,7 @@ class PswotAnalysesController < ApplicationController
     if @swot.save
       response = analyze_swot(@swot)
       @swot.update(analysis: response)
+
       redirect_to home_personal_path
     else
       render :new

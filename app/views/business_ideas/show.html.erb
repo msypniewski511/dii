@@ -59,10 +59,102 @@
   </div>
   <div class="card shadow-lg">
     <div class="row p-3">
+      <div class="col-12">
+        <h2>Stage Progress</h2>
+
+        <!-- Business Owner Characteristics (Independent but tracked) -->
+        <% ai_completed = current_user.assessments.last.ai_insights.present? %>
+        <% pswot_completed = current_user.pswot_analyses.present? %>
+
+        <% if ai_completed && pswot_completed %>
+          <div class="progress my-2">
+            <div class="progress-bar bg-success"
+              role="progressbar"
+              style="width: 100%"
+              aria-valuenow="100"
+              aria-valuemin="0"
+              aria-valuemax="100">
+              Business Owner Characteristics - Completed ✅
+            </div>
+          </div>
+        <% elsif ai_completed || pswot_completed %>
+          <div class="progress my-2">
+            <div class="progress-bar bg-warning"
+              role="progressbar"
+              style="width: 50%"
+              aria-valuenow="50"
+              aria-valuemin="0"
+              aria-valuemax="100">
+              Business Owner Characteristics - In Progress ⚠️
+            </div>
+          </div>
+        <% else %>
+          <div class="progress my-2">
+            <div class="progress-bar bg-secondary"
+              role="progressbar"
+              style="width: 0%"
+              aria-valuenow="0"
+              aria-valuemin="0"
+              aria-valuemax="100">
+              Business Owner Characteristics - Not Started ⚠️
+            </div>
+          </div>
+        <% end %>
+
+        <!-- Business Idea Stages -->
+        <% @business_idea.stages.each do |stage| %>
+          <div class="progress my-2">
+            <div class="progress-bar 
+              <%= 'bg-secondary' if stage.not_started? %>
+              <%= 'bg-warning' if stage.in_progress? %>
+              <%= 'bg-success' if stage.completed? %>"
+              role="progressbar"
+              style="width: <%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>%"
+              aria-valuenow="<%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>"
+              aria-valuemin="0"
+              aria-valuemax="100">
+              <%= stage.name %> - <%= stage.status.humanize %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+
+    <hr>
+    <div class="stepper-container">
+  <ul class="stepper">
+    <% @business_idea.stages.order(:created_at).each_with_index do |stage, index| %>
+      <li class="step <%= 'completed' if stage.status == 'completed' %>">
+        <a href="#" data-bs-toggle="tooltip" title="<%= stage.name %>">
+          <span class="step-number"><%= index + 1 %></span>
+          <span class="step-title"><%= stage.name %></span>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+
+    <div class="row p-3">
       <div class="col-6">
         <div class="card p-4">
           <fieldset class="border rounded-3 p-3">
             <legend class="float-none w-auto px-3"><%= @business_idea.title %></legend>
+
+            <h3>Selected Business Models:</h3>
+<ul>
+  <% @business_idea.stages.distinct.pluck(:stage_type).each do |model| %>
+    <li><%= model.titleize %></li>                                                
+  <% end %>
+</ul>
+
+<h3>Stages:</h3>
+<ol>
+  <% @business_idea.stages.order(:created_at).each do |stage| %>
+    <li><%= stage.name %> (<%= stage.stage_type.titleize %>)</li>
+  <% end %>
+</ol>
             
             <p><strong>Description:</strong>
             <br /><%= format_text_to_html @business_idea.description %>
