@@ -1,0 +1,2 @@
+module BusinessIdeaDefinitionsHelper
+end

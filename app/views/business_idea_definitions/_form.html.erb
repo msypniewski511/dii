@@ -1,0 +1,44 @@
+<%= form_with(model: [@business_idea, @business_idea_definition], local: true, url: business_idea_business_idea_definition_path(@business_idea)) do |form| %>
+  <% if @business_idea_definition.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@business_idea_definition.errors.count, "error") %> prohibited this from being saved:</h4>
+      <ul>
+        <% @business_idea_definition.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :problem_statement, "Problem Statement" %>
+    <%= form.text_area :problem_statement, class: 'form-control', rows: 3, placeholder: "Describe the key problem your business solves" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :solution, "Solution" %>
+    <%= form.text_area :solution, class: 'form-control', rows: 3, placeholder: "Explain how your business solves the problem" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :target_audience, "Target Audience" %>
+    <%= form.text_area :target_audience, class: 'form-control', rows: 3, placeholder: "Who are your ideal customers?" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :market_size, "Market Size" %>
+    <%= form.text_area :market_size, class: 'form-control', rows: 3, placeholder: "Estimate the potential market for your business" %>
+  </div>
+
+  <!-- AI Suggestions Display -->
+  <% if @business_idea_definition.ai_suggestions.present? %>
+    <div class="form-group">
+      <label>AI Suggestions:</label>
+      <p style="color: #17c1e8 !important;" class="text-info"><%= format_text_to_html @business_idea_definition.ai_suggestions %></p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

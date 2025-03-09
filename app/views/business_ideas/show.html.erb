@@ -126,7 +126,8 @@
   <ul class="stepper">
     <% @business_idea.stages.order(:created_at).each_with_index do |stage, index| %>
       <li class="step <%= 'completed' if stage.status == 'completed' %>">
-        <a href="#" data-bs-toggle="tooltip" title="<%= stage.name %>">
+        <!-- <a href="#" data-bs-toggle="tooltip" data-bs-toggle="modal" data-bs-target="<%= stage.name %>" title="<%= stage.name %>"> -->
+        <a href="#" data-bs-toggle="modal" data-bs-target="#<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">
           <span class="step-number"><%= index + 1 %></span>
           <span class="step-title"><%= stage.name %></span>
         </a>
@@ -145,7 +146,24 @@
             <h3>Selected Business Models:</h3>
 <ul>
   <% @business_idea.stages.distinct.pluck(:stage_type).each do |model| %>
-    <li><%= model.titleize %></li>                                                
+    <li><%= model.titleize %></li> 
+    <% if (model = "nine_stages" && !@business_idea.business_idea_definition.persisted? ) %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form2">Create Business Idea Definition</button>
+    <% else %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form2">Edit Business Idea Definition</button>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#business_idea_definition">Show Business Idea Definition</button>
+    <% end %>
+
+    <% if (model = "nine_stages" && !@business_idea.market_research.persisted? ) %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-market_research">Create Market Research</button>
+    <% else %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-market_research">Edit Market Research</button>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#market_research">Show Market Research</button>
+    <% end %>   
+
+
+
+
   <% end %>
 </ul>
 
@@ -268,7 +286,7 @@
 
     <div class="modal fade" id="modal-form1" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-        <div class="modal-content">
+        <div class="modal-content">#business_idea_definition
           <div class="modal-body p-0">
             <div class="card card-plain">
               <div class="card-header pb-0 text-left">
@@ -277,6 +295,94 @@
               </div>
               <div class="card-body">
                 <%= render "form", business_idea: @business_idea %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-12">
+
+    <div class="modal fade" id="modal-form2" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-info text-gradient">Create Stage 2 of Business Idea</h3>
+                <p class="mb-0"><%= @business_idea.title %></p>
+              </div>
+              <div class="card-body">
+                <%= render "business_idea_definitions/form", busines_idea: @busines_idea, business_idea_definition: @business_idea_definition %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div class="col-md-12">
+
+    <div class="modal fade" id="business_idea_definition" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-info text-gradient"Business Idea Definition for:</h3>
+                <p class="mb-0"><%= @business_idea.title %></p>
+              </div>
+              <div class="card-body">
+                <%= render "business_idea_definitions/business_idea_definition", busines_idea: @busines_idea, business_idea_definition: @business_idea_definition %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+    <div class="col-md-12">
+
+    <div class="modal fade" id="modal-form-market_research" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-info text-gradient">Create Stage 3 of Business Idea</h3>
+                <p class="mb-0"><%= @business_idea.title %></p>
+              </div>
+              <div class="card-body">
+                <%= render "market_researches/form", business_idea: @business_idea, market_research: @market_research %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+      <div class="col-md-12">
+
+    <div class="modal fade" id="market_research" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-info text-gradient">Stage 3 of Business Idea for:</h3>
+                <p class="mb-0"><%= @business_idea.title %></p>
+              </div>
+              <div class="card-body">
+                <%= render "market_researches/market_research", business_idea: @business_idea, market_research: @market_research %>
               </div>
             </div>
           </div>

@@ -3,6 +3,9 @@ class BusinessIdea < ApplicationRecord
   has_one :swot_analysis, dependent: :destroy
   has_one :porters_five_force, dependent: :destroy
 
+  has_one :business_idea_definition, dependent: :destroy
+  has_one :market_research, dependent: :destroy
+
   has_many :stages, dependent: :destroy
 
   accepts_nested_attributes_for :pestel_analysis

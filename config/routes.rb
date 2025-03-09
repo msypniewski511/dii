@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     member do
       post 'suggestions', to: 'openai_suggestions#create'
     end
+    resource :business_idea_definition, only: [:new, :create, :edit, :update]
+    resource :market_research, only: [:new, :create, :edit, :update, :show]
     resource :pestel_analyses
     resource :swot_analyses
     resource :porters_five_force, only: [:new, :create, :edit, :update, :show] do

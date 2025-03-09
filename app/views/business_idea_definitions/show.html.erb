@@ -1,0 +1,18 @@
+<h2>Business Idea Definition</h2>
+
+<% if @business_idea.business_idea_definition.present? %>
+  <p><strong>Problem Statement:</strong> <%= @business_idea.business_idea_definition.problem_statement %></p>
+  <p><strong>Solution:</strong> <%= @business_idea.business_idea_definition.solution %></p>
+  <p><strong>Target Audience:</strong> <%= @business_idea.business_idea_definition.target_audience %></p>
+  <p><strong>Market Size:</strong> <%= @business_idea.business_idea_definition.market_size %></p>
+
+  <% if @business_idea.business_idea_definition.ai_suggestions.present? %>
+    <div class="alert alert-info">
+      <strong>AI Suggestions:</strong> <%= @business_idea.business_idea_definition.ai_suggestions %>
+    </div>
+  <% end %>
+
+  <%= link_to "Edit Business Idea Definition", edit_business_idea_business_idea_definition_path(@business_idea), class: "btn btn-warning" %>
+<% else %>
+  <%= link_to "Define Business Idea", new_business_idea_business_idea_definition_path(@business_idea), class: "btn btn-primary" %>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_07_180330) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_08_034149) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -86,6 +86,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_07_180330) do
     t.index ["user_id"], name: "index_brands_on_user_id"
   end
 
+  create_table "business_idea_definitions", force: :cascade do |t|
+    t.bigint "business_idea_id", null: false
+    t.text "problem_statement"
+    t.text "solution"
+    t.text "target_audience"
+    t.text "market_size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "ai_suggestions"
+    t.index ["business_idea_id"], name: "index_business_idea_definitions_on_business_idea_id"
+  end
+
   create_table "business_ideas", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -120,6 +132,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_07_180330) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["user_id"], name: "index_ideas_on_user_id"
+  end
+
+  create_table "market_researches", force: :cascade do |t|
+    t.bigint "business_idea_id", null: false
+    t.text "market_trends"
+    t.text "competitor_insights"
+    t.text "customer_segments"
+    t.text "industry_reports"
+    t.text "ai_suggestions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_idea_id"], name: "index_market_researches_on_business_idea_id"
   end
 
   create_table "pestel_analyses", force: :cascade do |t|
@@ -225,10 +249,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_07_180330) do
   add_foreign_key "answers", "questions"
   add_foreign_key "assessments", "users"
   add_foreign_key "brands", "users"
+  add_foreign_key "business_idea_definitions", "business_ideas"
   add_foreign_key "business_ideas", "users"
   add_foreign_key "entrepreneurial_skills_user_responses", "answers"
   add_foreign_key "entrepreneurial_skills_user_responses", "questions"
   add_foreign_key "entrepreneurial_skills_user_responses", "users"
+  add_foreign_key "market_researches", "business_ideas"
   add_foreign_key "pestel_analyses", "business_ideas"
   add_foreign_key "porters_five_forces", "business_ideas"
   add_foreign_key "pswot_analyses", "users"
