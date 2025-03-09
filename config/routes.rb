@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  get 'competitors/new'
+  get 'competitors/create'
+  get 'competitors/update'
+  get 'competitors/destroy'
+  get 'competitor_analyses/new'
+  get 'competitor_analyses/create'
+  get 'competitor_analyses/show'
   resources :pswot_analyses, only: [:new, :create, :show]
   resources :assessments, only: [:new, :create, :show]
   resources :entrepreneurial_skills_user_responses
@@ -13,6 +20,12 @@ Rails.application.routes.draw do
     resource :market_research, only: [:new, :create, :edit, :update, :show]
     resource :pestel_analyses
     resource :swot_analyses
+    resource :competitor_analyses, only: [:new, :create, :show]
+    resource :competitors do
+      member do
+        post 'ai_analysis', to: 'competitors#ai_analysis'
+      end
+    end
     resource :porters_five_force, only: [:new, :create, :edit, :update, :show] do
       member do
         post :generate_ai_analysis

@@ -7,7 +7,7 @@
   <p><strong>Industry Reports:</strong> <%= @business_idea.market_research.industry_reports %></p>
 
   <% if @business_idea.market_research.ai_suggestions.present? %>
-    <div class="alert alert-info">
+    <div class="">
       <strong>AI Suggestions:</strong> <%= format_text_to_html @business_idea.market_research.ai_suggestions %>
     </div>
   <% end %>

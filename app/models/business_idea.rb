@@ -5,6 +5,7 @@ class BusinessIdea < ApplicationRecord
 
   has_one :business_idea_definition, dependent: :destroy
   has_one :market_research, dependent: :destroy
+  has_many :competitor_analysis
 
   has_many :stages, dependent: :destroy
 

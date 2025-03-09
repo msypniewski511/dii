@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_08_034149) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_09_065604) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -108,6 +108,24 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_08_034149) do
     t.integer "user_id"
     t.string "status", default: "Draft"
     t.index ["user_id"], name: "index_business_ideas_on_user_id"
+  end
+
+  create_table "competitor_analyses", force: :cascade do |t|
+    t.bigint "business_idea_id", null: false
+    t.text "summary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_idea_id"], name: "index_competitor_analyses_on_business_idea_id"
+  end
+
+  create_table "competitors", force: :cascade do |t|
+    t.bigint "competitor_analysis_id", null: false
+    t.string "name"
+    t.text "description"
+    t.text "five_forces"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["competitor_analysis_id"], name: "index_competitors_on_competitor_analysis_id"
   end
 
   create_table "entrepreneurial_skills_user_responses", force: :cascade do |t|
@@ -251,6 +269,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_08_034149) do
   add_foreign_key "brands", "users"
   add_foreign_key "business_idea_definitions", "business_ideas"
   add_foreign_key "business_ideas", "users"
+  add_foreign_key "competitor_analyses", "business_ideas"
+  add_foreign_key "competitors", "competitor_analyses"
   add_foreign_key "entrepreneurial_skills_user_responses", "answers"
   add_foreign_key "entrepreneurial_skills_user_responses", "questions"
   add_foreign_key "entrepreneurial_skills_user_responses", "users"

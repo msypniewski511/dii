@@ -16,6 +16,7 @@ class BusinessIdeasController < ApplicationController
     @swot_analysis = @business_idea.swot_analysis || @business_idea.build_swot_analysis
     @business_idea_definition = @business_idea.business_idea_definition || @business_idea.build_business_idea_definition
     @market_research = @business_idea.market_research || @business_idea.build_market_research
+    @competitor_analysis = @business_idea.competitor_analysis || @business_idea.build_competitor_analysis
   end
 
   # GET /business_ideas/new
@@ -122,14 +123,6 @@ class BusinessIdeasController < ApplicationController
     end
   
     def using_nine_stages_model?
-      puts "---------------"
-      puts "---------------"
-      puts "---------------"
-      puts "---------------"
-      puts "---------------"
-      puts "---------------"
-      puts "---------------"
-      puts "---------------"
       @business_idea.stages.any? { |stage| stage.stage_type == "nine_stages" }
     end
     
@@ -144,7 +137,7 @@ class BusinessIdeasController < ApplicationController
 
     def update_nine_stages_progress
       if using_nine_stages_model?
-        stage = Stage.find_by(name: "Business Owner Characteristics", stage_type: "nine_stages", business_idea: current_user.business_ideas)
+        stage = Stage.find_by(name: "Business Owner Characteristics", stage_type: "nine_stages", business_idea: @business_idea)
         p stage
         stage.update(status: "completed") if stage.present?
         p stage

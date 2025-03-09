@@ -161,7 +161,10 @@
       <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#market_research">Show Market Research</button>
     <% end %>   
 
-
+    <br />
+    
+    <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-competitor_analysis">Create Competitor Research</button>
+    <%= link_to "Competitor Analysis", business_idea_competitor_analyses_path(@business_idea), class: "btn bg-gradient-success mt-3" %>
 
 
   <% end %>
@@ -285,7 +288,7 @@
   <div class="col-md-4">
 
     <div class="modal fade" id="modal-form1" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
         <div class="modal-content">#business_idea_definition
           <div class="modal-body p-0">
             <div class="card card-plain">
@@ -307,7 +310,7 @@
   <div class="col-md-12">
 
     <div class="modal fade" id="modal-form2" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
         <div class="modal-content">
           <div class="modal-body p-0">
             <div class="card card-plain">
@@ -328,7 +331,7 @@
     <div class="col-md-12">
 
     <div class="modal fade" id="business_idea_definition" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
         <div class="modal-content">
           <div class="modal-body p-0">
             <div class="card card-plain">
@@ -351,7 +354,7 @@
     <div class="col-md-12">
 
     <div class="modal fade" id="modal-form-market_research" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
         <div class="modal-content">
           <div class="modal-body p-0">
             <div class="card card-plain">
@@ -372,8 +375,8 @@
 
       <div class="col-md-12">
 
-    <div class="modal fade" id="market_research" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+    <div class="modal fade w-100" id="market_research" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
         <div class="modal-content">
           <div class="modal-body p-0">
             <div class="card card-plain">
@@ -383,6 +386,28 @@
               </div>
               <div class="card-body">
                 <%= render "market_researches/market_research", business_idea: @business_idea, market_research: @market_research %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <div class="col-md-12">
+
+    <div class="modal fade" id="modal-form-competitor_analysis" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-info text-gradient">Create Stage 4 of Business Idea</h3>
+                <p class="mb-0"><%= @business_idea.title %></p>
+              </div>
+              <div class="card-body">
+                <%= render "competitor_analyses/form", business_idea: @business_idea, competitor_analysis: @competitor_analysis %>
               </div>
             </div>
           </div>
