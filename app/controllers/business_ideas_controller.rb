@@ -11,12 +11,13 @@ class BusinessIdeasController < ApplicationController
 
   # GET /business_ideas/1 or /business_ideas/1.json
   def show
+    @porter_analysis = @business_idea.porter_five_force || @business_idea.build_porter_five_force
     @porters_five_force = @business_idea.porters_five_force || @business_idea.build_porters_five_force
     @pestel_analysis = @business_idea.pestel_analysis || @business_idea.build_pestel_analysis
     @swot_analysis = @business_idea.swot_analysis || @business_idea.build_swot_analysis
     @business_idea_definition = @business_idea.business_idea_definition || @business_idea.build_business_idea_definition
     @market_research = @business_idea.market_research || @business_idea.build_market_research
-    @competitor_analysis = @business_idea.competitor_analysis || @business_idea.build_competitor_analysis
+    @competitor_analysis = @business_idea.competitor_analysis.last || @business_idea.build_competitor_analysis
   end
 
   # GET /business_ideas/new
@@ -99,7 +100,7 @@ class BusinessIdeasController < ApplicationController
     # Only allow a list of trusted parameters through.
     def business_idea_params
       params.require(:business_idea).permit(
-        :title, :description, :country, :status,
+        :title, :description, :country, :status, :industry_type_id,
         pestel_analysis_attributes: [:political, :economic, :social, :technological, :environmental, :legal],
         swot_analysis_attributes: [:strengths, :weaknesses, :opportunities, :threats]
       )

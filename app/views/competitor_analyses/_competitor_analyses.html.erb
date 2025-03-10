@@ -1,5 +1,54 @@
 <div>
   <h2>Competitor Analysis</h2>
+  <% if @competitor_analysis.competitors.any? %>
+    <hr>
+    <div class="col-lg-12 col-md-12 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+      <div class="nav-wrapper position-relative end-0">
+        <ul class="nav nav-pills nav-fill p-1" role="tablist">
+          <% @competitor_analysis.competitors.each_with_index do |competitor, index| %>
+            <li class="nav-item">
+              <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center 
+                <%= 'active' if index == 0 %>"  
+                id="nav-<%= competitor.name.downcase.gsub(' ', '_')%>-tab" 
+                data-bs-toggle="tab" 
+                data-bs-target="#nav-<%= competitor.name.downcase.gsub(' ', '_')%>" 
+                href="javascript:;" 
+                role="tab" 
+                aria-controls="nav-<%= competitor.name.downcase.gsub(' ', '_')%>"
+                aria-selected="<%= index == 0 ? 'true' : 'false' %>">
+                
+                <span class="ms-2"><%= competitor.name %></span>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content mt-3">
+      <% @competitor_analysis.competitors.each_with_index do |competitor, index| %>
+        <div class="tab-pane fade <%= 'show active' if index == 0 %>" 
+          id="nav-<%= competitor.name.downcase.gsub(' ', '_')%>" 
+          role="tabpanel" 
+          aria-labelledby="nav-<%= competitor.name.downcase.gsub(' ', '_')%>-tab">
+          
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title"><%= competitor.name %></h5>
+              <p class="card-text"><%= competitor.description %></p>
+
+              <h6>Porter's Five Forces Analysis</h6>
+              <p><%= competitor.five_forces.present? ? format_text_to_html(competitor.five_forces) : "Not generated yet" %></p>
+
+              <%= link_to "Update AI Analysis", ai_analysis_business_idea_competitors_path(competitor), method: :get, class: "btn btn-outline-secondary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
   <p><strong>Business Idea:</strong> <%= @competitor_analysis.business_idea.description  %></p>
   <p><strong>Country:</strong> <%= @competitor_analysis.country %></p>
 
@@ -14,7 +63,7 @@
           <p class="card-text"><%= competitor.description %></p>
 
           <h6>Porter's Five Forces Analysis</h6>
-          <p><%= competitor.five_forces.present? ? competitor.five_forces : "Not generated yet" %></p>
+          <p><%= competitor.five_forces.present? ? format_text_to_html(competitor.five_forces) : "Not generated yet" %></p>
 
           <%= link_to "Update AI Analysis", ai_analysis_business_idea_competitors_path(competitor), method: :get, class: "btn btn-outline-secondary" %>
         </div>

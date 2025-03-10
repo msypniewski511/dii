@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_09_065604) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_10_193948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_09_065604) do
     t.text "suggestions"
     t.integer "user_id"
     t.string "status", default: "Draft"
+    t.bigint "industry_type_id", null: false
+    t.index ["industry_type_id"], name: "index_business_ideas_on_industry_type_id"
     t.index ["user_id"], name: "index_business_ideas_on_user_id"
   end
 
@@ -152,6 +154,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_09_065604) do
     t.index ["user_id"], name: "index_ideas_on_user_id"
   end
 
+  create_table "industry_types", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "market_researches", force: :cascade do |t|
     t.bigint "business_idea_id", null: false
     t.text "market_trends"
@@ -175,6 +184,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_09_065604) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["business_idea_id"], name: "index_pestel_analyses_on_business_idea_id"
+  end
+
+  create_table "porter_five_forces", force: :cascade do |t|
+    t.bigint "business_idea_id", null: false
+    t.integer "threat_of_new_entrants"
+    t.integer "supplier_power"
+    t.integer "buyer_power"
+    t.integer "threat_of_substitutes"
+    t.integer "industry_rivalry"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_idea_id"], name: "index_porter_five_forces_on_business_idea_id"
   end
 
   create_table "porters_five_forces", force: :cascade do |t|
@@ -268,6 +289,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_09_065604) do
   add_foreign_key "assessments", "users"
   add_foreign_key "brands", "users"
   add_foreign_key "business_idea_definitions", "business_ideas"
+  add_foreign_key "business_ideas", "industry_types"
   add_foreign_key "business_ideas", "users"
   add_foreign_key "competitor_analyses", "business_ideas"
   add_foreign_key "competitors", "competitor_analyses"
@@ -276,6 +298,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_09_065604) do
   add_foreign_key "entrepreneurial_skills_user_responses", "users"
   add_foreign_key "market_researches", "business_ideas"
   add_foreign_key "pestel_analyses", "business_ideas"
+  add_foreign_key "porter_five_forces", "business_ideas"
   add_foreign_key "porters_five_forces", "business_ideas"
   add_foreign_key "pswot_analyses", "users"
   add_foreign_key "stage_methods", "stages"

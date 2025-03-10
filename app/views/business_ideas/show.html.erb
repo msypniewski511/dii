@@ -162,11 +162,11 @@
     <% end %>   
 
     <br />
-    
-    <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-competitor_analysis">Create Competitor Research</button>
-    <%= link_to "Competitor Analysis", business_idea_competitor_analyses_path(@business_idea), class: "btn bg-gradient-success mt-3" %>
-
-
+    <% if (model = "nine_stages" && !@business_idea.competitor_analysis.last.persisted? ) %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-competitor_analysis">Create Competitor Research</button>
+    <% else %>
+      <%= link_to "Competitor Analysis", business_idea_competitor_analyses_path(@business_idea), class: "btn bg-gradient-success mt-3" %>
+    <% end %>
   <% end %>
 </ul>
 
@@ -250,6 +250,8 @@
                       <fieldset class="border rounded-3 p-3">
                         <legend class="float-none w-auto px-3">Porter's Five Forces Analysis:</legend>
                         <%= render "porters_five_forces/porters_five_forces",  porters_five_force: @porters_five_force, business_idea: @business_idea %>
+                        <hr>
+                        <%= render "porter_five_forces/porter_five_forces", porter_analysis: @porter_analysis %>
                       </fieldset>
 
                   </div>
@@ -408,6 +410,27 @@
               </div>
               <div class="card-body">
                 <%= render "competitor_analyses/form", business_idea: @business_idea, competitor_analysis: @competitor_analysis %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-12">
+    <div class="modal fade w-100" id="competitor_analysis" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-info text-gradient">Stage 4 of Business Idea for:</h3>
+                <p class="mb-0"><%= @business_idea.title %></p>
+              </div>
+              <div class="card-body">
+                <%= render "competitor_analyses/competitor_analyses", business_idea: @business_idea, competitor_analysis: @competitor_analysis %>
               </div>
             </div>
           </div>

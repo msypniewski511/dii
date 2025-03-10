@@ -162,9 +162,26 @@ questions_and_answers = [
     ]
   ],
 ]
-questions_and_answers.each do |qa|
-  question = Question.create!(qa[0].first)
-  qa[1].each do |a|
-    question.answers.create!(a)
-  end
+# questions_and_answers.each do |qa|
+#   question = Question.create!(qa[0].first)
+#   qa[1].each do |a|
+#     question.answers.create!(a)
+#   end
+# end
+
+industries = [
+  "Technology",
+  "Healthcare",
+  "Retail",
+  "Finance",
+  "Manufacturing",
+  "Education",
+  "Entertainment",
+  "Real Estate",
+  "Transportation",
+  "Energy"
+]
+
+industries.each do |name|
+  IndustryType.find_or_create_by(name: name)
 end

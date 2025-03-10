@@ -128,3 +128,25 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 })
+
+// document.addEventListener("DOMContentLoaded", function () {
+//   var ctx = document.getElementById('portersChart').getContext('2d');
+//   var chart = new Chart(ctx, {
+//       type: 'radar',
+//       data: {
+//           labels: ['New Entrants', 'Supplier Power', 'Buyer Power', 'Substitutes', 'Industry Rivalry'],
+//           datasets: [{
+//               label: 'Porter’s Five Forces',
+//               data: [<%= @porter_analysis.threat_of_new_entrants %>, <%= @porter_analysis.supplier_power %>, <%= @porter_analysis.buyer_power %>, <%= @porter_analysis.threat_of_substitutes %>, <%= @porter_analysis.industry_rivalry %>],
+//               backgroundColor: 'rgba(54, 162, 235, 0.2)',
+//               borderColor: 'rgba(54, 162, 235, 1)',
+//               borderWidth: 2
+//           }]
+//       },
+//       options: {
+//           scale: {
+//               ticks: { beginAtZero: true, max: 5 }
+//           }
+//       }
+//   });
+// })
