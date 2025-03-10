@@ -1,0 +1,7 @@
+<div class="container mt-4">
+  <%= form_with model: @competitor_analysis, url: business_idea_competitor_analyses_path(@business_idea), local: true do |f| %>
+    <%= f.submit "Start AI Competitor Search", class: "btn btn-success" %>
+  <% end %>
+
+  <%= link_to "Back to Business Idea", business_idea_path(@business_idea), class: "btn btn-secondary mt-3" %>
+</div>

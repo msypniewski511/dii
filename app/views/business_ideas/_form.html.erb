@@ -40,10 +40,45 @@
     <%= form.country_select("country", { priority_countries: ["GB", "US"], selected: "GB" }, { class: 'form-control', data: { attribute: "value" } }) %>
   </div>
 
+
   <div class="form-group">
     <%= form.label :status, "Status" %>
     <%= form.select :status, BusinessIdea::VALID_STATUSES, {}, class: "form-control" %>
   </div>
+
+  <div class="form-group">
+    <%= form.label :industry_type_id, "Industry Type or let AI classify", class: "form-control-label" %>
+    <%= form.collection_select :industry_type_id, IndustryType.all, :id, :name, { prompt: "Select Industry" }, class: "form-control" %>
+  </div>
+
+
+  <div class="form-group">
+    <%= bootstrap_offcanvas_hash('business_model') %>
+    <%= form.label :selected_models, "Select Business Models", class: "form-control-label" %>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-check">
+          <%= check_box_tag 'selected_models[]', 'nine_stages', business_idea.stages.any? { |s| s.stage_type == "nine_stages" }, class: "form-check-input" %>
+          <%= label_tag 'selected_models_nine_stages', "9 Stages of Enterprise Creation", class: "form-check-label" %>
+        </div>
+        <div class="form-check">
+          <%= check_box_tag 'selected_models[]', 'lean_startup', business_idea.stages.any? { |s| s.stage_type == "lean_startup" }, class: "form-check-input" %>
+          <%= label_tag 'selected_models_lean_startup', "Lean Startup", class: "form-check-label" %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-check">
+          <%= check_box_tag 'selected_models[]', 'business_model_canvas', business_idea.stages.any? { |s| s.stage_type == "business_model_canvas" }, class: "form-check-input" %>
+          <%= label_tag 'selected_models_business_model_canvas', "Business Model Canvas", class: "form-check-label" %>
+        </div>
+        <div class="form-check">
+          <%= check_box_tag 'selected_models[]', 'bozward_model', business_idea.stages.any? { |s| s.stage_type == "bozward_model" }, class: "form-check-input" %>
+          <%= label_tag 'selected_models_bozward_model', "Bozward's 9 Stages of Enterprise Creation", class: "form-check-label" %>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <br>
 

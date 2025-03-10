@@ -1,0 +1,18 @@
+<h2>Market Research</h2>
+
+<% if @business_idea.market_research.present? %>
+  <p><strong>Market Trends:</strong> <%= @business_idea.market_research.market_trends %></p>
+  <p><strong>Competitor Insights:</strong> <%= @business_idea.market_research.competitor_insights %></p>
+  <p><strong>Customer Segments:</strong> <%= @business_idea.market_research.customer_segments %></p>
+  <p><strong>Industry Reports:</strong> <%= @business_idea.market_research.industry_reports %></p>
+
+  <% if @business_idea.market_research.ai_suggestions.present? %>
+    <div class="">
+      <strong>AI Suggestions:</strong> <%= format_text_to_html @business_idea.market_research.ai_suggestions %>
+    </div>
+  <% end %>
+
+  <%= link_to "Edit Market Research", edit_business_idea_market_research_path(@business_idea), class: "btn btn-warning" %>
+<% else %>
+  <%= link_to "Conduct Market Research", new_business_idea_market_research_path(@business_idea), class: "btn btn-primary" %>
+<% end %>

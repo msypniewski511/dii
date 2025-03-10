@@ -1,0 +1,44 @@
+<%= form_with(model: [@business_idea, @market_research], local: true, url: business_idea_market_research_path(@business_idea)) do |form| %>
+  <% if @market_research.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@market_research.errors.count, "error") %> prohibited this from being saved:</h4>
+      <ul>
+        <% @market_research.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :market_trends, "Market Trends" %>
+    <%= form.text_area :market_trends, class: 'form-control', rows: 3, placeholder: "Describe key market trends affecting your business" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :competitor_insights, "Competitor Insights" %>
+    <%= form.text_area :competitor_insights, class: 'form-control', rows: 3, placeholder: "Provide insights on competitors in your market" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :customer_segments, "Customer Segments" %>
+    <%= form.text_area :customer_segments, class: 'form-control', rows: 3, placeholder: "Define your target customers and their needs" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :industry_reports, "Industry Reports" %>
+    <%= form.text_area :industry_reports, class: 'form-control', rows: 3, placeholder: "Include any relevant industry data or statistics" %>
+  </div>
+
+  <!-- AI Suggestions Display -->
+  <% if @market_research.ai_suggestions.present? %>
+    <div class="form-group">
+      <label>AI Suggestions:</label>
+      <p class="alert alert-info"><%= format_text_to_html @market_research.ai_suggestions %></p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.submit "Save & Get AI Suggestions", class: "btn btn-primary" %>
+  </div>
+<% end %>

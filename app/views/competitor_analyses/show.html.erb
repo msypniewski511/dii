@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="card p-3">
+
+      <h2>Competitor Analysis</h2>
+      <p><strong>Business Idea:</strong> <%= @competitor_analysis.business_idea.title  %></p>
+      <p><strong>Business Idea:</strong> <%= @competitor_analysis.business_idea.description  %></p>
+      <p><strong>Country:</strong> <%= @competitor_analysis.country %></p>
+
+      <hr>
+
+      <h3>Identified Five Competitors</h3>
+      <% if @competitor_analysis.competitors.any? %>
+        <% @competitor_analysis.competitors.each do |competitor| %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title"><%= competitor.name %></h5>
+              <p class="card-text"><%= competitor.description %></p>
+
+              <h6>Porter's Five Forces Analysis</h6>
+              <p><%= competitor.five_forces.present? ? format_text_to_html(competitor.five_forces) : "Not generated yet" %></p>
+
+              <%= link_to "Update AI Analysis", ai_analysis_business_idea_competitors_path(competitor), method: :post, class: "btn btn-outline-secondary" %>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p>No competitors found yet.</p>
+      <% end %>
+
+      <%= link_to "Back to Business Idea", business_idea_path(@competitor_analysis.business_idea), class: "btn btn-primary mt-3" %> 
+
+  </div>
+</div>
