@@ -17,7 +17,7 @@ class BusinessIdeasController < ApplicationController
     @swot_analysis = @business_idea.swot_analysis || @business_idea.build_swot_analysis
     @business_idea_definition = @business_idea.business_idea_definition || @business_idea.build_business_idea_definition
     @market_research = @business_idea.market_research || @business_idea.build_market_research
-    @competitor_analysis = @business_idea.competitor_analysis.last || @business_idea.build_competitor_analysis
+    @competitor_analysis = @business_idea.competitor_analysis.last || @business_idea.competitor_analysis.build
   end
 
   # GET /business_ideas/new

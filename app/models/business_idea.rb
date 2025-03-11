@@ -30,33 +30,12 @@ class BusinessIdea < ApplicationRecord
   private
 
   def assign_industry_and_create_analysis
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "---------industry-----------"
     assign_industry if industry_type.nil? || industry_type.name == "Unknown Industry"
     
     create_porter_five_force! if porter_five_force.nil?
   end
 
   def recalculate_porter_five_forces
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "--------------------"
-    puts "----------porter----------"
     porter_five_force.analyze_forces if porter_five_force.present?
   end
 

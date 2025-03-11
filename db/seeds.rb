@@ -185,3 +185,5 @@ industries = [
 industries.each do |name|
   IndustryType.find_or_create_by(name: name)
 end
+
+IndustryType.find_or_create_by(name: "Unknown Industry")

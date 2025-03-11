@@ -48,7 +48,7 @@
 
   <div class="form-group">
     <%= form.label :industry_type_id, "Industry Type or let AI classify", class: "form-control-label" %>
-    <%= form.collection_select :industry_type_id, IndustryType.all, :id, :name, { prompt: "Select Industry" }, class: "form-control" %>
+    <%= form.collection_select :industry_type_id, IndustryType.all, :id, :name, { include_blank: "Select Industry" }, class: "form-control", include_hidden: false %>
   </div>
 
 

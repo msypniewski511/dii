@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_10_193948) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_11_000842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,7 +107,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_10_193948) do
     t.text "suggestions"
     t.integer "user_id"
     t.string "status", default: "Draft"
-    t.bigint "industry_type_id", null: false
+    t.bigint "industry_type_id", default: 1, null: false
     t.index ["industry_type_id"], name: "index_business_ideas_on_industry_type_id"
     t.index ["user_id"], name: "index_business_ideas_on_user_id"
   end
