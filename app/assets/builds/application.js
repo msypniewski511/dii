@@ -51103,6 +51103,19 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 });
+document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("submit", function(event2) {
+    const form2 = event2.target;
+    if (form2.tagName === "FORM") {
+      document.body.classList.add("blurred");
+      document.getElementById("page-loader").classList.add("show");
+    }
+  });
+  window.addEventListener("load", function() {
+    document.body.classList.remove("blurred");
+    document.getElementById("page-loader").classList.remove("show");
+  });
+});
 /*! Bundled license information:
 
 jquery/dist/jquery.js:

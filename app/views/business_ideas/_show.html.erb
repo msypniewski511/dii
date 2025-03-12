@@ -144,38 +144,38 @@
             <legend class="float-none w-auto px-3"><%= @business_idea.title %></legend>
 
             <h3>Selected Business Models:</h3>
-            <ul>
-              <% @business_idea.stages.distinct.pluck(:stage_type).each do |model| %>
-                <li><%= model.titleize %></li> 
-                <% if (model = "nine_stages" && !@business_idea.business_idea_definition.persisted? ) %>
-                  <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form2">Create Business Idea Definition</button>
-                <% else %>
-                  <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form2">Edit Business Idea Definition</button>
-                  <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#business_idea_definition">Show Business Idea Definition</button>
-                <% end %>
+<ul>
+  <% @business_idea.stages.distinct.pluck(:stage_type).each do |model| %>
+    <li><%= model.titleize %></li> 
+    <% if (model = "nine_stages" && !@business_idea.business_idea_definition.persisted? ) %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form2">Create Business Idea Definition</button>
+    <% else %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form2">Edit Business Idea Definition</button>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#business_idea_definition">Show Business Idea Definition</button>
+    <% end %>
 
-                <% if (model = "nine_stages" && !@business_idea.market_research.persisted? ) %>
-                  <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-market_research">Create Market Research</button>
-                <% else %>
-                  <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-market_research">Edit Market Research</button>
-                  <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#market_research">Show Market Research</button>
-                <% end %>   
+    <% if (model = "nine_stages" && !@business_idea.market_research.persisted? ) %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-market_research">Create Market Research</button>
+    <% else %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-market_research">Edit Market Research</button>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#market_research">Show Market Research</button>
+    <% end %>   
 
-                <br />
-                <% if (model = "nine_stages" && !@business_idea.competitor_analysis.last.persisted? ) %>
-                  <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-competitor_analysis">Create Competitor Research</button>
-                <% else %>
-                  <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#competitor_analysis">Competitor Analysis</button>
-                <% end %>
-              <% end %>
-            </ul>
+    <br />
+    <% if (model = "nine_stages" && !@business_idea.competitor_analysis.last.persisted? ) %>
+      <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#modal-form-competitor_analysis">Create Competitor Research</button>
+    <% else %>
+      <%= link_to "Competitor Analysis", business_idea_competitor_analyses_path(@business_idea), class: "btn bg-gradient-success mt-3" %>
+    <% end %>
+  <% end %>
+</ul>
 
-            <h3>Stages:</h3>
-            <ol>
-              <% @business_idea.stages.order(:created_at).each do |stage| %>
-                <li><%= stage.name %> (<%= stage.stage_type.titleize %>)</li>
-              <% end %>
-            </ol>
+<h3>Stages:</h3>
+<ol>
+  <% @business_idea.stages.order(:created_at).each do |stage| %>
+    <li><%= stage.name %> (<%= stage.stage_type.titleize %>)</li>
+  <% end %>
+</ol>
             
             <p><strong>Description:</strong>
             <br /><%= format_text_to_html @business_idea.description %>

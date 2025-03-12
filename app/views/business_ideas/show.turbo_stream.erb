@@ -1,0 +1,5 @@
+<turbo-stream action="replace" target="business_idea_<%= @business_idea.id %>">
+  <template>
+    <%= render partial: "business_ideas/show", locals: { business_idea: @business_idea } %>
+  </template>
+</turbo-stream>

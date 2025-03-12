@@ -7,6 +7,7 @@
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%# turbo_include_tags %>  <!-- ✅ Add this here -->
 
     <!-- Stylesheets -->
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -62,8 +63,69 @@
         75.01% { background-position: 100% 0, 100% 0, 100% 100%, 0 50%; }
         100% { background-position: 50%  0, 100% 0,    100% 100%, 0 100%; }
       }
-    </style>
-    <style>
+      /* Blurred effect */
+  <style>
+    /* Blurred effect for page during request */
+    .blurred {
+      filter: blur(5px);
+      pointer-events: none;
+    }
+
+    /* Full-screen loader */
+    #page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 19999;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.3s ease-in-out;
+    }
+
+    #page-loader.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    /* Infinity Animated Loader */
+
+    .infinity-loader {
+      width: 300px;
+      height: 200px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Adjusted stroke-dasharray values */
+    .infinity-path {
+      stroke-dasharray: 2.43px, 242.78px; /* 1% of total length, full length */
+      stroke-dashoffset: 0;
+      animation: infinity-anim 1.6s linear infinite;
+    }
+
+    @keyframes infinity-anim {
+      12.5% {
+        stroke-dasharray: 34px, 242.78px;  /* 14% of total length */
+        stroke-dashoffset: -26.70px;  /* 11% of total length */
+      }
+      43.75% {
+        stroke-dasharray: 85px, 242.78px;  /* 35% of total length */
+        stroke-dashoffset: -85px;  /* 35% of total length */
+      }
+      100% {
+        stroke-dasharray: 2.43px, 242.78px; /* Back to start */
+        stroke-dashoffset: -240.35px; /* 99% of total length */
+      }
+    }
+
   .stepper-container {
     display: flex;
     justify-content: center;
@@ -130,7 +192,14 @@
   </head>
 
   <body class="g-sidenav-show bg-gray-100">
-    <div class="loader"></div>
+      <!-- Loader -->
+      <div id="page-loader">
+        <svg class="infinity-loader" viewBox="0 0 187.3 93.7" preserveAspectRatio="xMidYMid meet">
+          <path stroke="#ededed" class="infinity-path" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"
+                d="M93.9,46.4c9.3,9.5,13.8,17.9,23.5,17.9s17.5-7.8,17.5-17.5s-7.8-17.6-17.5-17.5c-9.7,0.1-13.3,7.2-22.1,17.1 
+                  c-8.9,8.8-15.7,17.9-25.4,17.9s-17.5-7.8-17.5-17.5s7.8-17.5,17.5-17.5S86.2,38.6,93.9,46.4z" />
+        </svg>
+      </div>
     
   <div class="min-height-300 bg-dark position-absolute w-100">
     <!--<div class="position-absolute w-100 min-height-300 top-0" style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/profile-layout-header.jpg'); background-position-y: 50%;">

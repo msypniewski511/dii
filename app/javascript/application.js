@@ -150,3 +150,29 @@ document.addEventListener('DOMContentLoaded', function () {
 //       }
 //   });
 // })
+// document.addEventListener('turbo:submit-start', () => {
+//   document.body.classList.add('blurred') // Blur content
+//   document.getElementById('page-loader').classList.add('show') // Show loader
+// })
+
+// document.addEventListener('turbo:load', () => {
+//   document.body.classList.remove('blurred') // Remove blur
+//   document.getElementById('page-loader').classList.remove('show') // Hide loader
+// })
+document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('submit', function (event) {
+    const form = event.target
+
+    // Check if the form has 'data-remote' or a custom class to apply loader
+    if (form.tagName === 'FORM') {
+      document.body.classList.add('blurred') // Blur page
+      document.getElementById('page-loader').classList.add('show') // Show loader
+    }
+  })
+
+  // Remove blur and loader when the page loads (after request)
+  window.addEventListener('load', function () {
+    document.body.classList.remove('blurred')
+    document.getElementById('page-loader').classList.remove('show')
+  })
+})
