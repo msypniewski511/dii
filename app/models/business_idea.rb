@@ -7,6 +7,7 @@ class BusinessIdea < ApplicationRecord
 
   has_one :business_idea_definition, dependent: :destroy
   has_one :market_research, dependent: :destroy
+  has_one :business_model_canva, dependent: :destroy
   has_many :competitor_analysis
 
   has_many :stages, dependent: :destroy
@@ -26,6 +27,8 @@ class BusinessIdea < ApplicationRecord
   after_create :assign_industry_and_create_analysis
   after_update :assign_industry_and_create_analysis
   after_update :recalculate_porter_five_forces, if: -> { saved_change_to_industry_type_id? }
+  after_create :initialize_business_model_canvas
+
 
   private
 
@@ -43,5 +46,9 @@ class BusinessIdea < ApplicationRecord
     industry_name = OpenAI::AiIndustryClassifier.call(self.description)
     industry = IndustryType.find_or_create_by(name: industry_name)
     self.update!(industry_type: industry)
+  end
+
+  def initialize_business_model_canvas
+    create_business_model_canva!
   end
 end

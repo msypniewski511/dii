@@ -41,7 +41,8 @@
               <h6>Porter's Five Forces Analysis</h6>
               <p><%= competitor.five_forces.present? ? format_text_to_html(competitor.five_forces) : "Not generated yet" %></p>
 
-              <%= link_to "Update AI Analysis", ai_analysis_business_idea_competitors_path(competitor), method: :get, class: "btn btn-outline-secondary" %>
+              <%# link_to "Update AI Analysis", ai_analysis_business_idea_competitors_path(competitor), method: :get, class: "btn btn-outline-secondary" %>
+              <%= link_to "Update AI Analysis", ai_analysis_business_idea_competitor_path(@competitor_analysis.business_idea, competitor), method: :post, class: "btn btn-outline-secondary" %>
             </div>
           </div>
         </div>

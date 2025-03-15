@@ -1,0 +1,149 @@
+/* .bmc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 15px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.bmc-item {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.bmc-item h4 {
+  margin-bottom: 10px;
+}
+
+.partners {
+  grid-column: span 1;
+}
+.activities {
+  grid-column: span 1;
+}
+.resources {
+  grid-column: span 1;
+}
+.value {
+  grid-column: span 3;
+  background: #dff0d8;
+}
+.relationships {
+  grid-column: span 1;
+}
+.channels {
+  grid-column: span 1;
+}
+.segments {
+  grid-column: span 1;
+}
+.cost {
+  grid-column: span 1;
+  background: #f2dede;
+}
+.revenue {
+  grid-column: span 1;
+  background: #d9edf7;
+} */
+.bmc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr; /* 5 columns */
+  grid-template-rows: auto auto auto; /* 3 rows */
+  gap: 10px;
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+}
+
+.bmc-item {
+  background: #f8f9fa;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Top Row */
+.partners {
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
+} /* Tall */
+.activities {
+  grid-column: 2 / 3;
+  grid-row: 1 / 2;
+}
+.value {
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+} /* Tall */
+.relationships {
+  grid-column: 4 / 5;
+  grid-row: 1 / 2;
+}
+.segments {
+  grid-column: 5 / 6;
+  grid-row: 1 / 3;
+} /* Tall */
+
+/* Middle Row */
+.resources {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+}
+.channels {
+  grid-column: 4 / 5;
+  grid-row: 2 / 3;
+}
+
+/* Bottom Row */
+.cost {
+  grid-column: 1 / 3;
+  grid-row: 3 / 4;
+} /* Wide */
+.revenue {
+  grid-column: 3 / 6;
+  grid-row: 3 / 4;
+} /* Wide */
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .bmc-grid {
+    grid-template-columns: 1fr 1fr; /* Two columns on tablets */
+    grid-template-rows: auto;
+  }
+
+  .bmc-item {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .partners,
+  .segments,
+  .value {
+    grid-column: 1 / 3; /* Full width */
+  }
+
+  .cost,
+  .revenue {
+    grid-column: 1 / 3; /* Stack on mobile */
+  }
+}
+
+@media (max-width: 600px) {
+  .bmc-grid {
+    grid-template-columns: 1fr; /* Single column on mobile */
+  }
+
+  .bmc-item {
+    grid-column: 1 / 2;
+  }
+}

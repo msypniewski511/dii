@@ -22,6 +22,12 @@ Rails.application.routes.draw do
     resource :swot_analyses
     resource :competitor_analyses, only: [:new, :create, :show]
     resource :competitors do
+
+      member do
+        post 'ai_analysis', to: 'competitors#ai_analysis'
+      end
+    end
+    resources :competitors do
       member do
         post 'ai_analysis', to: 'competitors#ai_analysis'
       end
@@ -31,6 +37,8 @@ Rails.application.routes.draw do
         post :generate_ai_analysis
       end
     end
+
+    resource :business_model_canva, only: [:show, :edit, :update]
   end
   resources :articles
   resources :brands

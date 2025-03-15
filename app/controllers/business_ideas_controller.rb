@@ -18,6 +18,7 @@ class BusinessIdeasController < ApplicationController
     @business_idea_definition = @business_idea.business_idea_definition || @business_idea.build_business_idea_definition
     @market_research = @business_idea.market_research || @business_idea.build_market_research
     @competitor_analysis = @business_idea.competitor_analysis.last || @business_idea.competitor_analysis.build
+    @business_model_canva = @business_idea.business_model_canva || @business_idea.create_business_model_canva
   end
 
   # GET /business_ideas/new

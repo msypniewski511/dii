@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <h2 class="text-center">Edit Business Model Canvas</h2>
+
+  <%= form_with model: @business_model_canva, url: business_idea_business_model_canva_path(@business_idea), method: :patch do |f| %>
+    <div class="row">
+      <div class="col-md-6">
+        <label>Key Partners</label>
+        <%= f.text_area :key_partners, class: "form-control", value: @suggestions[:key_partners], rows: 5 %>
+      </div>
+      <div class="col-md-6">
+        <label>Key Activities</label>
+        <%= f.text_area :key_activities, class: "form-control", value: @suggestions[:key_activities], rows: 5 %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label>Key Resources</label>
+        <%= f.text_area :key_resources, class: "form-control", value: @suggestions[:key_resources], rows: 5 %>
+      </div>
+      <div class="col-md-6">
+        <label>Value Propositions</label>
+        <%= f.text_area :value_propositions, class: "form-control", value: @suggestions[:value_propositions], rows: 5 %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label>Customer Relationships</label>
+        <%= f.text_area :customer_relationships, class: "form-control", value: @suggestions[:customer_relationships], rows: 5 %>
+      </div>
+      <div class="col-md-6">
+        <label>Channels</label>
+        <%= f.text_area :channels, class: "form-control", value: @suggestions[:channels], rows: 5 %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label>Customer Segments</label>
+        <%= f.text_area :customer_segments, class: "form-control", value: @suggestions[:customer_segments], rows: 5 %>
+      </div>
+      <div class="col-md-6">
+        <label>Cost Structure</label>
+        <%= f.text_area :cost_structure, class: "form-control", value: @suggestions[:cost_structure], rows: 5 %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <label>Revenue Streams</label>
+        <%= f.text_area :revenue_streams, class: "form-control", value: @suggestions[:revenue_streams], rows: 5 %>
+      </div>
+    </div>
+
+    <br>
+    <%= f.submit "Save Changes", class: "btn btn-primary" %>
+  <% end %>
+</div>
