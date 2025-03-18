@@ -167,6 +167,7 @@
                 <% else %>
                   <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#competitor_analysis">Competitor Analysis</button>
                 <% end %>
+                <%= link_to "Business Model Canvas", business_idea_business_model_canva_path(@business_idea), method: :get, class: "btn bg-gradient-success mt-3" %>
               <% end %>
             </ul>
 
@@ -783,3 +784,82 @@
           </div>
         </div>
       </div>
+
+
+
+<div class="container-fluid py-4">
+  <div class="row gx-4">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h6><%= @business_idea.title %></h6>
+        </div>
+        <div class="card-body p-3">
+          <div class="timeline timeline-one-side" data-timeline-axis-style="dotted">
+
+            <% @business_idea.stages.order(:created_at).each do |stage| %>
+              <div class="timeline-block mb-3">
+                <span class="timeline-step">
+                  <i class="<%= 'fas fa-list-ul text-danger text-gradient' if stage.not_started? %>"></i>
+                  <i class="<%= 'fas fa-spinner fa-spin text-warning text-gradient' if stage.in_progress? %>"></i>
+                  <i class="<%= 'fas fa-check-circle text-success text-gradient' if stage.completed? %>"></i>
+                </span>
+
+                <div class="timeline-content">
+                  <h6 class="text-dark text-sm font-weight-bold mb-0">
+                    <%= stage.name %> (<%= stage.stage_type.titleize %>)
+                  </h6>
+                  <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+                    <%= Time.now.strftime("%d %b %H:%M") %>
+                  </p>
+
+                  <p class="text-sm mt-3 mb-2">
+                    <!-- Short description of the stage -->
+                    This stage involves key steps for business validation and strategic planning.
+                  </p>
+
+                  <!-- ✅ BUTTON SECTION ADDED ✅ -->
+                  <div class="d-flex gap-2 mt-2">
+                    <%= link_to "View Stage", "#", class: "btn btn-sm btn-info", data: { bs_toggle: "modal", bs_target: "##{stage.name.downcase.gsub(' ', '_')}" } %>
+                    <%# link_to "Edit Stage", edit_business_idea_stage_path(@business_idea, stage), class: "btn btn-sm btn-primary" %>
+                    <%= link_to "Business Model Canvas", business_idea_business_model_canva_path(@business_idea), class: "btn btn-sm btn-success" %>
+                  </div>
+
+                  <!-- ✅ PROGRESS BAR ✅ -->
+                  <div class="progress my-2">
+                    <div class="progress-bar 
+                      <%= 'bg-secondary' if stage.not_started? %>
+                      <%= 'bg-warning' if stage.in_progress? %>
+                      <%= 'bg-success' if stage.completed? %>"
+                      role="progressbar"
+                      style="width: <%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>%"
+                      aria-valuenow="<%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>"
+                      aria-valuemin="0"
+                      aria-valuemax="100">
+                      <%= stage.status.humanize %>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ✅ RIGHT SECTION FOR BUSINESS MODEL CANVAS ✅ -->
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header pb-0">
+          <h6>Business Model Canvas</h6>
+        </div>
+        <div class="card-body p-3">
+          <%= render @business_idea.business_model_canva %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

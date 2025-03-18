@@ -53,7 +53,112 @@
       </div>
     </div>
 
-    <br>
+    
+
+
+    <hr/>
+    <div class="row">
+      <div class="col-md-6">
+      <label>Key Partners</label>
+        <%= f.text_area :key_partners, class: "form-control", rows: 10 do %>
+          <%= @business_model_canva.key_partners.to_s.html_safe %>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <label>Key Activities</label>
+        <%= f.text_area :key_activities, class: "form-control", rows: 10 do %>
+          <%= @business_model_canva.key_activities.to_s.html_safe %>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <label>Key Resources</label>
+        <%= f.text_area :key_resources, class: "form-control", rows: 10 do %>
+          <%= @business_model_canva.key_resources.to_s.html_safe %>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <label>Value Propositions</label>
+        <%= f.text_area :value_propositions, class: "form-control", rows: 10 do %>
+          <%= @business_model_canva.value_propositions.to_s.html_safe %>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <label>Customer Relationships</label>
+        <%= f.text_area :customer_relationships, class: "form-control", rows: 10 do %>
+          <%= @business_model_canva.customer_relationships.to_s.html_safe %>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <label>Channels</label>
+        <%= f.text_area :channels, class: "form-control", rows: 10 do %>
+          <%= @business_model_canva.channels.to_s.html_safe %>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <label>Customer Segments</label>
+        <%= f.text_area :customer_segments, class: "form-control", rows: 10 do %>
+          <%= @business_model_canva.customer_segments.to_s.html_safe %>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <label>Cost Structure</label>
+        <%= f.text_area :cost_structure, class: "form-control", rows: 10 do %>
+          <%= @business_model_canva.cost_structure.to_s.html_safe %>
+        <% end %>
+      </div>
+
+      <div class="col-md-6">
+        <label>Revenue Streams</label>
+        <%= f.text_area :revenue_streams, class: "form-control", rows: 10 do %>
+          <%= @business_model_canva.revenue_streams.to_s.html_safe %>
+        <% end %>
+      </div>
+
+      <hr/>
+
+      <div class="col-md-6">
+  <label>Key Metrics</label>
+  <%= f.text_area :key_metrics, class: "form-control", value: @business_model_canva.key_metrics, rows: 5 %>
+</div>
+
+<div class="col-md-6">
+  <label>Customer Pains</label>
+  <%= f.text_area :customer_pains, class: "form-control", value: @business_model_canva.customer_pains, rows: 5 %>
+</div>
+
+<div class="col-md-6">
+  <label>Customer Gains</label>
+  <%= f.text_area :customer_gains, class: "form-control", value: @business_model_canva.customer_gains, rows: 5 %>
+</div>
+
+<div class="col-md-6">
+  <label>Cost Breakdown</label>
+  <%= f.text_area :cost_breakdown, class: "form-control", value: @business_model_canva.cost_breakdown, rows: 5 %>
+</div>
+
+<div class="col-md-6">
+  <label>Pricing Strategy</label>
+  <%= f.text_area :pricing_strategy, class: "form-control", value: @business_model_canva.pricing_strategy, rows: 5 %>
+</div>
+
+<div class="col-md-6">
+  <label>Distribution Channels</label>
+  <%= f.text_area :distribution_channels, class: "form-control", value: @business_model_canva.distribution_channels, rows: 5 %>
+</div>
+
+<div class="col-md-6">
+  <label>Partnerships</label>
+  <%= f.text_area :partnerships, class: "form-control", value: @business_model_canva.partnerships, rows: 5 %>
+</div>
+    </div>
+  <br>
     <%= f.submit "Save Changes", class: "btn btn-primary" %>
   <% end %>
 </div>

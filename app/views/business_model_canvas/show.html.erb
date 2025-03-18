@@ -1,51 +1,42 @@
 <div class="card m-3">
-  <div class="card-title">
-    
-    
-  </div>
+  <div class="card-title"></div>
   <div class="card-body">
-    <div class="container">
-    <h2 class="text-center">Business Model Canvas</h2>
+    <div class="container-flex">
+      <h2 class="text-center">Business Model Canvas</h2>
       <h5 class="text-center"><%= @business_idea.title %></h5>
-  
+
       <div class="bmc-grid">
-        <div class="bmc-item partners">
-          <h4>Key Partners</h4>
-          <p><%= format_text_to_html(@business_model_canva.key_partners.presence) || "Not defined yet" %></p>
-          <%= link_to "Edit", edit_business_idea_business_model_canva_path(@business_idea), class: "btn btn-primary btn-sm" %>
-        </div>
-        <div class="bmc-item activities">
-          <h4>Key Activities</h4>
-          <p><%= @business_model_canva.key_activities.presence || "Not defined yet" %></p>
-        </div>
-        <div class="bmc-item resources">
-          <h4>Key Resources</h4>
-          <p><%= @business_model_canva.key_resources.presence || "Not defined yet" %></p>
-        </div>
-        <div class="bmc-item value">
-          <h4>Value Propositions</h4>
-          <p><%= format_text_to_html(@business_model_canva.value_propositions.presence) || "Not defined yet" %></p>
-        </div>
-        <div class="bmc-item relationships">
-          <h4>Customer Relationships</h4>
-          <p><%= @business_model_canva.customer_relationships.presence || "Not defined yet" %></p>
-        </div>
-        <div class="bmc-item channels">
-          <h4>Channels</h4>
-          <p><%= @business_model_canva.channels.presence || "Not defined yet" %></p>
-        </div>
-        <div class="bmc-item segments">
-          <h4>Customer Segments</h4>
-          <p><%= @business_model_canva.customer_segments.presence || "Not defined yet" %></p>
-        </div>
-        <div class="bmc-item cost">
-          <h4>Cost Structure</h4>
-          <p><%= @business_model_canva.cost_structure.presence || "Not defined yet" %></p>
-        </div>
-        <div class="bmc-item revenue">
-          <h4>Revenue Streams</h4>
-          <p><%= @business_model_canva.revenue_streams.presence || "Not defined yet" %></p>
-        </div>
+        <% ordered_keys = {
+          "key_partners" => "partners",
+          "partnerships" => "strategic-partnerships",
+          "key_activities" => "activities",
+          "key_resources" => "resources",
+          "value_propositions" => "value",
+          "customer_relationships" => "relationships",
+          "customer_pains" => "pains",
+          "customer_gains" => "gains",
+          "distribution_channels" => "channels",
+          "customer_segments" => "segments",
+          "cost_structure" => "cost",
+          "cost_breakdown" => "cost-details",
+          "pricing_strategy" => "pricing",
+          "revenue_streams" => "revenue",
+          "key_metrics" => "metrics"
+        } %>
+
+        <% ordered_keys.each do |key, css_class| %>
+          <div class="bmc-item <%= css_class %>">
+            <div class="d-flex align-items-center">
+              <i class="fas <%= icon_for_bmc_attribute(key) %> fa-2x me-2"></i>
+              <h4 class="mb-2 fw-bold"><%= key.humanize.titleize %></h4>
+            </div>
+
+            <p><%= formatted_bmc_text(@business_model_canva[key].presence || "Not defined yet") %></p>
+
+            <%= link_to "Edit", edit_business_idea_business_model_canva_path(@business_idea), class: "btn btn-primary btn-sm" %>
+          </div>
+        <% end %>
+
       </div>
     </div>
   </div>

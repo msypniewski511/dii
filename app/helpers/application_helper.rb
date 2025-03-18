@@ -670,4 +670,54 @@ module ApplicationHelper
       # formatted_text = "<li class='list-group-item'>#{match[1]}. <h6 class='d-inline'>#{match[2]}:</h6> #{match[3]}</li>"
     "<div>#{formatted_text}</div>".html_safe
   end
+
+  def formatted_bmc_text(text)
+    return "" if text.blank?
+
+    text.split(/\r\n|\n/).reject(&:blank?).map do |line|
+      content_tag(:p, line.strip, class: "mb-3")
+    end.join.html_safe
+  end
+
+  # def icon_for_bmc_attribute(attribute)
+  #   icons = {
+  #     "key_partners" => "fa-handshake", # 🤝
+  #     "key_activities" => "fa-tasks", # 📋
+  #     "key_resources" => "fa-box", # 📦
+  #     "value_propositions" => "fa-bullseye", # 🎯
+  #     "customer_relationships" => "fa-comments", # 💬
+  #     "customer_segments" => "fa-user-friends", # 👥
+  #     "customer_pains" => "fa-exclamation-triangle", # ⚠️
+  #     "customer_gains" => "fa-gem", # 💎
+  #     "cost_structure" => "fa-money-bill-wave", # 💰
+  #     "pricing_strategy" => "fa-tags", # 🏷️
+  #     "key_metrics" => "fa-chart-line", # 📈
+  #     "distribution_channels" => "fa-share-alt", # 🚚
+  #     "partnerships" => "fa-handshake", # 🤝
+  #   }
+
+  #   icons[attribute] || "fa-info-circle" # Default icon if not mapped
+  # end
+
+
+  def icon_for_bmc_attribute(attribute)
+    icons = {
+      "key_partners" => "fa-handshake", # 🤝
+      "key_activities" => "fa-tasks", # 📋
+      "key_resources" => "fa-box", # 📦
+      "value_propositions" => "fa-bullseye", # 🎯
+      "customer_relationships" => "fa-comments", # 💬
+      "distribution_channels" => "fa-truck", # 🚚
+      "customer_segments" => "fa-user-friends", # 👥
+      "customer_pains" => "fa-exclamation-triangle", # ⚠️
+      "customer_gains" => "fa-gem", # 💎
+      "cost_structure" => "fa-money-bill-wave", # 💰
+      "pricing_strategy" => "fa-tags", # 🏷️
+      "key_metrics" => "fa-chart-line", # 📈
+      "partnerships" => "fa-handshake", # 🤝
+      "revenue_streams" => "fa-coins" # 💵 (FIXED!)
+    }
+
+    icons[attribute] || "fa-info-circle" # Default icon (if missing)
+  end
 end

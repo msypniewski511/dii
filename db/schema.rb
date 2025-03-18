@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_12_211305) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_16_172920) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,17 +114,24 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_12_211305) do
 
   create_table "business_model_canvas", force: :cascade do |t|
     t.bigint "business_idea_id", null: false
-    t.text "key_partners"
-    t.text "key_activities"
-    t.text "key_resources"
-    t.text "value_propositions"
-    t.text "customer_relationships"
-    t.text "channels"
-    t.text "customer_segments"
-    t.text "cost_structure"
-    t.text "revenue_streams"
+    t.text "key_partners", default: ""
+    t.text "key_activities", default: ""
+    t.text "key_resources", default: ""
+    t.text "value_propositions", default: ""
+    t.text "customer_relationships", default: ""
+    t.text "channels", default: ""
+    t.text "customer_segments", default: ""
+    t.text "cost_structure", default: ""
+    t.text "revenue_streams", default: ""
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "key_metrics", default: ""
+    t.text "customer_pains", default: ""
+    t.text "customer_gains", default: ""
+    t.text "cost_breakdown", default: ""
+    t.text "pricing_strategy", default: ""
+    t.text "distribution_channels", default: ""
+    t.text "partnerships", default: ""
     t.index ["business_idea_id"], name: "index_business_model_canvas_on_business_idea_id"
   end
 
