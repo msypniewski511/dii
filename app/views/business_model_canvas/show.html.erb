@@ -1,4 +1,4 @@
-<div class="card m-3">
+<!-- <div class="card m-3">
   <div class="card-title"></div>
   <div class="card-body">
     <div class="container-flex">
@@ -41,3 +41,596 @@
     </div>
   </div>
 </div>
+-->
+
+
+<div class="card m-3">
+  <div class="card-title"></div>
+  <div class="card-body">
+    <div class="container-flex">
+      <h2 class="text-center">Business Model Canvas</h2>
+      <h5 class="text-center"><%= @business_idea.title %></h5>
+
+      <div class="bmc-grid">
+        <% ordered_keys = {
+          "key_partners" => "partners",
+          # "partnerships" => "strategic-partnerships",
+          "key_activities" => "activities",
+          "key_resources" => "resources",
+          "value_propositions" => "value",
+          "customer_relationships" => "relationships",
+
+          "distribution_channels" => "channels",
+          "customer_segments" => "segments",
+          "cost_structure" => "cost",
+
+
+          "revenue_streams" => "revenue",
+
+        } %>
+
+        <% ordered_keys.each do |key, css_class| %>
+          <div class="bmc-item <%= css_class %>">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas <%= icon_for_bmc_attribute(key) %> fa-2x me-2"></i>
+              <h5 class="mb-2 fw-bold"><%= key.humanize.titleize %></h5>
+            </div>
+            <% if @business_model_canva[key].presence %>
+              <p id="user_input_<%= key %>"><%= formatted_bmc_text(@business_model_canva[key].presence || "Not defined yet") %></p>
+            <% else %>
+              <textarea id="user_input_<%= key %>" placeholder="<%= (@business_model_canva[key].presence || 'Not defined yet').html_safe %>" class="form-control" rows="10"><%= @business_model_canva.user_input[key] %></textarea>
+            <% end %>
+            <br/>
+            <button onclick="generateAiSuggestion('<%= key %>')" class="btn btn-sm">Generate with AI</button>
+            
+            <fieldset>
+              <legend>AI Suggestion </legend>
+              <p id="ai_suggestion_<%= key %>" style="max-height: 50vh;overflow: overlay;"><%= formatted_bmc_text@business_model_canva.ai_suggestions[key] %></p>
+            </fieldset>
+            
+
+            <!-- <p><%= formatted_bmc_text(@business_model_canva[key].presence || "Not defined yet") %></p> -->
+            
+            <%= link_to "Edit", edit_business_idea_business_model_canva_path(@business_idea), class: "btn btn-primary btn-sm" %>
+          </div>
+        <% end %>
+      </div>
+
+    <div class="container-flex">
+      <h5 class="text-center">Extended Model</h5>
+
+      <div class="bmc-grid">
+        <% ordered_keys = {
+          # "key_partners" => "partners",
+          "partnerships" => "strategic-partnerships",
+          # "key_activities" => "activities",
+          # "key_resources" => "resources",
+          # "value_propositions" => "value",
+          # "customer_relationships" => "relationships",
+          "customer_pains" => "pains",
+          "customer_gains" => "gains",
+          # "distribution_channels" => "channels",
+          # "customer_segments" => "segments",
+          # "cost_structure" => "cost",
+          "cost_breakdown" => "cost-details",
+          "pricing_strategy" => "pricing",
+          # "revenue_streams" => "revenue",
+          "key_metrics" => "metrics"
+        } %>
+
+        <% ordered_keys.each do |key, css_class| %>
+          <div class="bmc-item <%= css_class %>">
+            <div class="d-flex align-items-center">
+              <i class="fas <%= icon_for_bmc_attribute(key) %> fa-2x me-2"></i>
+              <h4 class="mb-2 fw-bold"><%= key.humanize.titleize %></h4>
+            </div>
+            <% if @business_model_canva[key].presence %>
+              <p id="user_input_<%= key %>"><%= formatted_bmc_text(@business_model_canva[key].presence || "Not defined yet") %></p>
+            <% else %>
+              <textarea id="user_input_<%= key %>" placeholder="<%= (@business_model_canva[key].presence || 'Not defined yet').html_safe %>" class="form-control" rows="10"><%= @business_model_canva.user_input[key] %></textarea>
+            <% end %>
+            <br/>
+            <button onclick="generateAiSuggestion('<%= key %>')" class="btn btn-sm">Generate with AI</button>
+            
+            <fieldset>
+              <legend>AI Suggestion </legend>
+              <p id="ai_suggestion_<%= key %>" style="max-height: 50vh;overflow: overlay;"><%= formatted_bmc_text@business_model_canva.ai_suggestions[key] %></p>
+            </fieldset>
+            
+
+            <!-- <p><%= formatted_bmc_text(@business_model_canva[key].presence || "Not defined yet") %></p> -->
+            
+            <%= link_to "Edit", edit_business_idea_business_model_canva_path(@business_idea), class: "btn btn-primary btn-sm" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card m-3">
+  <div class="card-title"></div>
+  <div class="card-body">
+    <div class="container-flex">
+      <h2 class="text-center">Business Model Canvas</h2>
+      <h5 class="text-center"><%= @business_idea.title %></h5>
+
+      <div class="bmc-grid">
+        <% ordered_keys = {
+          "key_partners" => "partners",
+          "partnerships" => "strategic-partnerships",
+          "key_activities" => "activities",
+          "key_resources" => "resources",
+          "value_propositions" => "value",
+          "customer_relationships" => "relationships",
+          "customer_pains" => "pains",
+          "customer_gains" => "gains",
+          "distribution_channels" => "channels",
+          "customer_segments" => "segments",
+          "cost_structure" => "cost",
+          "cost_breakdown" => "cost-details",
+          "pricing_strategy" => "pricing",
+          "revenue_streams" => "revenue",
+          "key_metrics" => "metrics"
+        } %>
+
+        <% ordered_keys.each do |key, css_class| %>
+          <div class="bmc-item <%= css_class %>">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas <%= icon_for_bmc_attribute(key) %> fa-2x me-2"></i>
+              <h5 class="mb-2 fw-bold"><%= key.humanize.titleize %></h5>
+            </div>
+
+            <!-- Truncated Text (Max 100 words) -->
+            <% text = @business_model_canva[key].presence || "Not defined yet" %>
+            <p id="short_text_<%= key %>">
+              <%= truncate(text, length: 100, separator: ' ') %>
+            </p>
+
+            <!-- Show Full Button -->
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_<%= key %>">Show Full</button>
+
+            <!-- Modal for Full View -->
+            <div class="modal fade" id="modal_<%= key %>" tabindex="-1" role="dialog" aria-labelledby="modalTitle_<%= key %>" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-md mw-80" role="document">
+                <div class="modal-content">
+                  <div class="modal-header d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title text-secondary" id="modalTitle_<%= key %>"><%= key.humanize.titleize %></h5>
+                    <button type="button" class="btn btn-link text-danger me-2" data-bs-dismiss="modal">Close</button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <fieldset class="border rounded-3 p-3">
+                          <legend class="float-none w-auto px-3">Your propositions</legend>
+                          <textarea id="user_input_<%= key %>" class="form-control height-vh-80" rows="5"><%= @business_model_canva[key] %></textarea>
+                        </fieldset>
+                        <br/>
+                        <button onclick="updateBmcSection('<%= key %>')" class="btn btn-success">Update</button>
+                        <button onclick="generateAiSuggestion('<%= key %>')" class="btn btn-warning">Generate with AI</button>
+                      </div>
+                    
+                      <div class="col-md-6">
+                        <fieldset class="border rounded-3 p-3">
+                          <legend class="float-none w-auto px-3">AI Suggestion</legend>
+                          <p id="ai_suggestion_<%= key %>" style="max-height: 80vh; overflow: overlay; display: block;"><%= formatted_bmc_text(@business_model_canva.ai_suggestions[key]) %></p>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button onclick="clearAiSuggesstions('<%= key %>')" class="btn btn-danger">Clear AI suggestions</button>
+                    <button type="button" class="btn btn-link ml-auto" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--
+  function updateBmcSection(section) {
+    // Wait for button click to check for textarea
+    let inputField = document.querySelector(`#modal_${section} textarea`);
+
+    if (!inputField) {
+      alert("Error: Input field not found.");
+      return;
+    }
+
+    let userInput = inputField.value.trim(); // Get the latest value
+
+    if (!userInput) {
+      alert("Please enter some text before updating!");
+      return;
+    }Updated Instantly! This is working
+
+    fetch(`/business_ideas/<%= @business_idea.id %>/business_model_canva`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": "<%= form_authenticity_token %>"
+      },
+      body: JSON.stringify({
+        business_model_canva: { [section]: userInput } // Send correct key-value pair
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.updated_text) {
+        // Update the short text preview
+        document.getElementById(`short_text_${section}`).innerText = data.updated_text;
+        
+        // Close the modal
+        let modal = document.querySelector(`#modal_${section}`);
+        let modalInstance = bootstrap.Modal.getInstance(modal);
+        modalInstance.hide();
+
+        alert("Updated Successfully!"); // Confirmation
+      } else {
+        alert("Update failed. Please try again.");
+      }
+    })
+    .catch(error => console.error("Error updating section:", error));
+  }
+
+<script>
+  function updateBmcSection(section) {
+    let inputField = document.querySelector(`#modal_${section} textarea`);
+
+    if (!inputField) {
+      alert("Error: Input field not found.");
+      return;
+    }
+
+    let userInput = inputField.value.trim(); // Get the latest value
+
+    if (!userInput) {
+      alert("Please enter some text before updating!");
+      return;
+    }
+
+    fetch(`/business_ideas/<%= @business_idea.id %>/business_model_canva`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": "<%= form_authenticity_token %>"
+      },
+      body: JSON.stringify({
+        business_model_canva: { [section]: userInput } // Send correct key-value pair
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.updated_text) {
+        // Update the short text preview
+        document.getElementById(`short_text_${section}`).innerText = data.updated_text;
+
+        // Close the modal
+        let modal = document.querySelector(`#modal_${section}`);
+        let modalInstance = bootstrap.Modal.getInstance(modal);
+        modalInstance.hide();
+
+        // 🔥 **Fix Bootstrap backdrop issue**
+        setTimeout(() => {
+          document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+          document.body.classList.remove("modal-open"); // Ensure scrolling is restored
+        }, 300);
+
+        alert("Updated Successfully!"); // Confirmation
+      } else {
+        alert("Update failed. Please try again.");
+      }
+    })
+    .catch(error => console.error("Error updating section:", error));
+  }
+  
+  function generateAiSuggestion(section) {
+    let userInput = document.querySelector(`#modal_${section} textarea`).value.trim(); // Get latest user input
+
+    console.log(`Sending request for ${section} with input:`, userInput); // ✅ Debug log
+
+    fetch(`/business_ideas/<%= @business_idea.id %>/business_model_canva/generate_ai_suggestion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": "<%= form_authenticity_token %>"
+      },
+      body: JSON.stringify({ section: section, user_input: userInput })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Received AI suggestion response:", data); // ✅ Debug log
+
+      let aiSuggestionElement = document.querySelector(`#modal_${section} #ai_suggestion_${section}`);
+
+      if (!aiSuggestionElement) {
+        console.error(`AI Suggestion field ai_suggestion_${section} not found in DOM!`);
+        alert("AI suggestion not updated. Element not found!");
+        return;
+      }
+
+      if (!data.suggestion) {
+        console.error("Received empty AI suggestion!");
+        alert("AI did not return a suggestion. Try again.");
+        return;
+      }
+
+      // 🔥 Ensure only ONE <p> element is used & updated
+      aiSuggestionElement.innerHTML += `<br><hr class="my-2"><br><strong>New AI Suggestion:</strong> ${data.suggestion}`;
+
+      // 🔥 Make sure the AI suggestion is visible
+      aiSuggestionElement.style.display = "block";
+
+      // 🔥 Force re-render of modal by removing and re-adding it
+      let modal = document.querySelector(`#modal_${section}`);
+      let parent = modal.parentNode;
+      parent.removeChild(modal); // Remove modal
+      parent.appendChild(modal); // Re-add modal to force Bootstrap re-initialize
+
+      alert("AI Suggestion Updated!"); // Confirmation
+    })
+    .catch(error => console.error("Error generating AI suggestion:", error));
+  }
+
+function clearAiSuggesstions(section) {
+  console.log("Target Section:", section);
+
+  // ✅ Directly get the AI Suggestion element inside the modal
+  let aiSuggestionElement = document.querySelector(`#modal_${section} #ai_suggestion_${section}`);
+
+  console.log("AI Suggestion Element Found:", aiSuggestionElement);
+
+  if (!aiSuggestionElement) {
+    console.error(`AI Suggestion field ai_suggestion_${section} not found inside modal!`);
+    alert("AI suggestion not updated. Element not found in modal.");
+    return;
+  }
+
+  // ✅ Force update the innerHTML
+  aiSuggestionElement.innerHTML = "🔥 AI Suggestion Cleard!";
+}
+</script>
+
+
+<script>
+function updateBmcSection(section) {
+  let inputField = document.querySelector(`#modal_${section} textarea`);
+
+  if (!inputField) {
+    alert("Error: Input field not found.");
+    return;
+  }
+
+  let userInput = inputField.value.trim(); // Get the latest value
+
+  if (!userInput) {
+    alert("Please enter some text before updating!");
+    return;
+  }
+
+  fetch(`/business_ideas/<%= @business_idea.id %>/business_model_canva`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": "<%= form_authenticity_token %>"
+    },
+    body: JSON.stringify({
+      business_model_canva: { [section]: userInput } // Send correct key-value pair
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.updated_text) {
+      // Update the short text preview
+      document.getElementById(`short_text_${section}`).innerText = data.updated_text;
+
+      // Close the modal
+      let modal = document.querySelector(`#modal_${section}`);
+      let modalInstance = bootstrap.Modal.getInstance(modal);
+      modalInstance.hide();
+
+      // 🔥 **Fix Bootstrap backdrop issue**
+      setTimeout(() => {
+        document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+        document.body.classList.remove("modal-open"); // Ensure scrolling is restored
+      }, 300);
+
+      alert("Updated Successfully!"); // Confirmation
+    } else {
+      alert("Update failed. Please try again.");
+    }
+  })
+  .catch(error => console.error("Error updating section:", error));
+}
+
+function generateAiSuggestion(section) {
+  let userInput = document.querySelector(`#modal_${section} textarea`).value.trim(); // Get the latest user input
+
+  console.log(`Sending request for ${section} with input:`, userInput); // ✅ Debug log
+
+  fetch(`/business_ideas/<%= @business_idea.id %>/business_model_canva/generate_ai_suggestion`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": "<%= form_authenticity_token %>"
+    },
+    body: JSON.stringify({ section: section, user_input: userInput })
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log("Received AI suggestion response:", data); // ✅ Debug log
+
+    let aiSuggestionElement = document.querySelector(`#modal_${section} #ai_suggestion_${section}`);
+
+    if (!aiSuggestionElement) {
+      console.error(`AI Suggestion field ai_suggestion_${section} not found in DOM!`);
+      alert("AI suggestion not updated. Element not found!");
+      return;
+    }
+
+    if (!data.suggestion) {
+      console.error("Received empty AI suggestion!");
+      alert("AI did not return a suggestion. Try again.");
+      return;
+    }
+
+    // 🔥 Append AI suggestion with a separator for history tracking
+    let oldText = aiSuggestionElement.innerHTML.trim();
+    let newText = `<div class="border p-2 rounded mt-2">
+                     <strong>New AI Suggestion:</strong> ${data.suggestion}
+                   </div>`;
+
+    aiSuggestionElement.innerHTML = oldText ? oldText + "<hr>" + newText : newText;
+
+    // 🔥 Make sure the AI suggestion is visible
+    aiSuggestionElement.style.display = "block";
+
+    alert("AI Suggestion Updated!"); // Confirmation
+  })
+  .catch(error => console.error("Error generating AI suggestion:", error));
+}
+
+function clearAiSuggestions(section) {
+  console.log("Target Section:", section);
+
+  // ✅ Directly get the AI Suggestion element inside the modal
+  let aiSuggestionElement = document.querySelector(`#modal_${section} #ai_suggestion_${section}`);
+
+  console.log("AI Suggestion Element Found:", aiSuggestionElement);
+
+  if (!aiSuggestionElement) {
+    console.error(`AI Suggestion field ai_suggestion_${section} not found inside modal!`);
+    alert("AI suggestion not updated. Element not found in modal.");
+    return;
+  }
+
+  // ✅ Clear all AI suggestions
+  aiSuggestionElement.innerHTML = "<em>AI suggestions have been cleared.</em>";
+}
+-->
+
+<script>
+  function updateBmcSection(section) {
+    let inputField = document.querySelector(`#modal_${section} textarea`);
+
+    if (!inputField) {
+      alert("Error: Input field not found.");
+      return;
+    }
+
+    let userInput = inputField.value.trim(); // Get the latest value
+
+    if (!userInput) {
+      alert("Please enter some text before updating!");
+      return;
+    }
+
+    fetch(`/business_ideas/<%= @business_idea.id %>/business_model_canva`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": "<%= form_authenticity_token %>"
+      },
+      body: JSON.stringify({
+        business_model_canva: { [section]: userInput } // Send correct key-value pair
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.updated_text) {
+        // Update the short text preview
+        document.getElementById(`short_text_${section}`).innerText = data.updated_text;
+
+        // Close the modal
+        let modal = document.querySelector(`#modal_${section}`);
+        let modalInstance = bootstrap.Modal.getInstance(modal);
+        modalInstance.hide();
+
+        // 🔥 **Fix Bootstrap backdrop issue**
+        setTimeout(() => {
+          document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+          document.body.classList.remove("modal-open"); // Ensure scrolling is restored
+        }, 300);
+
+        alert("Updated Successfully!"); // Confirmation
+      } else {
+        alert("Update failed. Please try again.");
+      }
+    })
+    .catch(error => console.error("Error updating section:", error));
+  }
+
+  function generateAiSuggestion(section) {
+    let userInput = document.querySelector(`#modal_${section} textarea`).value.trim(); // Get the latest user input
+
+    console.log(`Sending request for ${section} with input:`, userInput); // ✅ Debug log
+
+    fetch(`/business_ideas/<%= @business_idea.id %>/business_model_canva/generate_ai_suggestion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": "<%= form_authenticity_token %>"
+      },
+      body: JSON.stringify({ section: section, user_input: userInput })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Received AI suggestion response:", data); // ✅ Debug log
+
+      let aiSuggestionElement = document.querySelector(`#modal_${section} #ai_suggestion_${section}`);
+
+      if (!aiSuggestionElement) {
+        console.error(`AI Suggestion field ai_suggestion_${section} not found in DOM!`);
+        alert("AI suggestion not updated. Element not found!");
+        return;
+      }
+
+      if (!data.suggestion) {
+        console.error("Received empty AI suggestion!");
+        alert("AI did not return a suggestion. Try again.");
+        return;
+      }
+
+      // 🔥 Append AI suggestion with a separator for history tracking
+      let oldText = aiSuggestionElement.innerHTML.trim();
+      let newText = `<div class="border p-2 rounded mt-2">
+                      <strong>New AI Suggestion:</strong> ${data.suggestion}
+                    </div>`;
+
+      aiSuggestionElement.innerHTML = oldText ? oldText + "<hr>" + newText : newText;
+
+      // 🔥 Make sure the AI suggestion is visible
+      aiSuggestionElement.style.display = "block";
+
+      alert("AI Suggestion Updated!"); // Confirmation
+    })
+    .catch(error => console.error("Error generating AI suggestion:", error));
+  }
+
+  function clearAiSuggesstions(section) {
+    console.log("Target Section:", section);
+
+    // ✅ Directly get the AI Suggestion element inside the modal
+    let aiSuggestionElement = document.querySelector(`#modal_${section} #ai_suggestion_${section}`);
+
+    console.log("AI Suggestion Element Found:", aiSuggestionElement);
+
+    if (!aiSuggestionElement) {
+      console.error(`AI Suggestion field ai_suggestion_${section} not found inside modal!`);
+      alert("AI suggestion not updated. Element not found in modal.");
+      return;
+    }
+
+    // ✅ Clear all AI suggestions
+    aiSuggestionElement.innerHTML = "<em>AI suggestions have been cleared.</em>";
+  }
+
+</script>

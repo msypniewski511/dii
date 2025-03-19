@@ -51111,7 +51111,18 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("page-loader").classList.add("show");
     }
   });
+  document.querySelectorAll("[data-ai-suggestion]").forEach((button) => {
+    button.addEventListener("click", function() {
+      document.body.classList.add("blurred");
+      document.getElementById("page-loader").classList.add("show");
+    });
+  });
   window.addEventListener("load", function() {
+    document.body.classList.remove("blurred");
+    document.getElementById("page-loader").classList.remove("show");
+  });
+  document.addEventListener("ajax:complete", function() {
+    this.alert("finish fetching");
     document.body.classList.remove("blurred");
     document.getElementById("page-loader").classList.remove("show");
   });

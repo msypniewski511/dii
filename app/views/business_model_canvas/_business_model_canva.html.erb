@@ -1,39 +1,236 @@
-<div class="bmc-grid">
-  <div class="bmc-item partners">
-    <h4>Key Partners</h4>
-    <p><%= format_text_to_html(@business_model_canva.key_partners.presence) || "Not defined yet" %></p>
-    <%= link_to "Edit", edit_business_idea_business_model_canva_path(@business_idea), class: "btn btn-primary btn-sm" %>
-  </div>
-  <div class="bmc-item activities">
-    <h4>Key Activities</h4>
-    <p><%= @business_model_canva.key_activities.presence || "Not defined yet" %></p>
-  </div>
-  <div class="bmc-item resources">
-    <h4>Key Resources</h4>
-    <p><%= @business_model_canva.key_resources.presence || "Not defined yet" %></p>
-  </div>
-  <div class="bmc-item value">
-    <h4>Value Propositions</h4>
-    <p><%= format_text_to_html(@business_model_canva.value_propositions.presence) || "Not defined yet" %></p>
-  </div>
-  <div class="bmc-item relationships">
-    <h4>Customer Relationships</h4>
-    <p><%= @business_model_canva.customer_relationships.presence || "Not defined yet" %></p>
-  </div>
-  <div class="bmc-item channels">
-    <h4>Channels</h4>
-    <p><%= @business_model_canva.channels.presence || "Not defined yet" %></p>
-  </div>
-  <div class="bmc-item segments">
-    <h4>Customer Segments</h4>
-    <p><%= @business_model_canva.customer_segments.presence || "Not defined yet" %></p>
-  </div>
-  <div class="bmc-item cost">
-    <h4>Cost Structure</h4>
-    <p><%= @business_model_canva.cost_structure.presence || "Not defined yet" %></p>
-  </div>
-  <div class="bmc-item revenue">
-    <h4>Revenue Streams</h4>
-    <p><%= @business_model_canva.revenue_streams.presence || "Not defined yet" %></p>
+<div class="card p-0">
+  <div class="card-title"><h2 class="text-center mt-3">Business Model Canvas</h2></div>
+  <div class="card-body p-0">
+    <div class="container-flex">
+      
+      <h5 class="text-center"><%= @business_idea.title %></h5>
+
+      <div class="bmc-grid">
+        <% ordered_keys = {
+          "key_partners" => "partners",
+          "partnerships" => "strategic-partnerships",
+          "key_activities" => "activities",
+          "key_resources" => "resources",
+          "value_propositions" => "value",
+          "customer_relationships" => "relationships",
+          "customer_pains" => "pains",
+          "customer_gains" => "gains",
+          "distribution_channels" => "channels",
+          "customer_segments" => "segments",
+          "cost_structure" => "cost",
+          "cost_breakdown" => "cost-details",
+          "pricing_strategy" => "pricing",
+          "revenue_streams" => "revenue",
+          "key_metrics" => "metrics"
+        } %>
+
+        <% ordered_keys.each do |key, css_class| %>
+          <div class="bmc-item <%= css_class %>">
+            <div class="d-flex align-items-center mb-2">
+              <i class="fas <%= icon_for_bmc_attribute(key) %> fa-2x me-2"></i>
+              <h5 class="mb-2 fw-bold"><%= key.humanize.titleize %></h5>
+            </div>
+
+            <!-- Truncated Text (Max 100 words) -->
+            <% text = @business_model_canva[key].presence || "Not defined yet" %>
+            <p id="short_text_<%= key %>">
+              <%= truncate(text, length: 100, separator: ' ') %>
+            </p>
+
+            <!-- Show Full Button -->
+            <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#modal_<%= key %>">Show Full</button>
+
+            <!-- Modal for Full View -->
+            <div class="modal fade" id="modal_<%= key %>" tabindex="-1" role="dialog" aria-labelledby="modalTitle_<%= key %>" aria-hidden="true">
+              <div class="modal-dialog modal-lg modal-md mw-80" role="document">
+                <div class="modal-content">
+                  <div class="modal-header d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title text-secondary" id="modalTitle_<%= key %>"><%= key.humanize.titleize %></h5>
+                    <button type="button" class="btn btn-link text-danger me-2" data-bs-dismiss="modal">Close</button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <fieldset class="border rounded-3 p-3">
+                          <legend class="float-none w-auto px-3">Your propositions</legend>
+                          <textarea id="user_input_<%= key %>" class="form-control height-vh-80" rows="5"><%= @business_model_canva[key] %></textarea>
+                        </fieldset>
+                        <br/>
+                        <button onclick="updateBmcSection('<%= key %>')" class="btn btn-success">Update</button>
+                        <button data-ai-suggestion onclick="generateAiSuggestion('<%= key %>')" class="btn btn-warning">Generate with AI</button>
+                      </div>
+                    
+                      <div class="col-md-6">
+                        <fieldset class="border rounded-3 p-3">
+                          <legend class="float-none w-auto px-3">AI Suggestion</legend>
+                          <p id="ai_suggestion_<%= key %>" style="max-height: 80vh; overflow: overlay; display: block;"><%= formatted_bmc_text(@business_model_canva.ai_suggestions[key]) %></p>
+                        </fieldset>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button onclick="clearAiSuggesstions('<%= key %>')" class="btn btn-danger">Clear AI suggestions</button>
+                    <button type="button" class="btn btn-link ml-auto" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 </div>
+
+<script>
+function updateBmcSection(section) {
+  let inputField = document.querySelector(`#modal_${section} textarea`);
+
+  if (!inputField) {
+    alert("Error: Input field not found.");
+    return;
+  }
+
+  let userInput = inputField.value.trim(); // Get the latest value
+
+  if (!userInput) {
+    alert("Please enter some text before updating!");
+    return;
+  }
+
+  // ✅ Show Loader Before Sending Request
+  document.body.classList.add('blurred');
+  document.getElementById('page-loader').classList.add('show');
+
+  fetch(`/business_ideas/<%= @business_idea.id %>/business_model_canva`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": "<%= form_authenticity_token %>"
+    },
+    body: JSON.stringify({
+      business_model_canva: { [section]: userInput } // Send correct key-value pair
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.updated_text) {
+      let previewElement = document.getElementById(`short_text_${section}`);
+      let modalTextElement = document.querySelector(`#modal_${section} #user_input_${section}`);
+
+      if (previewElement) {
+        // ✅ Truncate long text to prevent UI freezing
+        let truncatedText = data.updated_text.length > 100 
+          ? data.updated_text.substring(0, 100) + "..." 
+          : data.updated_text;
+          
+        previewElement.innerText = truncatedText; // Update preview
+      }
+
+      if (modalTextElement) {
+        modalTextElement.value = data.updated_text; // Update full modal input
+      }
+
+      // ✅ Close the modal after successful update
+      let modal = document.querySelector(`#modal_${section}`);
+      let modalInstance = bootstrap.Modal.getInstance(modal);
+      modalInstance.hide();
+
+      // ✅ **FORCE FULL RESET TO RESTORE SCROLLING**
+      setTimeout(() => {
+        document.querySelectorAll(".modal-backdrop").forEach(el => el.remove());
+        document.body.classList.remove("modal-open"); // Reset Bootstrap modal class
+        document.body.style.overflow = "auto"; // **Ensure scrolling is restored**
+        document.documentElement.style.overflow = "auto"; // **Fix for Firefox**
+      }, 300);
+
+      alert("Updated Successfully!"); // Confirmation
+    } else {
+      alert("Update failed. Please try again.");
+    }
+  })
+  .catch(error => console.error("Error updating section:", error))
+  .finally(() => {
+    // ✅ Hide Loader After Request Finishes
+    document.body.classList.remove('blurred');
+    document.getElementById('page-loader').classList.remove('show');
+  });
+}
+
+  function generateAiSuggestion(section) {
+    let userInput = document.querySelector(`#modal_${section} textarea`).value.trim(); // Get the latest user input
+    
+    console.log(`Sending request for ${section} with input:`, userInput); // ✅ Debug log
+
+    fetch(`/business_ideas/<%= @business_idea.id %>/business_model_canva/generate_ai_suggestion`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": "<%= form_authenticity_token %>"
+      },
+      body: JSON.stringify({ section: section, user_input: userInput })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Received AI suggestion response:", data); // ✅ Debug log
+
+      let aiSuggestionElement = document.querySelector(`#modal_${section} #ai_suggestion_${section}`);
+
+      if (!aiSuggestionElement) {
+        console.error(`AI Suggestion field ai_suggestion_${section} not found in DOM!`);
+        alert("AI suggestion not updated. Element not found!");
+        return;
+      }
+
+      if (!data.suggestion) {
+        console.error("Received empty AI suggestion!");
+        alert("AI did not return a suggestion. Try again.");
+        return;
+      }
+
+      // ✅ **Format AI text to preserve line breaks**
+      let formattedText = data.suggestion
+        .replace(/\n/g, "<br>") // Convert new lines to HTML <br>
+        .replace(/(\d+)\./g, "<br><strong>$1.</strong>"); // Bold numbers (1., 2., etc.)
+
+      // 🔥 Append AI suggestion with a separator for history tracking
+      let oldText = aiSuggestionElement.innerHTML.trim();
+      let newText = `<div class="border p-2 rounded mt-2 bg-light">
+                      <strong>New AI Suggestion:</strong><br>${formattedText}
+                    </div>`;
+
+      aiSuggestionElement.innerHTML = oldText ? oldText + "<hr>" + newText : newText;
+
+      // 🔥 Make sure the AI suggestion is visible
+      aiSuggestionElement.style.display = "block";
+
+      alert("AI Suggestion Updated!"); // Confirmation
+    })
+    .catch(error => console.error("Error generating AI suggestion:", error))
+    .finally(() => {
+      // ✅ Hide Loader After Request Finishes
+      document.body.classList.remove('blurred');
+      document.getElementById('page-loader').classList.remove('show');
+    });
+  }
+
+
+  function clearAiSuggesstions(section) {
+    console.log("Target Section:", section);
+
+    // ✅ Directly get the AI Suggestion element inside the modal
+    let aiSuggestionElement = document.querySelector(`#modal_${section} #ai_suggestion_${section}`);
+
+    console.log("AI Suggestion Element Found:", aiSuggestionElement);
+
+    if (!aiSuggestionElement) {
+      console.error(`AI Suggestion field ai_suggestion_${section} not found inside modal!`);
+      alert("AI suggestion not updated. Element not found in modal.");
+      return;
+    }
+
+    // ✅ Clear all AI suggestions
+    aiSuggestionElement.innerHTML = "<em>AI suggestions have been cleared.</em>";
+  }
+
+</script>

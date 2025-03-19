@@ -170,8 +170,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   })
 
+  // ✅ Listen for AI Suggestion Button Clicks
+  document.querySelectorAll('[data-ai-suggestion]').forEach((button) => {
+    button.addEventListener('click', function () {
+      document.body.classList.add('blurred') // Blur page
+      document.getElementById('page-loader').classList.add('show') // Show loader
+    })
+  })
+
   // Remove blur and loader when the page loads (after request)
   window.addEventListener('load', function () {
+    document.body.classList.remove('blurred')
+    document.getElementById('page-loader').classList.remove('show')
+  })
+
+  // ✅ Hide Loader When AJAX Requests Finish (for fetch calls)
+  document.addEventListener('ajax:complete', function () {
+    this.alert('finish fetching')
     document.body.classList.remove('blurred')
     document.getElementById('page-loader').classList.remove('show')
   })

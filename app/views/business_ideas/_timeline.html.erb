@@ -1,0 +1,74 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="text-secondary">Business model: </h4>
+    <% @business_idea.stages.distinct.pluck(:stage_type).each do |model| %>
+      <li><%= model.titleize %></li>
+    <% end %>
+  </div>
+  <div class="card-body">
+    <div class="timeline timeline-one-side" data-timeline-axis-style="dotted">
+      <% @business_idea.stages.order(:created_at).each do |stage| %>
+        <div class="timeline-block mb-3">
+          <span class="timeline-step">
+            <% if stage.not_started? %>
+              <i class="fas fa-list-ul text-danger text-gradient"></i>
+            <% elsif stage.in_progress? %>
+              <i class="fas fa-spinner fa-spin text-warning text-gradient"></i>
+            <% elsif stage.completed? %>
+              <i class="fas fa-check-circle text-success text-gradient"></i>
+            <% end %>
+          </span>
+          <div class="timeline-content">
+            <h6 class="text-dark text-sm font-weight-bold mb-0">
+              <%= stage.name %> (<%= stage.stage_type.titleize %>)
+            </h6>
+
+            <div class="progress my-2">
+              <div 
+                class="progress-bar 
+                  <%= stage.not_started? ? 'bg-secondary' : '' %> 
+                  <%= stage.in_progress? ? 'bg-warning' : '' %> 
+                  <%= stage.completed? ? 'bg-info' : '' %>" 
+                role="progressbar"
+                style="width: <%= stage.progress_percentage %>%;"
+                aria-valuenow="<%= stage.progress_percentage %>"
+                aria-valuemin="0"
+                aria-valuemax="100">
+                <%= "#{stage.progress_percentage}% - #{stage.status.humanize}" %>
+              </div>
+            </div>
+
+            <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
+              <%= Time.now.strftime("%d %b %H:%M") %>
+            </p>
+            <p class="text-sm mt-3 mb-2">
+              <%# stage.description %>
+            </p>
+            
+            <!-- ✅ Fixed: Close <a> tag properly -->
+            <a href="#" data-bs-toggle="modal" data-bs-target="#<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">
+              <span class="badge badge-sm bg-gradient-success">Show</span>
+            </a>
+            <span class="badge badge-sm bg-gradient-danger">Update</span>
+            <span class="badge badge-sm bg-gradient-info">Start...</span>
+
+            <div class="progress my-2">
+              <div 
+                class="progress-bar 
+                  <%= stage.not_started? ? 'bg-warning' : '' %> 
+                  <%= stage.in_progress? ? 'bg-info' : '' %> 
+                  <%= stage.completed? ? 'bg-success' : '' %>" 
+                role="progressbar"
+                style="width: <%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>%;"
+                aria-valuenow="<%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>"
+                aria-valuemin="0"
+                aria-valuemax="100">
+                <%= stage.status.humanize %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -145,4 +145,14 @@ class BusinessIdeasController < ApplicationController
         p stage
       end
     end
+
+
+    def calculate_progress(model, fields)
+      return 0 if model.nil?
+      total_fields = fields.size
+      completed_fields = fields.count { |field| model[field].present? }
+      progress = (completed_fields.to_f / total_fields * 100).round
+      Rails.logger.info "Progress for #{model.class.name}: #{progress}%"
+      progress
+    end
 end

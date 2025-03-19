@@ -26,6 +26,7 @@ class Stage < ApplicationRecord
     update(status: new_status)
   end
 
+
   STAGE_ORDERS = {
     "nine_stages" => [
       "Business Owner Characteristics",
@@ -76,4 +77,13 @@ class Stage < ApplicationRecord
   scope :ordered, ->(stage_type) {
     order(:created_at).to_a.sort_by { |stage| STAGE_ORDERS[stage_type]&.index(stage.name) || STAGE_ORDERS[stage_type]&.length || 100 }
   }
+
+  # ✅ Ensure default value of progress is 0 when a new stage is created
+  after_initialize :set_default_progress, if: :new_record?
+
+  private
+
+  def set_default_progress
+    self.progress_percentage ||= 0
+  end
 end

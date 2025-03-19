@@ -4,6 +4,7 @@
 @import 'actiontext.css';
 @import 'argon-dashboard.scss';
 @import 'css/business_model_canvas.css';
+@import 'css/tools.css';
 
 aside {
   max-width: fit-content !important;
@@ -14,4 +15,10 @@ aside {
 
 .mw-65 {
   max-width: 65% !important;
+}
+
+.mw-80 {
+  width: 80% !important;
+  max-width: 80% !important;
+  margin-left: 15% !important;
 }

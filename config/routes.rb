@@ -38,7 +38,11 @@ Rails.application.routes.draw do
       end
     end
 
-    resource :business_model_canva, only: [:show, :edit, :update]
+    resource :business_model_canva, only: [:show, :edit, :update] do
+      member do
+        post 'generate_ai_suggestion', to: 'business_model_canvas#generate_ai_suggestion'
+      end
+    end
   end
   resources :articles
   resources :brands

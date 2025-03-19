@@ -22,10 +22,31 @@ class BusinessModelCanvasController < ApplicationController
 
   def update
     if @business_model_canva.update(business_model_canva_params)
-      redirect_to business_idea_business_model_canva_path(@business_idea), notice: "Business Model Canva updated successfully!"
+      respond_to do |format|
+        format.json { render json: { updated_text: @business_model_canva[params[:business_model_canva].keys.first] }, status: :ok }
+        # format.json {}
+        format.html { redirect_to business_idea_business_model_canva_path(@business_idea), notice: "Business Model Canva updated successfully!" }
+      end
     else
-      render :edit
+      respond_to do |format|
+        format.json { render json: { error: "Failed to update" }, status: :unprocessable_entity }
+        format.html { render :edit }
+      end
     end
+  end
+
+  def generate_ai_suggestion
+    section = params[:section]
+    user_input = params[:user_input]
+    industry = @business_idea.industry_type.name
+    competitor_analysis = @business_idea.competitor_analysis.first
+    competitors = competitor_analysis&.competitors&.pluck(:name) || []
+  
+    ai_response = OpenAI::AiBusinessModelService.generate_suggestions(section, user_input, industry, competitors)
+  
+    @business_model_canva.update(ai_suggestions: @business_model_canva.ai_suggestions.merge({ section => ai_response }))
+  
+    render json: { suggestion: ai_response }
   end
 
   private
@@ -47,29 +68,6 @@ class BusinessModelCanvasController < ApplicationController
     )
   end
 
-
-  # def merge_bmc_with_ai_suggestions(bmc, suggestions)
-  #   return {} if bmc.nil? || suggestions.nil? # Ensure neither is nil
-  
-  #   merged_data = {}
-  
-  #   bmc.attributes.each do |key, value|
-  #     next unless suggestions.key?(key.to_sym) # Ensure key exists in AI suggestions
-  
-  #     existing_value = value.to_s.strip
-  #     ai_suggestion = suggestions[key.to_sym].to_s.strip
-  
-  #     # 🔥 Append AI suggestion below existing content
-  #     if existing_value.present? && ai_suggestion.present?
-  #       merged_data[key] = "#{existing_value}\n\n--- AI Suggestion ---\n#{ai_suggestion}"
-  #     else
-  #       merged_data[key] = existing_value.presence || ai_suggestion
-  #     end
-  #   end
-  
-  #   Rails.logger.info "Merged Business Model Canvas Data: #{merged_data.inspect}"
-  #   merged_data # ✅ We return the merged data but don't auto-save it
-  # end
   def merge_bmc_with_ai_suggestions(bmc, suggestions)
     Rails.logger.info "BMC Before Merging: #{bmc.attributes.inspect}"
     Rails.logger.info "AI Suggestions Received: #{suggestions.inspect}"
@@ -98,64 +96,3 @@ class BusinessModelCanvasController < ApplicationController
     merged_data
   end
 end
-
-# class BusinessModelCanvasController < ApplicationController
-#   before_action :set_business_idea
-#   before_action :set_business_model_canvas
-
-#   def show
-#   end
-
-#   def edit
-#     puts "Cnva model: "
-#     puts @business_model_canvas
-#     puts "OpenAI:"
-#     # @suggestions = OpenAI::GenerateBusinessModelCanvas.call(@business_idea)
-#     # Rails.logs.info @suggestions
-#     # @suggestions =  merge_bmc_with_ai_suggestions(@business_model_canvas, @suggestions)
-#     @suggestions = @business_model_canvas
-#     puts @suggestions
-#   end
-
-#   def update
-#     if @business_model_canvas.update(business_model_canvas_params)
-#       redirect_to business_idea_business_model_canvas_path(@business_idea), notice: "Business Model Canvas updated successfully!"
-#     else
-#       render :edit
-#     end
-#   end
-
-#   private
-
-#   def set_business_idea
-#     @business_idea = BusinessIdea.find(params[:business_idea_id])
-#   end
-
-#   def set_business_model_canvas
-#     @business_model_canvas = @business_idea.business_model_canva || @business_idea.create_business_model_canva
-#   end
-
-#   def business_model_canvas_params
-#     params.require(:business_model_canvas).permit(:key_partners, :key_activities, :key_resources, :value_propositions, :customer_relationships, :channels, :customer_segments, :cost_structure, :revenue_streams)
-#   end
-
-#   def merge_bmc_with_ai_suggestions(bmc, suggestions)
-#     merged_data = {}
-  
-#     bmc.attributes.each do |key, value|
-#       next unless suggestions.key?(key)
-  
-#       existing_value = value.to_s.strip
-#       ai_suggestion = suggestions[key].to_s.strip
-  
-#       # Merge with a separator if there's an existing value
-#       merged_data[key] = if existing_value.present? && ai_suggestion.present?
-#                            "#{existing_value}\n\n--- AI Suggestion ---\n\n#{ai_suggestion}"
-#                          else
-#                            existing_value.presence || ai_suggestion
-#                          end
-#     end
-  
-#     # bmc.update(merged_data) # Save merged data back to the database
-#   end
-# end
