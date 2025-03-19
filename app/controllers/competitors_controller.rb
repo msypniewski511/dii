@@ -22,11 +22,12 @@ class CompetitorsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+
   end
 
   def ai_analysis
-    # @business_idea = BusinessIdea.find(params[:business_idea_id])
-    @competitor = Competitor.find(params[:business_idea_id])
+    @business_idea = BusinessIdea.find(params[:business_idea_id])
+    @competitor = Competitor.find(params[:id])
     result = OpenAI::AiCompetitorAnalysis.do_analise(@competitor)
     @competitor.update(five_forces: result)
     # .competitor_analysis

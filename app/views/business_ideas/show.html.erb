@@ -58,11 +58,13 @@
     </div>
   </div>
   <div class="card shadow-lg">
+    <!--
     <div class="row p-3">
       <div class="col-12">
+
         <h2>Stage Progress</h2>
 
-        <!-- Business Owner Characteristics (Independent but tracked) -->
+
         <% ai_completed = current_user.assessments.last.ai_insights.present? %>
         <% pswot_completed = current_user.pswot_analyses.present? %>
 
@@ -101,7 +103,7 @@
           </div>
         <% end %>
 
-        <!-- Business Idea Stages -->
+
         <% @business_idea.stages.each do |stage| %>
           <div class="progress my-2">
             <div class="progress-bar 
@@ -119,22 +121,22 @@
         <% end %>
       </div>
     </div>
+  -->
 
-
-    <hr>
-    <div class="stepper-container">
-  <ul class="stepper">
-    <% @business_idea.stages.order(:created_at).each_with_index do |stage, index| %>
-      <li class="step <%= 'completed' if stage.status == 'completed' %>">
-        <!-- <a href="#" data-bs-toggle="tooltip" data-bs-toggle="modal" data-bs-target="<%= stage.name %>" title="<%= stage.name %>"> -->
-        <a href="#" data-bs-toggle="modal" data-bs-target="#<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">
-          <span class="step-number"><%= index + 1 %></span>
-          <span class="step-title"><%= stage.name %></span>
-        </a>
-      </li>
-    <% end %>
-  </ul>
-</div>
+  <hr>
+  <div class="stepper-container">
+    <ul class="stepper">
+      <% @business_idea.stages.order(:created_at).each_with_index do |stage, index| %>
+        <li class="step <%= 'completed' if stage.status == 'completed' %>">
+          <!-- <a href="#" data-bs-toggle="tooltip" data-bs-toggle="modal" data-bs-target="<%= stage.name %>" title="<%= stage.name %>"> -->
+          <a href="#" data-bs-toggle="modal" data-bs-target="#<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">
+            <span class="step-number"><%= index + 1 %></span>
+            <span class="step-title"><%= stage.name %></span>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 
 
     <div class="row p-3">
@@ -142,7 +144,69 @@
         <div class="card p-4">
           <fieldset class="border rounded-3 p-3">
             <legend class="float-none w-auto px-3"><%= @business_idea.title %></legend>
+            <div class="col-lg-12 col-md-12 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+              <div class="nav-wrapper position-relative end-0">
+                <ul class="nav nav-pills nav-fill p-1" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center" 
+                      id="nav-description-tab" 
+                      data-bs-toggle="tab" 
+                      data-bs-target="#nav-description" 
+                      href="javascript:;" 
+                      role="tab" 
+                      aria-controls="nav-description"
+                      aria-selected="true">
+                      <i class="fa-solid fa-thumbs-up"></i>
+                      <span class="ms-2">descriptions</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center" 
+                      id="nav-ai-insights-tab" 
+                      data-bs-toggle="tab" 
+                      data-bs-target="#nav-ai-insights" 
+                      href="javascript:;" 
+                      role="tab" 
+                      aria-controls="nav-ai-insights"
+                      aria-selected="false">
+                      <i class="fa-solid fa-thumbs-down"></i>
+                      <span class="ms-2">ai-insights</span>
+                    </a>
+                  </li>
 
+                </ul>
+              </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content mt-3">
+              <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
+                <p><strong>Description:</strong>
+                <br /><%= format_text_to_html @business_idea.description %>
+                </p>
+            <p><strong>Country:</strong> <%= @business_idea.country %></p>
+              </div>
+              <div class="tab-pane fade" id="nav-ai-insights" role="tabpanel" aria-labelledby="nav-ai-insights-tab">
+                <%= form_with url: suggestions_business_idea_path(@business_idea), local: true, method: :post, data: { turbo: "false" } do %>
+                  <%= hidden_field_tag :business_idea, value: @business_idea.title %>
+                  <%= submit_tag "Get basic AI Suggestions", class: "btn btn-outline-success" %>
+                <% end %>
+
+                <% if @suggestions.present? || @business_idea.suggestions %>
+                  <div id="suggestions-output">
+                    <h3>AI-Generated Suggestions</h3>
+                    <p><%= @suggestions %></p>
+                    <p><%= format_text_to_html @business_idea.suggestions %></p>
+                  </div>
+                <% elsif @error.present? %>
+                  <div id="suggestions-output">
+                    <h3>Error</h3>
+                    <p><%= @error %></p>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+            <!--
             <h3>Selected Business Models:</h3>
             <ul>
               <% @business_idea.stages.distinct.pluck(:stage_type).each do |model| %>
@@ -167,6 +231,7 @@
                 <% else %>
                   <button type="button" class="btn bg-gradient-success mt-3" data-bs-toggle="modal" data-bs-target="#competitor_analysis">Competitor Analysis</button>
                 <% end %>
+                <%= button_to "Business Model Canvas", business_idea_business_model_canva_path(@business_idea), method: :get, class: "btn bg-gradient-success mt-3" %>
               <% end %>
             </ul>
 
@@ -175,30 +240,7 @@
               <% @business_idea.stages.order(:created_at).each do |stage| %>
                 <li><%= stage.name %> (<%= stage.stage_type.titleize %>)</li>
               <% end %>
-            </ol>
-            
-            <p><strong>Description:</strong>
-            <br /><%= format_text_to_html @business_idea.description %>
-            </p>
-            <p><strong>Country:</strong> <%= @business_idea.country %></p>
-
-            <%= form_with url: suggestions_business_idea_path(@business_idea), local: true, method: :post, data: { turbo: "false" } do %>
-              <%= hidden_field_tag :business_idea, value: @business_idea.title %>
-              <%= submit_tag "Get basic AI Suggestions", class: "btn btn-outline-success" %>
-            <% end %>
-
-            <% if @suggestions.present? || @business_idea.suggestions %>
-              <div id="suggestions-output">
-                <h3>AI-Generated Suggestions</h3>
-                <p><%= @suggestions %></p>
-                <p><%= format_text_to_html @business_idea.suggestions %></p>
-              </div>
-            <% elsif @error.present? %>
-              <div id="suggestions-output">
-                <h3>Error</h3>
-                <p><%= @error %></p>
-              </div>
-            <% end %>
+            </ol>-->
           </fieldset>
         </div>
         </div>
@@ -439,3 +481,32 @@
     </div>
   </div>
 </turbo-frame>
+
+
+<% @business_idea.stages.order(:created_at).each do |stage| %>
+  <div class="progress my-2">
+    <div class="progress-bar 
+      <%= 'bg-secondary' if stage.not_started? %>
+      <%= 'bg-warning' if stage.in_progress? %>
+      <%= 'bg-success' if stage.completed? %>"
+      role="progressbar"
+      style="width: <%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>%"
+      aria-valuenow="<%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>"
+      aria-valuemin="0"
+      aria-valuemax="100">
+      <%= stage.name %> - <%= stage.status.humanize %>
+    </div>
+  </div>
+<% end %>
+
+
+  <div class="row">
+    <div class="col-md-4">
+      <%= render 'timeline' %>
+    </div>
+
+    <div class="col-md-8">
+      <%= render @business_idea.business_model_canva %>
+    </div>
+  </div>
+

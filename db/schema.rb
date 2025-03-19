@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_11_000842) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_19_222750) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,6 +110,37 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_11_000842) do
     t.bigint "industry_type_id", default: 1, null: false
     t.index ["industry_type_id"], name: "index_business_ideas_on_industry_type_id"
     t.index ["user_id"], name: "index_business_ideas_on_user_id"
+  end
+
+  create_table "business_model_canvas", force: :cascade do |t|
+    t.bigint "business_idea_id", null: false
+    t.text "key_partners", default: ""
+    t.text "key_activities", default: ""
+    t.text "key_resources", default: ""
+    t.text "value_propositions", default: ""
+    t.text "customer_relationships", default: ""
+    t.text "channels", default: ""
+    t.text "customer_segments", default: ""
+    t.text "cost_structure", default: ""
+    t.text "revenue_streams", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "key_metrics", default: ""
+    t.text "customer_pains", default: ""
+    t.text "customer_gains", default: ""
+    t.text "cost_breakdown", default: ""
+    t.text "pricing_strategy", default: ""
+    t.text "distribution_channels", default: ""
+    t.text "partnerships", default: ""
+    t.jsonb "ai_suggestions", default: {}
+    t.jsonb "user_input", default: {}
+    t.jsonb "industry_insights", default: {}
+    t.jsonb "competitor_insights", default: {}
+    t.index ["ai_suggestions"], name: "index_business_model_canvas_on_ai_suggestions", using: :gin
+    t.index ["business_idea_id"], name: "index_business_model_canvas_on_business_idea_id"
+    t.index ["competitor_insights"], name: "index_business_model_canvas_on_competitor_insights", using: :gin
+    t.index ["industry_insights"], name: "index_business_model_canvas_on_industry_insights", using: :gin
+    t.index ["user_input"], name: "index_business_model_canvas_on_user_input", using: :gin
   end
 
   create_table "competitor_analyses", force: :cascade do |t|
@@ -246,6 +277,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_11_000842) do
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "progress_percentage", default: 0
     t.index ["business_idea_id"], name: "index_stages_on_business_idea_id"
   end
 
@@ -291,6 +323,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_11_000842) do
   add_foreign_key "business_idea_definitions", "business_ideas"
   add_foreign_key "business_ideas", "industry_types"
   add_foreign_key "business_ideas", "users"
+  add_foreign_key "business_model_canvas", "business_ideas"
   add_foreign_key "competitor_analyses", "business_ideas"
   add_foreign_key "competitors", "competitor_analyses"
   add_foreign_key "entrepreneurial_skills_user_responses", "answers"

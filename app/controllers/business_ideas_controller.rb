@@ -18,6 +18,7 @@ class BusinessIdeasController < ApplicationController
     @business_idea_definition = @business_idea.business_idea_definition || @business_idea.build_business_idea_definition
     @market_research = @business_idea.market_research || @business_idea.build_market_research
     @competitor_analysis = @business_idea.competitor_analysis.last || @business_idea.competitor_analysis.build
+    @business_model_canva = @business_idea.business_model_canva || @business_idea.create_business_model_canva
   end
 
   # GET /business_ideas/new
@@ -143,5 +144,15 @@ class BusinessIdeasController < ApplicationController
         stage.update(status: "completed") if stage.present?
         p stage
       end
+    end
+
+
+    def calculate_progress(model, fields)
+      return 0 if model.nil?
+      total_fields = fields.size
+      completed_fields = fields.count { |field| model[field].present? }
+      progress = (completed_fields.to_f / total_fields * 100).round
+      Rails.logger.info "Progress for #{model.class.name}: #{progress}%"
+      progress
     end
 end

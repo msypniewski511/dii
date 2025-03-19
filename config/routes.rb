@@ -22,6 +22,12 @@ Rails.application.routes.draw do
     resource :swot_analyses
     resource :competitor_analyses, only: [:new, :create, :show]
     resource :competitors do
+
+      member do
+        post 'ai_analysis', to: 'competitors#ai_analysis'
+      end
+    end
+    resources :competitors do
       member do
         post 'ai_analysis', to: 'competitors#ai_analysis'
       end
@@ -29,6 +35,12 @@ Rails.application.routes.draw do
     resource :porters_five_force, only: [:new, :create, :edit, :update, :show] do
       member do
         post :generate_ai_analysis
+      end
+    end
+
+    resource :business_model_canva, only: [:show, :edit, :update] do
+      member do
+        post 'generate_ai_suggestion', to: 'business_model_canvas#generate_ai_suggestion'
       end
     end
   end
