@@ -191,3 +191,35 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('page-loader').classList.remove('show')
   })
 })
+
+document.addEventListener('turbo:load', function () {
+  // Remove stale moving tabs
+  document.querySelectorAll('.moving-tab').forEach((el) => el.remove())
+
+  // Re-init every tab nav group
+  document.querySelectorAll('.nav-pills').forEach(function (nav) {
+    if (typeof initMovingTab === 'function') {
+      initMovingTab(nav)
+
+      // Optional: trigger reflow
+      const activeTab = nav.querySelector('.nav-link.active')
+      if (activeTab) activeTab.click()
+    }
+  })
+})
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Remove stale moving tabs
+  document.querySelectorAll('.moving-tab').forEach((el) => el.remove())
+
+  // Re-init every tab nav group
+  document.querySelectorAll('.nav-pills').forEach(function (nav) {
+    if (typeof initMovingTab === 'function') {
+      initMovingTab(nav)
+
+      // Optional: trigger reflow
+      const activeTab = nav.querySelector('.nav-link.active')
+      if (activeTab) activeTab.click()
+    }
+  })
+})

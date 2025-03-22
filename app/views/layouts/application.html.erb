@@ -126,67 +126,112 @@
       }
     }
 
-  .stepper-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
+.stepper-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
 
-  .stepper {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    position: relative;
-    width: 100%;
-    max-width: 900px;
-  }
+.stepper {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  position: relative;
+  width: 100%;
+}
 
-  .stepper li {
-    flex: 1;
-    text-align: center;
-    position: relative;
-  }
+.stepper li {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
 
-  .stepper li a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #6c757d;
-    font-weight: bold;
-  }
+/* Connector base: both sides */
+.stepper li::before,
+.stepper li::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  width: 50%;
+  height: 4px;
+  background: #ddd; /* default gray */
+  z-index: 0;
+  transition: background 0.3s ease;
+}
 
-  .stepper li .step-number {
-    background: #ddd;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: bold;
-  }
+/* LEFT side of connector (from current step) */
+.stepper li::before {
+  left: 0;
+}
 
-  .stepper li.completed .step-number {
-    background: #28a745;
-    color: white;
-  }
+/* RIGHT side of connector (to next step) */
+.stepper li::after {
+  right: 0;
+}
 
-  .stepper li:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 4px;
-    background: #ddd;
-    top: 20px;
-    left: 50%;
-    z-index: -1;
-  }
+/* Completed step: left half becomes green */
+.stepper li.completed::before, .stepper li.completed::after {
+  background: #28a745;
+}
 
-  .stepper li.completed:not(:last-child)::after {
-    background: #28a745;
-  }
+.stepper li.in_progress::before, .stepper li.in_progress::after {
+  background: #fb6340;
+}
+
+/* Next step is also completed: right half green */
+.stepper li.connector-completed::after {
+  background: #28a745;
+}
+
+
+
+/* Don't show unnecessary ends */
+.stepper li:first-child::before {
+  display: none;
+}
+
+.stepper li:last-child::after {
+  display: none;
+}
+
+/* Step styling */
+.stepper li a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #6c757d;
+  font-weight: bold;
+  position: relative;
+  z-index: 2;
+}
+
+.stepper li .step-number {
+  background: #ddd;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  position: relative;
+  z-index: 3;
+}
+
+.stepper li.in_progress .step-number {
+  background: #fb6340;
+  color: white;
+}
+
+.stepper li.completed .step-number {
+  background: #28a745;
+  color: white;
+}
+
+
   .bmc-grid {
   display: grid;
   /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; 5 columns */

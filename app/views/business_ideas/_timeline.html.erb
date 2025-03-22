@@ -23,23 +23,8 @@
               <%= stage.name %> (<%= stage.stage_type.titleize %>)
             </h6>
 
-            <div class="progress my-2">
-              <div 
-                class="progress-bar 
-                  <%= stage.not_started? ? 'bg-secondary' : '' %> 
-                  <%= stage.in_progress? ? 'bg-warning' : '' %> 
-                  <%= stage.completed? ? 'bg-info' : '' %>" 
-                role="progressbar"
-                style="width: <%= stage.progress_percentage %>%;"
-                aria-valuenow="<%= stage.progress_percentage %>"
-                aria-valuemin="0"
-                aria-valuemax="100">
-                <%= "#{stage.progress_percentage}% - #{stage.status.humanize}" %>
-              </div>
-            </div>
-
             <p class="text-secondary font-weight-bold text-xs mt-1 mb-0">
-              <%= Time.now.strftime("%d %b %H:%M") %>
+              <%# Time.now.strftime("%d %b %H:%M") %>
             </p>
             <p class="text-sm mt-3 mb-2">
               <%# stage.description %>
@@ -52,18 +37,19 @@
             <span class="badge badge-sm bg-gradient-danger">Update</span>
             <span class="badge badge-sm bg-gradient-info">Start...</span>
 
-            <div class="progress my-2">
+            <div class="progress my-2" style="height: 16px;">
               <div 
                 class="progress-bar 
-                  <%= stage.not_started? ? 'bg-warning' : '' %> 
-                  <%= stage.in_progress? ? 'bg-info' : '' %> 
-                  <%= stage.completed? ? 'bg-success' : '' %>" 
+                  <%= stage.not_started? ? 'p-2' : '' %> 
+                  <%= stage.in_progress? ? 'p-2 bg-warning' : '' %> 
+                  <%= stage.completed? ? 'p-2 bg-info' : '' %>" 
                 role="progressbar"
-                style="width: <%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>%;"
-                aria-valuenow="<%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>"
+                style="width: 
+                <%= stage.progress_percentage + (stage.not_started? ? 100 : 0) %>%; height: 7px;" 
+                aria-valuenow="<%= stage.progress_percentage %>"
                 aria-valuemin="0"
                 aria-valuemax="100">
-                <%= stage.status.humanize %>
+                <%= "#{stage.progress_percentage}% - #{stage.status.humanize}" %>
               </div>
             </div>
           </div>

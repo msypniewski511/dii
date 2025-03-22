@@ -1,0 +1,49 @@
+  <div class="card shadow-lg m-x-0 my-4 card-profile">
+    <div class="card-body p-3">
+      <div class="row gx-4">
+        <div class="col-auto">
+          <div class="avatar avatar-xl position-relative">
+            <%= image_tag 'th.jpg', alt: "profile_image", class: "w-100 border-radius-lg shadow-sm" %>
+          </div>
+        </div>
+        <div class="col-auto my-auto">
+          <div class="h-100">
+            <h5 class="mb-1">
+              <%= @business_idea.title %>
+            </h5>
+            <p class="mb-0 font-weight-bold text-sm">
+              <p><strong>Status:</strong> 
+                <span class="badge bg-gradient-<%= @business_idea.status == 'Approved' ? 'success' : @business_idea.status == 'Submitted' ? 'warning' : @business_idea.status == 'In Progress' ? 'danger' : 'secondary' %>">
+                  <%= @business_idea.status %>
+                </p>
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-8 col-md-8 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+          <div class="nav-wrapper position-relative end-0">
+            <ul class="nav nav-pills nav-fill p-1" role="tablist" id="main-tabs">
+              <li class="nav-item">
+                <a class="nav-link active mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-idea-definition-tab" data-bs-toggle="tab" data-bs-target="#nav-idea-definition" href="javascript:;" role="tab" aria-selected="false">
+                  <i class="fas fa-compass text-primary"></i>
+                  <span class="ms-2">Idea Overview</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-creation-roadmap-tab" data-bs-toggle="tab" data-bs-target="#nav-creation-roadmap" href="javascript:;" role="tab" aria-selected="false">
+                  <i class="fas fa-map text-danger"></i>
+                  <span class="ms-2">Creation Roadmap</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " id="nav-analysis-tab" data-bs-toggle="tab" data-bs-target="#nav-analysis" href="javascript:;" role="tab" aria-selected="false">
+                  <i class="fa fa-globe text-info"></i>
+                  <span class="ms-2">Analysis</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

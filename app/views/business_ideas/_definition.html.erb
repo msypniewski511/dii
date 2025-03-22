@@ -1,0 +1,70 @@
+<fieldset class="border rounded-3 p-3">
+  <legend class="float-none w-auto px-3"><%= @business_idea.title %></legend>
+  <div class="col-lg-12 col-md-12 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+    <div class="nav-wrapper position-relative end-0">
+      <ul class="nav nav-pills nav-fill p-1" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link mb-0 px-0 py-1 active d-flex align-items-center justify-content-center" 
+            id="nav-description-tab" 
+            data-bs-toggle="tab" 
+            data-bs-target="#nav-description" 
+            href="javascript:;" 
+            role="tab" 
+            aria-controls="nav-description"
+            aria-selected="true">
+            <i class="fa-solid fa-lightbulb"></i>
+            <span class="ms-2">Descriptions</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center" 
+            id="nav-ai-insights-tab" 
+            data-bs-toggle="tab" 
+            data-bs-target="#nav-ai-insights" 
+            href="javascript:;" 
+            role="tab" 
+            aria-controls="nav-ai-insights"
+            aria-selected="false">
+            <i class="fa-solid fa-magnifying-glass-chart"></i>
+            <span class="ms-2">AI-Insights</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content mt-3">
+    <div class="tab-pane fade show active" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
+      <fieldset class="border rounded-3 p-3">
+        <legend class="float-none w-auto px-3">Description:</legend>
+
+        <br /><%= format_text_to_html @business_idea.description %>
+        </p>
+        <p><strong>Industry:</strong> <%= @business_idea.industry_type.name %></p>
+        <p><strong>Country:</strong> <%= @business_idea.country %></p>
+      </fieldset>
+    </div>
+    <div class="tab-pane fade" id="nav-ai-insights" role="tabpanel" aria-labelledby="nav-ai-insights-tab">
+      <fieldset class="border rounded-3 p-3">
+        <legend class="float-none w-auto px-3">AI-Generated Suggestions</legend>
+        <% if @suggestions.present? || @business_idea.suggestions %>
+          <div id="suggestions-output">
+            <p><%= @suggestions %></p>
+            <p><%= format_text_to_html @business_idea.suggestions %></p>
+          </div>
+        <% elsif @error.present? %>
+          <div id="suggestions-output">
+            <h3>Error</h3>
+            <p><%= @error %></p>
+          </div>
+        <% end %>
+        <%= form_with url: suggestions_business_idea_path(@business_idea), local: true, method: :post, data: { turbo: "false" } do %>
+          <%= hidden_field_tag :business_idea, value: @business_idea.title %>
+          <%= submit_tag "Get basic AI Suggestions", class: "btn btn-outline-success" %>
+        <% end %>
+      </fieldset>
+    </div>
+  </div>
+</fieldset>

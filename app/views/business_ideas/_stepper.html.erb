@@ -1,0 +1,15 @@
+<ul class="stepper">
+  <% stages = @business_idea.stages.order(:created_at) %>
+  <% stages.each_with_index do |stage, index| %>
+    <% current_completed = stage.status == 'completed' %>
+    <% next_stage = stages[index + 1] %>
+    <% next_completed = next_stage&.status == 'completed' %>
+
+    <li class="step <%= 'completed' if current_completed %> <%= stage.status %> <%= 'connector-completed' if current_completed && next_completed %>">
+      <a href="#" data-bs-toggle="modal" data-bs-target="#<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">
+        <span class="step-number"><%= index + 1 %></span>
+        <span class="step-title"><%= stage.name %></span>
+      </a>
+    </li>
+  <% end %>
+</ul>

@@ -51127,6 +51127,26 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("page-loader").classList.remove("show");
   });
 });
+document.addEventListener("turbo:load", function() {
+  document.querySelectorAll(".moving-tab").forEach((el) => el.remove());
+  document.querySelectorAll(".nav-pills").forEach(function(nav) {
+    if (typeof initMovingTab === "function") {
+      initMovingTab(nav);
+      const activeTab = nav.querySelector(".nav-link.active");
+      if (activeTab) activeTab.click();
+    }
+  });
+});
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".moving-tab").forEach((el) => el.remove());
+  document.querySelectorAll(".nav-pills").forEach(function(nav) {
+    if (typeof initMovingTab === "function") {
+      initMovingTab(nav);
+      const activeTab = nav.querySelector(".nav-link.active");
+      if (activeTab) activeTab.click();
+    }
+  });
+});
 /*! Bundled license information:
 
 jquery/dist/jquery.js:

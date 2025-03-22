@@ -1,0 +1,101 @@
+<div class="col-lg-8 col-md-8 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
+  <div class="nav-wrapper position-relative end-0">
+    <ul class="nav nav-pills nav-fill p-1" role="tablist" id="analysis-subtabs">
+      <li class="nav-item">
+        <a class="nav-link active mb-0 px-0 py-1 d-flex align-items-center justify-content-center " id="nav-pestel-tab" data-bs-toggle="tab" data-bs-target="#nav-pestel" href="#nav-pestel" role="tab" aria-selected="true">
+          <i class="fa fa-globe"></i>
+          <span class="ms-2">PESTEL</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center " id="nav-swot-tab" data-bs-toggle="tab" data-bs-target="#nav-swot" href="#nav-swot" role="tab" aria-selected="false">
+          <i class="fa-solid fa-balance-scale text-primary"></i>
+          <span class="ms-2">SWOT</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center "  id="nav-posters-tab" data-bs-toggle="tab" data-bs-target="#nav-posters" href="#nav-posters" role="tab" aria-selected="false">
+          <i class="fa-solid fa-people-arrows"></i>
+          <span class="ms-2">Porter's Five Forces</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- To tu zmieniasz zawartosc prawej strony -->
+<div class="col-12 p-4">
+  <div class="tab-content" id="analysis-subtabs-content">
+    <%# To jest powtarzajace sie %>
+    <div class="tab-pane fade show active" id="nav-pestel" role="tabpanel" aria-labelledby="nav-pestel-tab">
+        <div class="row">
+
+                <fieldset class="border rounded-3 p-3">
+                  <legend class="float-none w-auto px-3">PESTEL Analysis:</legend>
+                  <%= render @pestel_analysis, locals: {busines_idea: @busines_idea} %>
+                </fieldset>
+          </div>
+        </div>
+
+
+
+    <div class="tab-pane fade" id="nav-swot" role="tabpanel" aria-labelledby="nav-swot-tab">
+        <div class="row">
+
+                <fieldset class="border rounded-3 p-3">
+                  <legend class="float-none w-auto px-3">SWOT matrix:</legend>
+                  <%= render @swot_analysis, locals: {busines_idea: @busines_idea} %>
+                </fieldset>
+        </div>
+      </div>
+
+
+    <div class="tab-pane fade" id="nav-posters" role="tabpanel" aria-labelledby="nav-posters-tab">
+        <div class="row">
+
+                <fieldset class="border rounded-3 p-3">
+                  <legend class="float-none w-auto px-3">Porter's Five Forces Analysis:</legend>
+                  <%= render "porters_five_forces/porters_five_forces",  porters_five_force: @porters_five_force, business_idea: @business_idea %>
+                  <hr>
+                  <%= render "porter_five_forces/porter_five_forces", porter_analysis: @porter_analysis %>
+                </fieldset>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="nav-strength" role="tabpanel" aria-labelledby="nav-strength-tab">
+      <div class="container-fluid py-4">
+        <div class="row">
+          <div class="col">
+            <fieldset class="border rounded-3 p-3">
+              <legend class="float-none w-auto px-3">Strengths:</legend>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  // Delay a bit to ensure layout is fully mounted
+  setTimeout(() => {
+    const navWrapper = document.querySelector('.nav-wrapper');
+    console.log(navWrapper)
+    if (navWrapper && typeof initMovingTab === 'function') {
+      initMovingTab(navWrapper.querySelector('.nav-pills'));
+    }
+  }, 100); // 100ms delay helps after Turbo or partial load
+});
+document.addEventListener("turbo:load", function () {
+  // Delay a bit to ensure layout is fully mounted
+  setTimeout(() => {
+    const navWrapper = document.querySelector('.nav-wrapper');
+    console.log(navWrapper)
+    if (navWrapper && typeof initMovingTab === 'function') {
+      initMovingTab(navWrapper.querySelector('.nav-pills'));
+    }
+  }, 100); // 100ms delay helps after Turbo or partial load
+});
+</script>

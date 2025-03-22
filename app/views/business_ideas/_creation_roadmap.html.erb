@@ -1,0 +1,30 @@
+<!--
+<% @business_idea.stages.order(:created_at).each do |stage| %>
+  <div class="progress my-2">
+    <div class="progress-bar 
+      <%= 'bg-secondary' if stage.not_started? %>
+      <%= 'bg-warning' if stage.in_progress? %>
+      <%= 'bg-success' if stage.completed? %>"
+      role="progressbar"
+      style="width: <%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>%"
+      aria-valuenow="<%= stage.completed? ? 100 : (stage.in_progress? ? 50 : 0) %>"
+      aria-valuemin="0"
+      aria-valuemax="100">
+      <%= stage.name %> - <%= stage.status.humanize %>
+    </div>
+  </div>
+<% end %>
+-->
+
+<div class="row">
+  <div class="stepper-container">
+    <%= render 'business_ideas/stepper' %>
+  </div>
+  <div class="col-md-3">
+    <%= render 'timeline' %>
+  </div>
+
+  <div class="col-md-9">
+    <%= render @business_idea.business_model_canva %>
+  </div>
+</div>
