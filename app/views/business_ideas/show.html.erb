@@ -66,6 +66,7 @@
     </div>
   </div>
 
+  <!-- Business Idea Definition -->
   <div class="col-md-12">
     <div class="modal fade" id="modal-form2" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
@@ -77,7 +78,29 @@
                 <p class="mb-0"><%= @business_idea.title %></p>
               </div>
               <div class="card-body">
-                <%= render "business_idea_definitions/form", busines_idea: @busines_idea, business_idea_definition: @business_idea_definition %>
+
+                <%= render "business_idea_definitions/form", locals: { business_idea: @business_idea, definition: @business_idea_definition } %>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-12">
+    <div class="modal fade" id="business_idea_definition" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <div class="card card-plain">
+              <div class="card-header pb-0 text-left">
+                <h3 class="font-weight-bolder text-info text-gradient"Business Idea Definition for:</h3>
+                <p class="mb-0"><%= @business_idea.title %></p>
+              </div>
+              <div class="card-body">
+                <%= render "business_idea_definitions/form", business_idea: @business_idea, business_idea_definition: @business_idea_definition %>
               </div>
             </div>
           </div>
@@ -87,30 +110,8 @@
   </div>
 
 
-    <div class="col-md-12">
-      <div class="modal fade" id="business_idea_definition" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
-          <div class="modal-content">
-            <div class="modal-body p-0">
-              <div class="card card-plain">
-                <div class="card-header pb-0 text-left">
-                  <h3 class="font-weight-bolder text-info text-gradient"Business Idea Definition for:</h3>
-                  <p class="mb-0"><%= @business_idea.title %></p>
-                </div>
-                <div class="card-body">
-                  <%= render "business_idea_definitions/business_idea_definition", busines_idea: @busines_idea, business_idea_definition: @business_idea_definition %>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-  </div>
-
-
-
-    <div class="col-md-12">
-
+  <!-- Market Reasearch -->
+  <div class="col-md-12">
     <div class="modal fade" id="modal-form-market_research" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
         <div class="modal-content">
@@ -129,10 +130,8 @@
       </div>
     </div>
   </div>
-
-
-      <div class="col-md-12">
-
+  
+  <div class="col-md-12">
     <div class="modal fade w-100" id="market_research" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
         <div class="modal-content">
@@ -152,9 +151,8 @@
     </div>
   </div>
 
-
-    <div class="col-md-12">
-
+  <!-- Competitor Analysis -->
+  <div class="col-md-12">
     <div class="modal fade" id="modal-form-competitor_analysis" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-md mw-65" role="document">
         <div class="modal-content">
@@ -168,7 +166,7 @@
                 <%= render "competitor_analyses/form", business_idea: @business_idea, competitor_analysis: @competitor_analysis %>
               </div>
             </div>
-          </div>      <!-- -->
+          </div>
         </div>
       </div>
     </div>
@@ -195,4 +193,3 @@
     </div>
   </div>
 </turbo-frame>
-

@@ -8,7 +8,8 @@ class MarketResearchesController < ApplicationController
 
   def create
     @market_research = @business_idea.build_market_research(market_research_params)
-
+    puts @market_research
+    puts @market_research.valid?
     if @market_research.save
       @market_research.generate_ai_suggestions # AI Suggestions
       update_stage_status

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :funding_plans
   get 'competitors/new'
   get 'competitors/create'
   get 'competitors/update'
@@ -44,6 +45,18 @@ Rails.application.routes.draw do
       end
     end
   end
+  resources :business_ideas do
+    resource :business_idea_definition, only: [:edit, :update] do
+      post :generate_ai_field, on: :collection
+    end
+  end
+
+  resources :funding_plans do
+    member do
+      post :generate_ai
+    end
+  end
+  
   resources :articles
   resources :brands
   resources :ideas

@@ -1,0 +1,11 @@
+<h5 class="mb-3">Generate Fields with AI</h5>
+
+<% %w[
+  problem_statement solution target_audience market_size
+  target_customer_segment value_proposition key_differentiators
+].each do |field| %>
+  <%= button_to "Generate #{field.humanize}",
+      generate_ai_field_business_idea_business_idea_definition_path(field: field, business_idea_id: definition.business_idea_id),
+      method: :post,
+      class: "btn btn-outline-primary w-100 mb-2" %>
+<% end %>

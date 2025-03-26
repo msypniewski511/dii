@@ -1,0 +1,69 @@
+  <div class="card">
+    <div class="card-header text-center">
+      <h4 class="text-gradient text-info font-weight-bold mb-0">Business Idea Definition Wizard</h4>
+      <small class="text-muted">Step-by-step guidance to define your business idea</small>
+    </div>
+
+    <div class="card-body">
+      <div id="wizard-container">
+        <div class="multisteps-form">
+          <div class="row">
+            <div class="col-12 col-lg-12 mx-auto">
+              <!-- Wizard navigation -->
+              <div class="multisteps-form__progress">
+                <% [
+                  'Problem Statement',
+                  'Solution',
+                  'Target Audience',
+                  'Market Size',
+                  'Customer Segment',
+                  'Value Proposition',
+                  'Key Differentiators'
+                ].each_with_index do |label, index| %>
+                  <button class="multisteps-form__progress-btn btn-sm <%='js-active' if index == 0%>" type="button" title="<%= label %>"><%= label %></button>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <%= form_with(model: [@business_idea, @business_idea_definition], local: true, url: business_idea_business_idea_definition_path(@business_idea)) do |f| %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= javascript_tag do %>
+    document.addEventListener("DOMContentLoaded", function() {
+      const test = document.querySelector('.multisteps-form__panel.js-active');
+      if (test) {
+        console.log('✅ Wizard card is active and visible');
+        console.log(test)
+      } else {
+        console.warn('🚨 Wizard card not initialized properly');
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fix height if wizard already visible (on direct page load)
+      const wizard = document.querySelector(".multisteps-form__form");
+      const activePanel = wizard?.querySelector(".js-active");
+
+      if (wizard && activePanel) {
+        wizard.style.height = activePanel.offsetHeight + "px";
+      }
+
+      // Handle wizard becoming visible via Bootstrap tab
+      const roadmapTab = document.querySelector('#nav-creation-roadmap-tab');
+      if (roadmapTab) {
+        roadmapTab.addEventListener('shown.bs.tab', function () {
+          const wizard = document.querySelector(".multisteps-form__form");
+          const activePanel = wizard?.querySelector(".js-active");
+
+          if (wizard && activePanel) {
+            wizard.style.height = activePanel.offsetHeight + "px";
+            console.log("Wizard activated and height fixed.");
+          }
+        });
+      }
+    });
+
+  <% end %>

@@ -9,6 +9,7 @@ class BusinessIdea < ApplicationRecord
   has_one :market_research, dependent: :destroy
   has_one :business_model_canva, dependent: :destroy
   has_many :competitor_analysis
+  has_one :funding_plan
 
   has_many :stages, dependent: :destroy
 

@@ -1,4 +1,5 @@
-<%= form_with(model: [@business_idea, @market_research], local: true, url: business_idea_market_research_path(@business_idea)) do |form| %>
+
+<!-- <%= form_with(model: [@business_idea, @market_research], local: true, url: business_idea_market_research_path(@business_idea)) do |form| %>
   <% if @market_research.errors.any? %>
     <div class="alert alert-danger">
       <h4><%= pluralize(@market_research.errors.count, "error") %> prohibited this from being saved:</h4>
@@ -30,7 +31,7 @@
     <%= form.text_area :industry_reports, class: 'form-control', rows: 3, placeholder: "Include any relevant industry data or statistics" %>
   </div>
 
-  <!-- AI Suggestions Display -->
+  <!-- AI Suggestions Display
   <% if @market_research.ai_suggestions.present? %>
     <div class="form-group">
       <label>AI Suggestions:</label>
@@ -42,3 +43,142 @@
     <%= form.submit "Save & Get AI Suggestions", class: "btn btn-primary" %>
   </div>
 <% end %>
+-->
+
+<div class="card">
+  <div class="card-header text-center">
+    <h4 class="text-gradient text-info font-weight-bold mb-0">Market Research Wizard</h4>
+    <small class="text-muted">Step-by-step guidance to do your business idea market research</small>
+  </div>
+
+  <div class="card-body">
+    <div id="wizard-container">
+      <div id="wizard-market-research" class="multisteps-form">
+        <div class="row">
+          <div class="col-12 col-lg-12 mx-auto">
+            <!-- Wizard navigation -->
+            <div class="multisteps-form__progress">
+              <% [
+                'Market Trends',
+                'Competitor Insights',
+                'Customer Segments',
+                'Industry Reports'
+              ].each_with_index do |label, index| %>
+                <button class="multisteps-form__progress-btn <%='js-active' if index == 0%>" type="button"><%= label %></button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+
+        <%= form_with(model: [@business_idea, @market_research], local: true, data: { turbo: false }, url: business_idea_market_research_path(@business_idea)) do |form| %>
+          <div class="multisteps-form__form">
+            <!-- Step 1 -->
+            <div class="multisteps-form__panel js-active" data-animation="FadeIn">
+              <div class="multisteps-form__content">
+                <h5 class="font-weight-bolder">Step 1: Market Trends</h5>
+                <span class="text-muted d-flex mb-3">
+                  <%= bootstrap_offcanvas_hash('business_name') %>
+                  <p class="text-muted">Describe key trends in your market or industry</p>
+                </span>
+                <%= form.text_area :market_trends, rows: 10, class: 'form-control mb-3', placeholder: "Describe key market trends affecting your business..." %>
+                <div class="button-row d-flex mt-4">
+                  <div class="form-group text-end">
+                    <%# link_to "Generate with AI",
+                        generate_ai_field_business_idea_market_research_path(field: :market_trends, business_idea_id: @business_idea.id),
+                        method: :post,
+                        data: { turbo: false },
+                        class: "btn btn-outline-info btn-sm" %>
+                  </div>
+                  <button class="btn btn-info ms-auto js-btn-next" type="button">Next</button>
+                </div>
+              </div>
+            </div>  
+
+            <!-- Repeat for Competitor Insights, Customer Segments, Industry Reports -->
+            <div class="multisteps-form__panel" data-animation="FadeIn">
+              <div class="multisteps-form__content">
+                <h5 class="font-weight-bolder">Step 2: Competitor Insights</h5>
+                <span class="text-muted d-flex mb-3">
+                  <%= bootstrap_offcanvas_hash('business_name') %>
+                  <p class="text-muted">Provide insights on competitors in your market</p>
+                </span>
+                <%= form.text_area :competitor_insights, rows: 10, class: 'form-control mb-3', placeholder: "Provide insights on competitors in your market..." %>
+                <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+              </div>
+            </div>
+
+            <div class="multisteps-form__panel" data-animation="FadeIn">
+              <div class="multisteps-form__content">
+                <h5 class="font-weight-bolder">Step 3: Target Customer Segment</h5>
+                <span class="text-muted d-flex mb-3">
+                  <%= bootstrap_offcanvas_hash('business_name') %>
+                  <p class="text-muted">Describe key trends in your market or industry</p>
+                </span>
+                <%= form.text_area :customer_segments, rows: 10, class: 'form-control mb-3', placeholder: "Define your target customers and their needs..." %>
+                <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+              </div>
+            </div>
+
+            <div class="multisteps-form__panel" data-animation="FadeIn">
+              <div class="multisteps-form__content">
+                <h5 class="font-weight-bolder">Step 4: Market Trends</h5>
+                <span class="text-muted d-flex mb-3">
+                  <%= bootstrap_offcanvas_hash('business_name') %>
+                  <p class="text-muted">Describe key industry data or statistics</p>
+                </span>
+                <%= form.text_area :industry_reports, rows: 10, class: 'form-control mb-3', placeholder: "Include any relevant industry data or statistics..." %>
+                <div class="button-row d-flex mt-4">
+                  <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                  <%= form.submit "Finish & Save", class: "btn btn-sm btn-success ms-auto" %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <%= javascript_tag do %>
+    document.addEventListener("DOMContentLoaded", function() {
+      const test = document.querySelector('.multisteps-form__panel.js-active');
+      if (test) {
+        console.log('✅ Wizard card is active and visible');
+        console.log(test)
+      } else {
+        console.warn('🚨 Wizard card not initialized properly');
+      }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+      // Fix height if wizard already visible (on direct page load)
+      const wizard = document.querySelector(".multisteps-form__form");
+      const activePanel = wizard?.querySelector(".js-active");
+
+      if (wizard && activePanel) {
+        wizard.style.height = activePanel.offsetHeight + "px";
+      }
+
+      // Handle wizard becoming visible via Bootstrap tab
+      const roadmapTab = document.querySelector('#nav-creation-roadmap-tab');
+      if (roadmapTab) {
+        roadmapTab.addEventListener('shown.bs.tab', function () {
+          const wizard = document.querySelector(".multisteps-form__form");
+          const activePanel = wizard?.querySelector(".js-active");
+
+          if (wizard && activePanel) {
+            wizard.style.height = activePanel.offsetHeight + "px";
+            console.log("Wizard activated and height fixed.");
+          }
+        });
+      }
+    });
+
+  <% end %>

@@ -50044,6 +50044,77 @@ function initializeLineChart() {
 }
 document.addEventListener("turbo:load", initializeLineChart);
 
+// app/javascript/plugins/multistep-form.js
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".multisteps-form").forEach((wizardContainer) => {
+    const stepsBtns = wizardContainer.querySelectorAll(
+      ".multisteps-form__progress-btn"
+    );
+    const stepsForm = wizardContainer.querySelector(".multisteps-form__form");
+    const stepFormPanels = wizardContainer.querySelectorAll(
+      ".multisteps-form__panel"
+    );
+    const stepPrevBtnClass = "js-btn-prev";
+    const stepNextBtnClass = "js-btn-next";
+    const removeClasses = (elemSet, className2) => {
+      elemSet.forEach((elem) => elem.classList.remove(className2));
+    };
+    const getActiveStep = (elem) => {
+      return Array.from(stepsBtns).indexOf(elem);
+    };
+    const setActiveStep = (activeStepNum) => {
+      removeClasses(stepsBtns, "js-active");
+      stepsBtns.forEach((elem, index4) => {
+        if (index4 <= activeStepNum) {
+          elem.classList.add("js-active");
+        }
+      });
+    };
+    const getActivePanel = () => {
+      return Array.from(stepFormPanels).find(
+        (panel) => panel.classList.contains("js-active")
+      );
+    };
+    const setActivePanel = (activePanelNum) => {
+      removeClasses(stepFormPanels, "js-active");
+      stepFormPanels.forEach((elem, index4) => {
+        if (index4 === activePanelNum) {
+          elem.classList.add("js-active");
+          setFormHeight(elem);
+        }
+      });
+    };
+    const formHeight = (activePanel) => {
+      const activePanelHeight = activePanel.offsetHeight;
+      stepsForm.style.height = `${activePanelHeight}px`;
+    };
+    const setFormHeight = () => {
+      const activePanel = getActivePanel();
+      if (activePanel) formHeight(activePanel);
+    };
+    wizardContainer.querySelector(".multisteps-form__progress").addEventListener("click", (e4) => {
+      const eventTarget = e4.target;
+      if (!eventTarget.classList.contains("multisteps-form__progress-btn"))
+        return;
+      const activeStep = getActiveStep(eventTarget);
+      setActiveStep(activeStep);
+      setActivePanel(activeStep);
+    });
+    stepsForm.addEventListener("click", (e4) => {
+      const eventTarget = e4.target;
+      if (!eventTarget.classList.contains(stepPrevBtnClass) && !eventTarget.classList.contains(stepNextBtnClass))
+        return;
+      const activePanel = eventTarget.closest(".multisteps-form__panel");
+      const activePanelNum = Array.from(stepFormPanels).indexOf(activePanel);
+      const newIndex = eventTarget.classList.contains(stepPrevBtnClass) ? activePanelNum - 1 : activePanelNum + 1;
+      setActiveStep(newIndex);
+      setActivePanel(newIndex);
+    });
+    setFormHeight();
+    window.addEventListener("resize", setFormHeight, false);
+  });
+});
+
 // app/javascript/argon-dashboard.js
 (function() {
   var isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;
@@ -51056,9 +51127,79 @@ window.defocused = defocused;
 window.sidebarColor = sidebarColor;
 window.sidebarType = sidebarType;
 
+// app/javascript/plugins/multistep_form_initializer.js
+function initializeMultiStepForm(container) {
+  if (!container) return;
+  const DOM = {
+    stepsBtnClass: "multisteps-form__progress-btn",
+    stepsBtns: container.querySelectorAll(".multisteps-form__progress-btn"),
+    stepsForm: container.querySelector(".multisteps-form__form"),
+    stepFormPanels: container.querySelectorAll(".multisteps-form__panel"),
+    stepPrevBtnClass: "js-btn-prev",
+    stepNextBtnClass: "js-btn-next"
+  };
+  const removeClasses = (elems, className2) => {
+    elems.forEach((el) => el.classList.remove(className2));
+  };
+  const findParent = (elem, parentClass) => {
+    let current = elem;
+    while (!current.classList.contains(parentClass)) {
+      current = current.parentNode;
+    }
+    return current;
+  };
+  const getActiveStep = (elem) => [...DOM.stepsBtns].indexOf(elem);
+  const setActiveStep = (activeStep) => {
+    removeClasses(DOM.stepsBtns, "js-active");
+    DOM.stepsBtns.forEach((btn, idx) => {
+      if (idx <= activeStep) btn.classList.add("js-active");
+    });
+  };
+  const setActivePanel = (activeStep) => {
+    removeClasses(DOM.stepFormPanels, "js-active");
+    DOM.stepFormPanels[activeStep].classList.add("js-active");
+    setFormHeight();
+  };
+  const setFormHeight = () => {
+    const activePanel = container.querySelector(
+      ".multisteps-form__panel.js-active"
+    );
+    if (activePanel && DOM.stepsForm) {
+      DOM.stepsForm.style.height = `${activePanel.offsetHeight}px`;
+    }
+  };
+  DOM.stepsBtns.forEach((btn, idx) => {
+    btn.addEventListener("click", () => {
+      setActiveStep(idx);
+      setActivePanel(idx);
+    });
+  });
+  container.querySelectorAll(`.${DOM.stepNextBtnClass}`).forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const activePanel = findParent(btn, "multisteps-form__panel");
+      let panelIndex = [...DOM.stepFormPanels].indexOf(activePanel);
+      panelIndex++;
+      setActiveStep(panelIndex);
+      setActivePanel(panelIndex);
+    });
+  });
+  container.querySelectorAll(`.${DOM.stepPrevBtnClass}`).forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const activePanel = findParent(btn, "multisteps-form__panel");
+      let panelIndex = [...DOM.stepFormPanels].indexOf(activePanel);
+      panelIndex--;
+      setActiveStep(panelIndex);
+      setActivePanel(panelIndex);
+    });
+  });
+  window.addEventListener("resize", setFormHeight);
+  setFormHeight();
+}
+
 // app/javascript/application.js
 Rails.start();
 turbo_es2017_esm_exports.session.drive = false;
+window.initializeMultiStepForm = initializeMultiStepForm;
 document.addEventListener("turbo:load", function() {
   document.querySelectorAll(".dropdown-toggle").forEach((dropdown) => {
     new bootstrap.Dropdown(dropdown);

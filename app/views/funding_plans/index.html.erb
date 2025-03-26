@@ -1,0 +1,18 @@
+<div class="container-fluid">
+<div class="card p-3">
+<p style="color: green"><%= notice %></p>
+
+<h1>Funding plans</h1>
+
+<div id="funding_plans">
+  <% @funding_plans.each do |funding_plan| %>
+    <%# render funding_plan %>
+    <p>
+      <%= link_to "Show this funding plan", funding_plan %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New funding plan", new_funding_plan_path %>
+</div>
+</div>

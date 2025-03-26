@@ -1,2 +1,274 @@
-<h2>Edit Business Idea Definition</h2>
-<%= render 'form' %>
+<div class="container my-5">
+  <div class="card">
+    <div class="card-header text-center">
+      <h4 class="text-gradient text-info font-weight-bold mb-0">Business Idea Definition Wizard</h4>
+      <small class="text-muted">Step-by-step guidance to define your business idea</small>
+    </div>
+
+    <div class="card-body">
+      <div id="wizard-container">
+        <div class="multisteps-form">
+          <div class="row">
+            <div class="col-12 col-lg-12 mx-auto">
+              <!-- Wizard navigation -->
+              <div class="multisteps-form__progress">
+                <% [
+                  'Problem Statement',
+                  'Solution',
+                  'Target Audience',
+                  'Market Size',
+                  'Customer Segment',
+                  'Value Proposition',
+                  'Key Differentiators'
+                ].each_with_index do |label, index| %>
+                  <button class="multisteps-form__progress-btn btn-sm <%='js-active' if index == 0%>" type="button" title="<%= label %>"><%= label %></button>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <%= form_with(model: [@business_idea, @business_idea_definition], local: true, url: business_idea_business_idea_definition_path(@business_idea)) do |f| %>
+            <div class="multisteps-form__form">
+              <div class="multisteps-form__panel js-active" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <!-- WIZARD CARDS GO HERE (step 2) -->
+                  <h5 class="font-weight-bolder">Step 1: Problem Statement</h5>
+                  <p class="text-sm mb-3 text-muted">What core problem does your business idea solve?</p>
+
+                  <div class="form-group">
+                    <%= f.label :problem_statement, "Describe the Problem" %>
+                    <%= f.text_area :problem_statement, rows: 15, class: "multisteps-form__input form-control mb-3", placeholder: "Write your problem statement here..." %>
+                  </div>
+
+                  <%# AI BUTTON FOR PROBLEM STATEMENT %>
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_business_idea_definition_path(field: :problem_statement, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                </div>
+              </div>
+            
+
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 2: Solution</h5>
+                  <p class="text-sm mb-3 text-muted">How does your idea solve the identified problem?</p>
+
+                  <div class="form-group">
+                    <%= f.label :solution, "Your Solution" %>
+                    <%= f.text_area :solution, rows: 15, class: "multisteps-form__input form-control mb-3", placeholder: "Describe your solution..." %>
+                  </div>
+
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_business_idea_definition_path(field: :solution, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 3: Target Audience</h5>
+                  <p class="text-sm mb-3 text-muted">Who are the ideal customers or users for your product/service?</p>
+
+                  <div class="form-group">
+                    <%= f.label :target_audience, "Target Audience" %>
+                    <%= f.text_area :target_audience, rows: 15, class: "multisteps-form__input form-control mb-3", placeholder: "Describe your ideal customers or users..." %>
+                  </div>
+
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_business_idea_definition_path(field: :target_audience, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 4: Market Size</h5>
+                  <p class="text-sm mb-3 text-muted">Estimate the potential market size for your business idea. You can include number of customers, revenue potential, or industry value.</p>
+
+                  <div class="form-group">
+                    <%= f.label :market_size, "Market Size" %>
+                    <%= f.text_area :market_size, rows: 15, class: "multisteps-form__input form-control mb-3", placeholder: "Describe or estimate the potential market size..." %>
+                  </div>
+
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_business_idea_definition_path(field: :market_size, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 5: Customer Segment</h5>
+                  <p class="text-sm mb-3 text-muted">Which customer groups or segments are you targeting with this business idea?</p>
+
+                  <div class="form-group">
+                    <%= f.label :target_customer_segment, "Target Customer Segment" %>
+                    <%= f.text_area :target_customer_segment, rows: 15, class: "multisteps-form__input form-control mb-3", placeholder: "Describe the customer segments you aim to serve..." %>
+                  </div>
+
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_business_idea_definition_path(field: :target_customer_segment, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 6: Value Proposition</h5>
+                  <p class="text-sm mb-3 text-muted">What unique value does your product or service offer to your target customers? Why would they choose it?</p>
+
+                  <div class="form-group">
+                    <%= f.label :value_proposition, "Value Proposition" %>
+                    <%= f.text_area :value_proposition, rows: 15, class: "multisteps-form__input form-control mb-3", placeholder: "Describe your unique value..." %>
+                  </div>
+
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_business_idea_definition_path(field: :value_proposition, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 7: Key Differentiators</h5>
+                  <p class="text-sm mb-3 text-muted">What makes your business idea different or better than existing solutions? What is your unique edge?</p>
+
+                  <div class="form-group">
+                    <%= f.label :key_differentiators, "Key Differentiators" %>
+                    <%= f.text_area :key_differentiators, rows: 15, class: "multisteps-form__input form-control mb-3", placeholder: "Describe your unique advantage..." %>
+                  </div>
+
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_business_idea_definition_path(field: :key_differentiators, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <%= f.submit "Finish & Save", class: "btn btn-sm btn-success ms-auto" %>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <%= form_with(model: [@business_idea, @business_idea_definition], local: true, url: business_idea_business_idea_definition_path(@business_idea)) do |f| %>
+            <div class="form-group">
+              <%= bootstrap_offcanvas_hash('title') %>
+              <%= f.label :problem_statement %>
+              <%= f.text_area :problem_statement, rows: 10, class: "form-control mb-3", placeholder: "Problem Statement" %>
+            </div>
+            <div class="form-group">
+              <%= bootstrap_offcanvas_hash('title') %>
+              <%= f.label :solution %>
+              <%= f.text_area :solution, rows: 10, class: "form-control mb-3", placeholder: "Solution" %>
+            </div>
+            <div class="form-group">
+              <%= bootstrap_offcanvas_hash('title') %>
+              <%= f.label :target_audience %>
+              <%= f.text_area :target_audience, rows: 10, class: "form-control mb-3", placeholder: "Target Audience" %>
+            </div>
+            <div class="form-group">
+              <%= bootstrap_offcanvas_hash('title') %>
+              <%= f.label :market_size %>
+              <%= f.text_area :market_size, rows: 10, class: "form-control mb-3", placeholder: "Market Size" %>
+            </div>
+            <div class="form-group">
+              <%= bootstrap_offcanvas_hash('title') %>
+              <%= f.label :target_customer_segment %>
+              <%= f.text_area :target_customer_segment, rows: 10, class: "form-control mb-3", placeholder: "Customer Segment" %>
+            </div>
+            <div class="form-group">
+              <%= bootstrap_offcanvas_hash('title') %>
+              <%= f.label :value_proposition %>
+              <%= f.text_area :value_proposition, rows: 10, class: "form-control mb-3", placeholder: "Value Proposition" %>
+            </div>
+            <div class="form-group">
+              <%= bootstrap_offcanvas_hash('title') %>
+              <%= f.label :key_differentiators %>
+              <%= f.text_area :key_differentiators, rows: 10, class: "form-control mb-3", placeholder: "Key Differentiators" %>
+            </div>
+
+            <div class="form-group">
+              <%= f.submit class: "btn btn-sm btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+
+
+        <div class="col-md-6">
+          <%= render 'ai_buttons', definition: @business_idea_definition %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

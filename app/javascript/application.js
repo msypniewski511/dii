@@ -69,10 +69,15 @@ import '@rails/actiontext'
 import './plugins/fullcalendar'
 import './plugins/swot_chart'
 import './plugins/line_chart'
+import './plugins/multistep-form.js'
 
 // ✅ Argon Dashboard (Ensure This Is Loaded)
 import './argon-dashboard'
 import './argon-dashboard.js'
+
+import { initializeMultiStepForm } from './plugins/multistep_form_initializer'
+
+window.initializeMultiStepForm = initializeMultiStepForm
 
 // ✅ Fix Bootstrap Dropdowns on Turbo Navigation
 document.addEventListener('turbo:load', function () {

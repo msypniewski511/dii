@@ -31,7 +31,7 @@
             </p>
             
             <!-- ✅ Fixed: Close <a> tag properly -->
-            <a href="#" data-bs-toggle="modal" data-bs-target="#<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">
+            <a href="#" data-bs-toggle="tab" data-target-stage="<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">
               <span class="badge badge-sm bg-gradient-success">Show</span>
             </a>
             <span class="badge badge-sm bg-gradient-danger">Update</span>
@@ -45,7 +45,7 @@
                   <%= stage.completed? ? 'p-2 bg-info' : '' %>" 
                 role="progressbar"
                 style="width: 
-                <%= stage.progress_percentage + (stage.not_started? ? 100 : 0) %>%; height: 7px;" 
+                <%= stage.progress_percentage + (stage.not_started? || stage.completed? ? 100 : 0) %>%; height: 7px;" 
                 aria-valuenow="<%= stage.progress_percentage %>"
                 aria-valuemin="0"
                 aria-valuemax="100">
@@ -58,3 +58,4 @@
     </div>
   </div>
 </div>
+

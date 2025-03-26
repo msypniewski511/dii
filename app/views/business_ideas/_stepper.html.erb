@@ -6,7 +6,8 @@
     <% next_completed = next_stage&.status == 'completed' %>
 
     <li class="step <%= 'completed' if current_completed %> <%= stage.status %> <%= 'connector-completed' if current_completed && next_completed %>">
-      <a href="#" data-bs-toggle="modal" data-bs-target="#<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">
+      <a href="#" data-bs-toggle="tab" data-target-stage="<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">
+      <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#<%= stage.name.downcase.gsub(' ', '_') %>" title="<%= stage.name %>">-->
         <span class="step-number"><%= index + 1 %></span>
         <span class="step-title"><%= stage.name %></span>
       </a>

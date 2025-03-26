@@ -1,0 +1,18 @@
+<div class="container-fluid my-5">
+<div class="row">
+<div class="col-12">
+<div class="card p-3">
+<%= render @funding_plan %>
+
+<div>
+  <%= link_to "Edit this funding plan", edit_funding_plan_path(@funding_plan) %> |
+  <%= link_to "Back to funding plans", funding_plans_path %>
+
+  <%= button_to "Destroy this funding plan", @funding_plan, method: :delete %>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>

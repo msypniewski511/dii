@@ -1,0 +1,83 @@
+<div class="card-header">
+<h1>Funding Plan</h1>
+
+  <strong>Business Idea:</strong>
+  <%# link_to @funding_plan.business_idea.title, @funding_plan.business_idea %>
+</div>
+<div class="card-body">
+<div id="<%= dom_id funding_plan %>">
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card my-3">
+        <div class="card-header">
+          <div class="card-title"><h3 class="text-border-radius-2xl">Bank loan borrowing:</h3></div>
+        </div>
+        <div class="card-body">
+          <%= format_text_to_html(funding_plan.bank_loan_borrowing) %>
+        </div>
+        <div class="card-footer">
+          <%= button_to "Generate AI Answer for Bank Loan", generate_ai_funding_plan_path(@funding_plan, field: "bank_loan"), method: :post, class: "btn btn-outline-primary mb-5" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title"><h3 class="text-border-radius-2xl">Alternative funding:</h3></div>
+        </div>
+        <div class="card-body">
+          <%= format_text_to_html funding_plan.alternative_funding %>
+        </div>
+      </div>
+      <div class="card-footer">
+        <%= button_to "Generate AI Answer for Alternative Funding", generate_ai_funding_plan_path(@funding_plan, field: "alternative"), method: :post, class: "btn btn-outline-primary" %>
+      </div>
+    </div>
+  </div>
+    
+
+</div>
+
+<hr>
+
+<h2>1.2.1. Bank Loan Borrowing</h2>
+<p>Explain how you would secure a £25,000 bank loan and repay it using the 5 Cs of Credit:</p>
+
+<ul>
+  <li><strong>Character:</strong> Your reputation</li>
+  <li><strong>Capacity:</strong> Your financial ability to repay</li>
+  <li><strong>Capital:</strong> The funds or assets you own to support your business</li>
+  <li><strong>Collateral:</strong> The security you can offer</li>
+  <li><strong>Conditions:</strong> How economic or industry trends could affect your ability to make repayments</li>
+</ul>
+
+<div class="mb-4 p-3 border rounded bg-light">
+  <%= format_text_to_html(@funding_plan.bank_loan_borrowing.presence) || "Not generated yet." %>
+</div>
+
+<%= button_to "Generate AI Answer for Bank Loan", generate_ai_funding_plan_path(@funding_plan, field: "bank_loan"), method: :post, class: "btn btn-primary mb-5" %>
+
+<hr>
+
+<h2>1.2.2. Alternative Business Funding</h2>
+<p>Discuss one alternative funding source instead of a £25,000 bank loan to support your business. Explain:</p>
+
+<ul>
+  <li>Why this funding source could be a better option for your business</li>
+  <li>Its advantages and disadvantages</li>
+</ul>
+
+<div class="mb-4 p-3 border rounded bg-light">
+  <%=format_text_to_html(@funding_plan.alternative_funding.presence) || "Not generated yet." %>
+</div>
+
+<%= button_to "Generate AI Answer for Alternative Funding", generate_ai_funding_plan_path(@funding_plan, field: "alternative"), method: :post, class: "btn btn-primary" %>
+
+<hr>
+
+<%= link_to 'Edit Funding Plan', edit_funding_plan_path(@funding_plan), class: "btn btn-secondary" %> |
+<%= link_to 'Back to List', funding_plans_path, class: "btn btn-link" %>
+
+</div>
