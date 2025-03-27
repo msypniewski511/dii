@@ -3,6 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="Startup Business Builder App – Create, validate, and grow your business ideas with AI-powered tools and proven frameworks. App launching soon!">
+    <meta name="keywords" content="startup, business builder, business planning, entrepreneur tools, market research, lean startup, business model canvas, UK startups, AI business planning">
+    <meta name="author" content="Dhruvi Infinity Inspiration Ltd.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Startup Business Builder App" />
+    <meta property="og:description" content="Launch your business with AI tools & proven frameworks. App launching soon. Plan smarter with Dhruvi Infinity Inspiration Ltd." />
+    <meta property="og:image" content="https://dhruviinfinity.com/assets/og-image.png" />
+    <meta property="og:url" content="https://dhruviinfinity.com/" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Startup Business Builder App" />
+    <meta name="twitter:description" content="Launch your business with AI tools & proven frameworks. App launching soon. Plan smarter with Dhruvi Infinity Inspiration Ltd." />
+    <meta name="twitter:image" content="https://dhruviinfinity.com/assets/og-image.png" />
   <title>Startup Business Builder App</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
@@ -530,8 +548,72 @@
     }
 
   </style>
+    <style>
+      body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #f8f9fa;
+      }
+      .coming-soon-banner {
+        background: #ffc107 !important;
+        color: #212529 !important;
+        padding: 12px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        position: fixed !important;
+        top: 0;
+        width: 100%;
+        z-index: 99999 !important;
+      }
+      .coming-soon-banner .close-btn {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        font-size: 20px;
+        color: #000;
+        background: none;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    </style>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const banner = document.querySelector('.coming-soon-banner');
+        if (banner) {
+          const closeBtn = banner.querySelector('.close-btn');
+          if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+              banner.style.display = 'none';
+            });
+          }
+
+          const launchDate = new Date();
+          launchDate.setDate(launchDate.getDate() + 14);
+
+          const now = new Date();
+          const diffTime = launchDate - now;
+          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+          const bannerText = banner.querySelector('.banner-text');
+          if (bannerText && diffDays > 0) {
+            bannerText.textContent = `🚀 Our Startup Business Builder App is launching in just ${diffDays} day${diffDays > 1 ? 's' : ''}! Stay tuned and get ready to build your dream business with AI power.`;
+          }
+
+          setTimeout(() => {
+            banner.style.display = 'none';
+          }, 80000);
+        }
+      });
+    </script>
+
 </head>
 <body>
+    <div class="coming-soon-banner">
+      <span class="banner-text">🚀 Our Startup Business Builder App is launching in just 14 days! Stay tuned and get ready to build your dream business with AI power.</span>
+      <button class="close-btn" aria-label="Close">&times;</button>
+    </div>
   <span class="sr-only">Turn your startup dream into a thriving business.</span>
   <header>
       <h1 class="fluid">Turn Ideas<br />Into Reality.</h1>
