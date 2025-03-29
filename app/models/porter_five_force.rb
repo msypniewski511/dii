@@ -17,9 +17,11 @@ class PorterFiveForce < ApplicationRecord
   private
 
   def ensure_industry_assigned
-    if business_idea.industry_type.name == "Unknown Industry"
-      business_idea.assign_industry
-      business_idea.reload # Ensure it updates before scoring
+    if business_idea.industry_type.nil? || business_idea.industry_type.name == "Unknown Industry"
+      industry_name = OpenAI::AiIndustryClassifier.call(business_idea.description)
+      industry = IndustryType.find_or_create_by(name: industry_name)
+      business_idea.update!(industry_type: industry)
+      business_idea.reload
     end
   end
 end

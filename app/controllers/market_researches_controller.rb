@@ -13,7 +13,8 @@ class MarketResearchesController < ApplicationController
     if @market_research.save
       @market_research.generate_ai_suggestions # AI Suggestions
       update_stage_status
-      redirect_to @business_idea, notice: "Market Research added successfully!"
+      # redirect_to @business_idea, notice: "Market Research added successfully!"
+      redirect_to business_idea_path(@business_idea, anchor: 'market_research'), notice: "Saved"
     else
       render :new
     end
@@ -25,7 +26,8 @@ class MarketResearchesController < ApplicationController
     if @market_research.update(market_research_params)
       @market_research.generate_ai_suggestions # AI Update
       update_stage_status
-      redirect_to @business_idea, notice: "Market Research updated successfully!"
+      # redirect_to @business_idea, notice: "Market Research updated successfully!"
+      redirect_to business_idea_path(@business_idea, anchor: 'market_research'), notice: "Saved"
     else
       render :edit
     end

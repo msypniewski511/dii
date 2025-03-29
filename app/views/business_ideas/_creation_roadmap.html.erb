@@ -47,7 +47,38 @@
     </div>
   </div>
 </div>
+<!--
+<%= javascript_tag do %>
+document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const stage = urlParams.get('stage');
 
+  if (stage) {
+    // First click roadmap tab
+    const roadmapTab = document.querySelector('#nav-creation-roadmap-tab');
+    if (roadmapTab) {
+      roadmapTab.click(); // 👈 activates roadmap tab
+    }
+
+    // Then show the specific stage tab
+    const targetPane = document.querySelector(`#${stage}`);
+    const allTabs = document.querySelectorAll('.tab-pane-road-map');
+    if (targetPane) {
+      allTabs.forEach(tab => tab.classList.remove('show', 'active'));
+      targetPane.classList.add('show', 'active');
+
+      // Wizard init
+      const wizard = targetPane.querySelector('.multisteps-form');
+      if (wizard && !wizard.dataset.initialized) {
+        wizard.dataset.initialized = true;
+        initializeMultiStepForm(wizard);
+        console.log(`Wizard for ${stage} initialized`);
+      }
+    }
+  }
+});
+<% end %>
+-->
 <%= javascript_tag do %>
 document.addEventListener('DOMContentLoaded', function () {
   const tabPaneSelector = '.tab-pane-road-map';
@@ -77,3 +108,5 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 <% end %>
+
+

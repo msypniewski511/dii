@@ -98,7 +98,9 @@ class BusinessIdeaDefinitionsController < ApplicationController
     field = params[:field]
     OpenAI::BusinessIdeaDefinitionGenerator.new(@definition).generate(field)
     # redirect_to edit_business_idea_definition_path(@business_idea), notice: "#{field.humanize} generated"
-    redirect_to edit_business_idea_business_idea_definition_path(@business_idea), notice: "#{field.humanize} generated"
+    # redirect_to edit_business_idea_business_idea_definition_path(@business_idea), notice: "#{field.humanize} generated"
+    redirect_to business_idea_path(@business_idea, anchor: "business_idea_definition"), notice: "#{field.humanize} generated"
+    # redirect_to business_idea_path(@business_idea, stage: 'business_idea_definition'), notice: "#{field.humanize} generated"
   end
 
   private
