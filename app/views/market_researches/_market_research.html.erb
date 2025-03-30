@@ -1,19 +1,125 @@
 
  
     <% if @business_idea.market_research.present? && @business_idea.market_research.persisted? %>
-     <div class="card-body">
-      <p><strong>Market Trends:</strong> <%= @business_idea.market_research.market_trends %></p>
-      <p><strong>Competitor Insights:</strong> <%= @business_idea.market_research.competitor_insights %></p>
-      <p><strong>Customer Segments:</strong> <%= @business_idea.market_research.customer_segments %></p>
-      <p><strong>Industry Reports:</strong> <%= @business_idea.market_research.industry_reports %></p>
 
-      <% if @business_idea.market_research.ai_suggestions.present? %>
-        <div class="alert alert-info">
-          <strong>AI Suggestions:</strong> <%= format_text_to_html @business_idea.market_research.ai_suggestions %>
+      <div class="card mb-3">
+        <div class="card-header text-center">
+          <h4 class="text-gradient text-info font-weight-bold mb-0">Market Research</h4>
         </div>
-      <% end %>
 
-      <%= link_to "Edit Market Research", edit_business_idea_market_research_path(@business_idea), class: "btn btn-sm btn-outline-info" %>
+        <div class="card-body">
+          <div id="wizard-container">
+            <div id="wizard-market-research-main" class="multisteps-form">
+              <div class="row">
+                <div class="col-12 col-lg-12 mx-auto">
+                  <!-- Wizard navigation -->
+                  <div class="multisteps-form__progress">
+                    <% [
+                      'Market Trends',
+                      'Competitor Insights',
+                      'Customer Segments',
+                      'Industry Reports'
+                    ].each_with_index do |label, index| %>
+                      <button class="multisteps-form__progress-btn <%='js-active' if index == 0%>" type="button"><%= label %></button>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+
+
+              
+                <div class="multisteps-form__form">
+                  <!-- Step 1 -->
+                  <div class="multisteps-form__panel js-active" data-animation="FadeIn">
+                    <div class="multisteps-form__content">
+                      <h5 class="font-weight-bolder">Market Trends</h5>
+                      <p><%= format_text_to_html @business_idea.market_research.market_trends %></p>
+                      <div class="form-group text-end">
+                        <%= link_to "Regenerate with AI",
+                          generate_ai_field_business_idea_market_research_path(field: :market_trends, business_idea_id: @business_idea.id),
+                          method: :post,
+                          data: { turbo: false },
+                          class: "btn btn-sm btn-outline-info" %>
+                      </div>
+                                        <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                      </div>
+                    </div>  
+
+                    <!-- Repeat for Competitor Insights, Customer Segments, Industry Reports -->
+                    <div class="multisteps-form__panel" data-animation="FadeIn">
+                      <div class="multisteps-form__content">
+                        <h5 class="font-weight-bolder">Competitor Insights</h5>
+                        
+                    
+                          
+                        <%= format_text_to_html @business_idea.market_research.competitor_insights %>
+                        <div class="form-group text-end">
+                          <%= link_to "Regenerate with AI",
+                            generate_ai_field_business_idea_market_research_path(field: :competitor_insights, business_idea_id: @business_idea.id),
+                            method: :post,
+                            data: { turbo: false },
+                            class: "btn btn-sm btn-outline-info" %>
+                        </div>
+                                          <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                      </div>
+                    </div>
+
+                    <div class="multisteps-form__panel" data-animation="FadeIn">
+                      <div class="multisteps-form__content">
+                        <h5 class="font-weight-bolder">Target Customer Segment</h5>
+                        
+                    
+                        <%= format_text_to_html @business_idea.market_research.customer_segments %>
+                        <div class="form-group text-end">
+                          <%= link_to "Regenerate with AI",
+                            generate_ai_field_business_idea_market_research_path(field: :customer_segments, business_idea_id: @business_idea.id),
+                            method: :post,
+                            data: { turbo: false },
+                            class: "btn btn-sm btn-outline-info" %>
+                        </div>
+                                          <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                      </div>
+                    </div>
+
+                  <div class="multisteps-form__panel" data-animation="FadeIn">
+                    <div class="multisteps-form__content">
+                      <h5 class="font-weight-bolder">Industry Reports</h5>
+                      
+                  
+                      <%= format_text_to_html @business_idea.market_research.industry_reports %>
+                      <div class="form-group text-end">
+                          <%= link_to "Regenerate with AI",
+                            generate_ai_field_business_idea_market_research_path(field: :industry_reports, business_idea_id: @business_idea.id),
+                            method: :post,
+                            data: { turbo: false },
+                            class: "btn btn-sm btn-outline-info" %>
+                        </div>
+                                          <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                  </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <% if @business_idea.market_research.ai_suggestions.present? %>
+            <div class="alert alert-info">
+              <strong>AI Suggestions:</strong> <%= format_text_to_html @business_idea.market_research.ai_suggestions %>
+            </div>
+          <% end %>
+
+          <%# link_to "Edit Market Research", edit_business_idea_market_research_path(@business_idea), class: "btn btn-sm btn-outline-danger" %>
+        </div>
       </div>
     <% else %>
       <%# link_to "Conduct Market Research", new_business_idea_market_research_path(@business_idea), class: "btn btn-sm btn-outline-info", data: { turbo: false } %>

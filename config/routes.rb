@@ -18,12 +18,16 @@ Rails.application.routes.draw do
       post 'suggestions', to: 'openai_suggestions#create'
     end
     resource :business_idea_definition, only: [:new, :create, :edit, :update]
-    resource :market_research, only: [:new, :create, :edit, :update, :show]
+    resource :market_research, only: [:new, :create, :edit, :update, :show] do
+      post :generate_ai_field, on: :collection
+    end
     resource :pestel_analyses
     resource :swot_analyses
-    resource :competitor_analyses, only: [:new, :create, :show]
-    resource :competitors do
+    resource :competitor_analyses, only: [:new, :create, :show] do
+      resources :competitors
+    end
 
+    resource :competitors do
       member do
         post 'ai_analysis', to: 'competitors#ai_analysis'
       end
@@ -44,11 +48,16 @@ Rails.application.routes.draw do
         post 'generate_ai_suggestion', to: 'business_model_canvas#generate_ai_suggestion'
       end
     end
+
+    resource :strategy_development, only: [:edit, :update] do
+      post :generate_ai_section
+    end
   end
   resources :business_ideas do
     resource :business_idea_definition, only: [:edit, :update] do
       post :generate_ai_field, on: :collection
     end
+
   end
 
   resources :funding_plans do

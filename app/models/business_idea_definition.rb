@@ -19,6 +19,7 @@ class BusinessIdeaDefinition < ApplicationRecord
     PROMPT
 
     response = OpenAiService.generate_text(prompt)
+    puts "Wywolane ai"
     update(ai_summary: response.strip, ai_generated: true)
   end
 
@@ -33,14 +34,21 @@ class BusinessIdeaDefinition < ApplicationRecord
   end
 
   def completed?
-    progress_percentage == 100
+    is_complete = progress_percentage == 100
+    if is_complete && ai_summary.nil?
+      generate_ai_summary
+    end
+    is_complete
   end
   private
 
   def update_stage_status
     stage = business_idea.stages.find_by(name: "Business Idea Definition")
     return unless stage
-
+    puts "W srodku update stage status"
+    puts "check ai_summary: #{ai_summary.nil?}"
+    puts ai_summary
+    completed?
     stage.update(
       progress_percentage: progress_percentage, 
       status: completed? ? :completed : :in_progress

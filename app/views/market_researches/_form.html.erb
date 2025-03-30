@@ -82,49 +82,65 @@
                   <p class="text-muted">Describe key trends in your market or industry</p>
                 </span>
                 <%= form.text_area :market_trends, rows: 10, class: 'form-control mb-3', placeholder: "Describe key market trends affecting your business..." %>
-                <div class="button-row d-flex mt-4">
+                  <%# AI BUTTON FOR PROBLEM STATEMENT %>
                   <div class="form-group text-end">
-                    <%# link_to "Generate with AI",
-                        generate_ai_field_business_idea_market_research_path(field: :market_trends, business_idea_id: @business_idea.id),
-                        method: :post,
-                        data: { turbo: false },
-                        class: "btn btn-outline-info btn-sm" %>
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_market_research_path(field: :market_trends, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
                   </div>
-                  <button class="btn btn-info ms-auto js-btn-next" type="button">Next</button>
+
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
+                </div>
+              </div>  
+
+              <!-- Repeat for Competitor Insights, Customer Segments, Industry Reports -->
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 2: Competitor Insights</h5>
+                  <span class="text-muted d-flex mb-3">
+                    <%= bootstrap_offcanvas_hash('business_name') %>
+                    <p class="text-muted">Provide insights on competitors in your market</p>
+                  </span>
+                  <%= form.text_area :competitor_insights, rows: 10, class: 'form-control mb-3', placeholder: "Provide insights on competitors in your market..." %>
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_market_research_path(field: :competitor_insights, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
+                  <div class="button-row d-flex mt-4">
+                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                  </div>
                 </div>
               </div>
-            </div>  
 
-            <!-- Repeat for Competitor Insights, Customer Segments, Industry Reports -->
-            <div class="multisteps-form__panel" data-animation="FadeIn">
-              <div class="multisteps-form__content">
-                <h5 class="font-weight-bolder">Step 2: Competitor Insights</h5>
-                <span class="text-muted d-flex mb-3">
-                  <%= bootstrap_offcanvas_hash('business_name') %>
-                  <p class="text-muted">Provide insights on competitors in your market</p>
-                </span>
-                <%= form.text_area :competitor_insights, rows: 10, class: 'form-control mb-3', placeholder: "Provide insights on competitors in your market..." %>
-                <div class="button-row d-flex mt-4">
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 3: Target Customer Segment</h5>
+                  <span class="text-muted d-flex mb-3">
+                    <%= bootstrap_offcanvas_hash('business_name') %>
+                    <p class="text-muted">Describe key trends in your market or industry</p>
+                  </span>
+                  <%= form.text_area :customer_segments, rows: 10, class: 'form-control mb-3', placeholder: "Define your target customers and their needs..." %>
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_market_research_path(field: :customer_segments, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
+                  <div class="button-row d-flex mt-4">
                     <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
                     <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
                   </div>
+                </div>
               </div>
-            </div>
-
-            <div class="multisteps-form__panel" data-animation="FadeIn">
-              <div class="multisteps-form__content">
-                <h5 class="font-weight-bolder">Step 3: Target Customer Segment</h5>
-                <span class="text-muted d-flex mb-3">
-                  <%= bootstrap_offcanvas_hash('business_name') %>
-                  <p class="text-muted">Describe key trends in your market or industry</p>
-                </span>
-                <%= form.text_area :customer_segments, rows: 10, class: 'form-control mb-3', placeholder: "Define your target customers and their needs..." %>
-                <div class="button-row d-flex mt-4">
-                    <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
-                    <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
-                  </div>
-              </div>
-            </div>
 
             <div class="multisteps-form__panel" data-animation="FadeIn">
               <div class="multisteps-form__content">
@@ -134,6 +150,13 @@
                   <p class="text-muted">Describe key industry data or statistics</p>
                 </span>
                 <%= form.text_area :industry_reports, rows: 10, class: 'form-control mb-3', placeholder: "Include any relevant industry data or statistics..." %>
+                  <div class="form-group text-end">
+                    <%= link_to "Generate with AI",
+                      generate_ai_field_business_idea_market_research_path(field: :industry_reports, business_idea_id: @business_idea.id),
+                      method: :post,
+                      data: { turbo: false },
+                      class: "btn btn-sm btn-outline-info" %>
+                  </div>
                 <div class="button-row d-flex mt-4">
                   <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
                   <%= form.submit "Finish & Save", class: "btn btn-sm btn-success ms-auto" %>

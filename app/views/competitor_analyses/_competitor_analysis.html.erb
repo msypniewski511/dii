@@ -1,3 +1,64 @@
+<% if @competitor_analysis.competitors.present? && @competitor_analysis.persisted? %>
+
+  <div class="card mb-3">
+    <div class="card-header text-center">
+      <h4 class="text-gradient text-info font-weight-bold mb-0">Competitor Analysis</h4>
+    </div>
+
+    <div class="card-body">
+      <div id="wizard-container">
+        <div id="wizard-market-research-main" class="multisteps-form">
+          <div class="row">
+            <div class="col-12 col-lg-12 mx-auto">
+              <!-- Wizard navigation -->
+              <div class="multisteps-form__progress">
+                <% @competitor_analysis.competitors.order(:created_at).each_with_index do |competitor, index| %>
+                  <button class="multisteps-form__progress-btn <%='js-active' if index == 0%>" type="button"><%= competitor.name %></button>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class="multisteps-form__form">
+            <% @competitor_analysis.competitors.order(:created_at).each_with_index do |competitor, index| %>
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                      <h5 class="card-title"><%= competitor.name %></h5>
+                      <p class="card-text"><%= competitor.description %></p>
+
+                      <h6>Porter's Five Forces Analysis</h6>
+                      <p><%= competitor.five_forces.present? ? format_text_to_html(competitor.five_forces) : "Not generated yet" %></p>
+
+                      <%= link_to "Update AI Analysis", ai_analysis_business_idea_competitor_path(@competitor_analysis.business_idea, competitor), method: :post, class: "btn btn-outline-secondary" %>
+                    </div>
+              </div>  
+
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+          
+
+    <div class="card-footer">
+      
+    </div>
+  </div>
+<% else %>
+  <h2>Start Competitor Analysis</h2>
+  <p>This will use AI to find competitors for your business idea.</p>
+  <%= form_with model: @competitor_analysis, url: business_idea_competitor_analyses_path(@business_idea), method: :post, local: true do |f| %>
+    <%= f.submit "Start AI Competitor Search", class: "btn btn-success" %>
+  <% end %>
+<% end %>
+
+
+
+
+
+
+
 <div>
   <h2>Competitor Analysis</h2>
   <% if @competitor_analysis.competitors.any? %>
@@ -5,7 +66,7 @@
     <div class="col-lg-12 col-md-12 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
       <div class="nav-wrapper position-relative end-0">
         <ul class="nav nav-pills nav-fill p-1" role="tablist">
-          <% @competitor_analysis.competitors.each_with_index do |competitor, index| %>
+          <% @competitor_analysis.competitors.order(:created_at).each_with_index do |competitor, index| %>
             <li class="nav-item">
               <a class="nav-link mb-0 px-0 py-1 d-flex align-items-center justify-content-center 
                 <%= 'active' if index == 0 %>"  
@@ -41,7 +102,6 @@
               <h6>Porter's Five Forces Analysis</h6>
               <p><%= competitor.five_forces.present? ? format_text_to_html(competitor.five_forces) : "Not generated yet" %></p>
 
-              <%# link_to "Update AI Analysis", ai_analysis_business_idea_competitors_path(competitor), method: :get, class: "btn btn-outline-secondary" %>
               <%= link_to "Update AI Analysis", ai_analysis_business_idea_competitor_path(@competitor_analysis.business_idea, competitor), method: :post, class: "btn btn-outline-secondary" %>
             </div>
           </div>
@@ -49,40 +109,4 @@
       <% end %>
     </div>
   <% end %>
-
-  <p><strong>Business Idea:</strong> <%# @competitor_analysis.business_idea.description  %></p>
-  <p><strong>Country:</strong> <%= @competitor_analysis.country %></p>
-
-  <hr>
-
-  <h3>Identified Competitors</h3>
-  <% if @competitor_analysis.competitors.any? %>
-    <% @competitor_analysis.competitors.each do |competitor| %>
-      <div class="card mb-3">
-        <div class="card-body">
-          <h5 class="card-title"><%= competitor.name %></h5>
-          <p class="card-text"><%= competitor.description %></p>
-
-          <h6>Porter's Five Forces Analysis</h6>
-          <p><%= competitor.five_forces.present? ? format_text_to_html(competitor.five_forces) : "Not generated yet" %></p>
-
-          <%= link_to "Update AI Analysis", ai_analysis_business_idea_competitors_path(competitor), method: :get, class: "btn btn-outline-secondary" %>
-        </div>
-      </div>
-    <% end %>
-  <% else %>
-    <p>No competitors found yet.</p>
-    <div class="container mt-4">
-  <h2>Start Competitor Analysis</h2>
-  <p>This will use AI to find competitors for your business idea.</p>
-
-  <%= form_with model: @competitor_analysis, url: business_idea_competitor_analyses_path(@business_idea), local: true do |f| %>
-    <%= f.submit "Start AI Competitor Search", class: "btn btn-success" %>
-  <% end %>
-
-  <%= link_to "Back to Business Idea", business_idea_path(@business_idea), class: "btn btn-secondary mt-3" %>
-</div>
-  <% end %>
-
-  <%= link_to "Back to Business Idea", business_idea_path(@competitor_analysis.business_idea), class: "btn btn-primary mt-3" %>
 </div>

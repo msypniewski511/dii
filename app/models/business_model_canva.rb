@@ -10,6 +10,7 @@ class BusinessModelCanva < ApplicationRecord
   # validates :key_metrics, :customer_pains, :customer_gains, :cost_breakdown, 
   #   :pricing_strategy, :distribution_channels, :partnerships, presence: true, allow_blank: true
   after_save :update_stage_status
+  after_update :update_stage_status
 
   REQUIRED_FIELDS = %w[
     key_partners key_activities key_resources value_propositions 

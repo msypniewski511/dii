@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_24_110135) do
+ActiveRecord::Schema[7.1].define(version: 2025_03_30_083421) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -296,6 +296,24 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_24_110135) do
     t.index ["business_idea_id"], name: "index_stages_on_business_idea_id"
   end
 
+  create_table "strategy_developments", force: :cascade do |t|
+    t.bigint "business_idea_id", null: false
+    t.text "vision"
+    t.text "mission"
+    t.text "strategic_goals"
+    t.text "core_strategy"
+    t.text "value_chain"
+    t.text "marketing_strategy"
+    t.text "competitive_strategy"
+    t.text "swot_actions"
+    t.text "kpis"
+    t.boolean "ai_generated"
+    t.json "ai_suggestions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_idea_id"], name: "index_strategy_developments_on_business_idea_id"
+  end
+
   create_table "swot_analyses", force: :cascade do |t|
     t.integer "business_idea_id", null: false
     t.text "strengths"
@@ -352,6 +370,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_24_110135) do
   add_foreign_key "pswot_analyses", "users"
   add_foreign_key "stage_methods", "stages"
   add_foreign_key "stages", "business_ideas"
+  add_foreign_key "strategy_developments", "business_ideas"
   add_foreign_key "swot_analyses", "business_ideas"
   add_foreign_key "user_responses", "answers"
   add_foreign_key "user_responses", "questions"

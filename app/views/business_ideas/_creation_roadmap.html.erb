@@ -30,7 +30,7 @@
       </div>
 
       <div class="tab-pane-road-map tab-pane fade" id="strategy_development">
-        <%= render @business_idea.business_idea_definition %>
+        <%= render @business_idea.strategy_development %>
       </div>
 
       <div class="tab-pane-road-map tab-pane fade" id="financial_planning">
@@ -47,12 +47,11 @@
     </div>
   </div>
 </div>
-<!--
+
 <%= javascript_tag do %>
 document.addEventListener('DOMContentLoaded', function () {
   const urlParams = new URLSearchParams(window.location.search);
   const stage = urlParams.get('stage');
-
   if (stage) {
     // First click roadmap tab
     const roadmapTab = document.querySelector('#nav-creation-roadmap-tab');
@@ -78,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 <% end %>
--->
+
 <%= javascript_tag do %>
 document.addEventListener('DOMContentLoaded', function () {
   const tabPaneSelector = '.tab-pane-road-map';
@@ -86,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!contentArea) return;
 
   const allTabs = contentArea.querySelectorAll(tabPaneSelector);
-
   document.querySelectorAll('[data-target-stage]').forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
@@ -105,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log(`Wizard in ${targetId} initialized`);
       }
     });
-  });
+  })
 });
 <% end %>
 

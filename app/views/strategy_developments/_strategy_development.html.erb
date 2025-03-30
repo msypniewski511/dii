@@ -1,0 +1,70 @@
+<%# if @strategy_development.persisted? %>
+  <% if true %>
+  <div class="card mb-3">
+    <div class="card-header text-center">
+      <h4 class="text-gradient text-info font-weight-bold mb-0">Strategy Development</h4>
+    </div>
+
+    <div class="card-body">
+      <div id="wizard-container">
+        <div id="wizard-market-research-main" class="multisteps-form">
+          <div class="row">
+            <div class="col-12 col-lg-12 mx-auto">
+              <!-- Wizard navigation -->
+              <div class="multisteps-form__progress">
+                <% %w[
+                      vision mission strategic_goals core_strategy
+                      value_chain marketing_strategy competitive_strategy
+                      swot_actions kpis
+                    ].each_with_index do |attribute, index| %>
+                  <button class="multisteps-form__progress-btn <%='js-active' if index == 0%>" type="button"><%= attribute.humanize %></button>
+                <% end %>
+              </div>
+            </div>
+          </div>
+
+          <div class="multisteps-form__form">
+            <% %w[
+                  vision mission strategic_goals core_strategy
+                  value_chain marketing_strategy competitive_strategy
+                  swot_actions kpis
+                ].each_with_index do |attribute, index| %>
+              <div class="multisteps-form__panel <%='js-active' if index == 0%>" data-animation="FadeIn">
+                <div class="multisteps-form__content <%='js-active' if index == 0%>">
+                  
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <h5 class="card-title"><%= attribute.humanize.titleize %></h5>
+
+                      <p><%= @strategy_development[attribute] ? format_text_to_html(@strategy_development[attribute]) : "Not generated yet" %></p>
+
+                      <div class="form-group text-end">
+                        <%= link_to "Generate with AI",
+                          generate_ai_section_business_idea_strategy_development_path(field: attribute, business_idea_id: @business_idea.id),
+                          method: :post,
+                          data: { turbo: false },
+                          class: "btn btn-sm btn-outline-info" %>
+                      </div>
+
+                      <%# link_to "Update AI Analysis", generate_ai_section_business_idea_strategy_development_path(@strategy_development.business_idea, attribute), method: :post, class: "btn btn-outline-secondary" %>
+                    </div>
+                  </div>
+
+                </div>
+              </div>  
+
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    </div>
+          
+
+    <div class="card-footer">
+      <%= link_to "Edit Market Research", edit_business_idea_market_research_path(@business_idea), class: "btn btn-sm btn-outline-danger" %>
+    </div>
+  </div>
+<% else %>
+  <%# link_to "Conduct Market Research", new_business_idea_market_research_path(@business_idea), class: "btn btn-sm btn-outline-info", data: { turbo: false } %>
+<% end %>

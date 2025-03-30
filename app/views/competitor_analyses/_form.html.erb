@@ -1,7 +1,34 @@
-<div class="container mt-4">
+<!-- <div class="container mt-4">
   <%= form_with model: @competitor_analysis, url: business_idea_competitor_analyses_path(@business_idea), local: true do |f| %>
     <%= f.submit "Start AI Competitor Search", class: "btn btn-success" %>
   <% end %>
 
   <%= link_to "Back to Business Idea", business_idea_path(@business_idea), class: "btn btn-secondary mt-3" %>
+</div>
+-->
+<div class="multisteps-form__panel shadow p-4 rounded bg-white js-active" data-animation="fade">
+  <h5 class="font-weight-bolder mb-4">Competitor Analysis</h5>
+
+  <% @competitor_analysis.competitors.each do |competitor| %>
+    <div class="card mb-3 border">
+      <div class="card-body">
+        <h6><%= competitor.name %></h6>
+        <p><%= competitor.description %></p>
+
+        <% if competitor.five_forces.present? %>
+          <div class="alert alert-success">
+            <strong>AI Analysis:</strong>
+            <p><%= simple_format(competitor.five_forces) %></p>
+          </div>
+        <% else %>
+          <%= button_to "Generate AI Analysis", 
+                ai_analysis_business_idea_competitor_path(@business_idea, competitor),
+                method: :post, 
+                class: "btn btn-sm btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+
+  <%# link_to "Add Competitor", new_business_idea_competitor_analyses_competitor_path(@competitor_analysis), class: "btn btn-outline-dark mt-3" %>
 </div>

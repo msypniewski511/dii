@@ -1,6 +1,6 @@
 class MarketResearchesController < ApplicationController
   before_action :set_business_idea
-  before_action :set_market_research, only: [:edit, :update]
+  before_action :set_market_research, only: [:edit, :update, :generate_ai_field]
 
   def new
     @market_research = @business_idea.build_market_research
@@ -8,13 +8,10 @@ class MarketResearchesController < ApplicationController
 
   def create
     @market_research = @business_idea.build_market_research(market_research_params)
-    puts @market_research
-    puts @market_research.valid?
     if @market_research.save
-      @market_research.generate_ai_suggestions # AI Suggestions
+      # @market_research.generate_ai_field # AI Suggestions
       update_stage_status
-      # redirect_to @business_idea, notice: "Market Research added successfully!"
-      redirect_to business_idea_path(@business_idea, anchor: 'market_research'), notice: "Saved"
+      redirect_to business_idea_path(@business_idea, anchor: 'market_research'), notice: "Market Research added successfully!"
     else
       render :new
     end
@@ -24,13 +21,19 @@ class MarketResearchesController < ApplicationController
 
   def update
     if @market_research.update(market_research_params)
-      @market_research.generate_ai_suggestions # AI Update
-      update_stage_status
+      # @market_research.generate_ai_field # AI Update
+      # update_stage_status
       # redirect_to @business_idea, notice: "Market Research updated successfully!"
-      redirect_to business_idea_path(@business_idea, anchor: 'market_research'), notice: "Saved"
+      redirect_to business_idea_path(@business_idea, anchor: 'market_research'), notice: "Market Research updated successfully!"
     else
       render :edit
     end
+  end
+
+  def generate_ai_field
+    field = params[:field]
+    @market_research.generate_ai_field(field)
+    redirect_to business_idea_path(@business_idea, anchor: 'market_research'), notice: "#{field.humanize} generated"
   end
 
   private
@@ -40,7 +43,8 @@ class MarketResearchesController < ApplicationController
   end
 
   def set_market_research
-    @market_research = @business_idea.market_research
+    @market_research = @business_idea.market_research || @business_idea.build_market_research
+    @market_research.save if @market_research.new_record?
   end
 
   def market_research_params

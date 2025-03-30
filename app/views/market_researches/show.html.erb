@@ -16,3 +16,77 @@
 <% else %>
   <%= link_to "Conduct Market Research", new_business_idea_market_research_path(@business_idea), class: "btn btn-primary" %>
 <% end %>
+
+
+<div class="card">
+  <div class="card-header text-center">
+    <h4 class="text-gradient text-info font-weight-bold mb-0">Market Research</h4>
+  </div>
+
+  <div class="card-body">
+    <div id="wizard-container">
+      <div id="wizard-market-research" class="multisteps-form">
+        <div class="row">
+          <div class="col-12 col-lg-12 mx-auto">
+            <!-- Wizard navigation -->
+            <div class="multisteps-form__progress">
+              <% [
+                'Market Trends',
+                'Competitor Insights',
+                'Customer Segments',
+                'Industry Reports'
+              ].each_with_index do |label, index| %>
+                <button class="multisteps-form__progress-btn <%='js-active' if index == 0%>" type="button"><%= label %></button>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+
+        
+          <div class="multisteps-form__form">
+            <!-- Step 1 -->
+            <div class="multisteps-form__panel js-active" data-animation="FadeIn">
+              <div class="multisteps-form__content">
+                <h5 class="font-weight-bolder">Step 1: Market Trends</h5>
+                
+            
+                  
+                
+                <p><strong>Market Trends:</strong> <%= format_text_to_html @business_idea.market_research.market_trends %></p>
+                </div>
+              </div>  
+
+              <!-- Repeat for Competitor Insights, Customer Segments, Industry Reports -->
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 2: Competitor Insights</h5>
+                  
+              
+                    
+                  <%= format_text_to_html @business_idea.market_research.competitor_insights %>
+                </div>
+              </div>
+
+              <div class="multisteps-form__panel" data-animation="FadeIn">
+                <div class="multisteps-form__content">
+                  <h5 class="font-weight-bolder">Step 3: Target Customer Segment</h5>
+                  
+              
+                  <%= format_text_to_html @business_idea.market_research.customer_segments %>
+                </div>
+              </div>
+
+            <div class="multisteps-form__panel" data-animation="FadeIn">
+              <div class="multisteps-form__content">
+                <h5 class="font-weight-bolder">Step 4: Market Trends</h5>
+                
+            
+                <%= format_text_to_html @business_idea.market_research.industry_reports %>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
