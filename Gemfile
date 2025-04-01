@@ -46,3 +46,5 @@ gem "ruby-openai"
 gem "sidekiq", "~> 7.3"
 gem 'country_select', '~> 8.0'
 gem "devise", "~> 4.9"
+
+gem "redcarpet", "~> 3.6"

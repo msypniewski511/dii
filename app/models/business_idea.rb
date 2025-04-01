@@ -11,6 +11,7 @@ class BusinessIdea < ApplicationRecord
   has_many :competitor_analysis
   has_one :strategy_development
   has_one :funding_plan
+  has_one :financial_plan
 
   has_many :stages, dependent: :destroy
 

@@ -1,0 +1,28 @@
+<!-- app/views/financial_plans/_step_kpi_milestones.html.erb -->
+<div class="multisteps-form__panel p-4 fade" id="kpi_milestones" role="tabpanel">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="financial_plan_kpi_milestones">KPIs & Financial Milestones</label>
+        <%= form.text_area :kpi_milestones, class: "form-control", rows: 10, placeholder: "List KPIs (e.g. CAC, LTV) and financial goals/milestones with timing..." %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow p-3">
+        <p><strong>Let AI help</strong> generate actionable metrics and targets for your plan.</p>
+        <%= link_to "💬 Generate with AI", generate_ai_section_business_idea_financial_plan_path(@business_idea, section: "kpi_milestones"),
+            method: :post, data: { turbo: false }, class: "btn btn-outline-primary w-100 mb-2" %>
+
+        <div id="ai_suggestion_result_kpi_milestones" class="mt-3 text-muted small">
+          <%= @financial_plan.kpi_milestones if @financial_plan.kpi_milestones.present? %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 d-flex justify-content-between">
+    <button type="button" class="btn btn-secondary prev-step">← Back</button>
+    <%= form.submit "Finish", class: "btn btn-success" %>
+  </div>
+</div>

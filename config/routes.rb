@@ -52,6 +52,10 @@ Rails.application.routes.draw do
     resource :strategy_development, only: [:edit, :update] do
       post :generate_ai_section
     end
+
+    resource :financial_plan, only: [:edit, :update] do
+      post :generate_ai_section
+    end
   end
   resources :business_ideas do
     resource :business_idea_definition, only: [:edit, :update] do

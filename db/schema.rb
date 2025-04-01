@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_03_30_083421) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_01_004347) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -177,6 +177,24 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_30_083421) do
     t.index ["answer_id"], name: "index_entrepreneurial_skills_user_responses_on_answer_id"
     t.index ["question_id"], name: "index_entrepreneurial_skills_user_responses_on_question_id"
     t.index ["user_id"], name: "index_entrepreneurial_skills_user_responses_on_user_id"
+  end
+
+  create_table "financial_plans", force: :cascade do |t|
+    t.bigint "business_idea_id", null: false
+    t.text "startup_costs"
+    t.text "revenue_forecasts"
+    t.text "cost_forecasts"
+    t.text "break_even_analysis"
+    t.text "cash_flow_forecast"
+    t.text "funding_needs"
+    t.text "profit_and_loss"
+    t.text "risk_assessment"
+    t.text "kpi_milestones"
+    t.boolean "ai_generated", default: false
+    t.integer "progress_percentage", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_idea_id"], name: "index_financial_plans_on_business_idea_id"
   end
 
   create_table "funding_plans", force: :cascade do |t|
@@ -362,6 +380,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_03_30_083421) do
   add_foreign_key "entrepreneurial_skills_user_responses", "answers"
   add_foreign_key "entrepreneurial_skills_user_responses", "questions"
   add_foreign_key "entrepreneurial_skills_user_responses", "users"
+  add_foreign_key "financial_plans", "business_ideas"
   add_foreign_key "funding_plans", "business_ideas"
   add_foreign_key "market_researches", "business_ideas"
   add_foreign_key "pestel_analyses", "business_ideas"

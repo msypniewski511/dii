@@ -2,9 +2,6 @@
 module OpenAI
   class AiStrategyDevelopmentService
     def self.generate(section, business_idea)
-      puts "korwa czego brakuje"
-      puts section
-      puts business_idea
       context = <<~CONTEXT
         Business Title: #{business_idea.title}
         Description: #{business_idea.description}
@@ -20,14 +17,36 @@ module OpenAI
         #{business_idea.competitor_analysis.last&.competitors&.map { |c| "#{c.name}: #{c.five_forces}" }&.join("\n\n")}
       CONTEXT
 
-      prompt = <<~PROMPT
-        Using the business context provided, generate a detailed section for "#{section.humanize}" in a startup's strategic development plan.
+      prompt = if section == "core_strategy"
+        <<~PROMPT
+          Using the business context provided, generate a detailed "Core Strategy" for the startup, including:
 
-        Context:
-        #{context}
+          - SMART Strategic Goals (specific, measurable, achievable, relevant, time-bound)
+          - Core strategic initiatives
+          - Highlighted section labeled **Scaling Strategy**, focusing on how the business will grow, expand, or scale operations over time.
 
-        Return only the generated content without explanation.
-      PROMPT
+          Format Scaling Strategy like this:
+
+          **Scaling Strategy:**
+          - Detail 1
+          - Detail 2
+          ...
+
+          Context:
+          #{context}
+
+          Return only the generated content.
+        PROMPT
+      else
+        <<~PROMPT
+          Using the business context provided, generate a detailed section for "#{section.humanize}" in a startup's strategic development plan.
+
+          Context:
+          #{context}
+
+          Return only the generated content without explanation.
+        PROMPT
+      end
 
       OpenAiService.generate_text(prompt)
     end

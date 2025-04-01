@@ -1,0 +1,31 @@
+<div class="multisteps-form__panel fade" id="revenue_forecasts" role="tabpanel">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="financial_plan_revenue_forecasts">Revenue Forecasts</label>
+        <%= form.text_area :revenue_forecasts, class: "form-control", rows: 10, placeholder: "Enter your revenue expectations, pricing models, expected customers..." %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow p-3">
+        <p><strong>Need help?</strong> Let AI generate a forecast for your business revenues based on your pricing and customer data.</p>
+        
+        <%= link_to "💬 Generate with AI", 
+              generate_ai_section_business_idea_financial_plan_path(@business_idea, section: "revenue_forecasts"), 
+              method: :post, 
+              data: { turbo: false }, 
+              class: "btn btn-outline-primary w-100 mb-2" %>
+
+        <div id="ai_suggestion_result_revenue_forecasts" class="mt-3 text-muted small">
+          <%= @financial_plan.revenue_forecasts if @financial_plan.revenue_forecasts.present? %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 d-flex justify-content-between">
+    <button type="button" class="btn btn-secondary js-btn-prev">← Back</button>
+    <button type="submit" class="btn btn-primary">Next →</button>
+  </div>
+</div>

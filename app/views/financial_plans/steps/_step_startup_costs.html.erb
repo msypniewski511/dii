@@ -1,0 +1,40 @@
+<div class="multisteps-form__panel p-4 fade show active" id="startup_costs" role="tabpanel">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="financial_plan_startup_costs">Startup Costs</label>
+        <%= form.text_area :startup_costs, class: "form-control", rows: 10, placeholder: "List your expected startup costs (equipment, legal, office, development...)" %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow p-3">
+        <p><strong>Need help?</strong> Let AI generate startup costs for you based on your business idea and industry.</p>
+        <%= button_to "💬 Generate with AI", generate_ai_financial_plan_path(@business_idea, section: "startup_costs"), 
+              method: :post, 
+              remote: true, 
+              class: "btn btn-outline-primary w-100 mb-2" %>
+
+        <div id="ai_suggestion_result_startup_costs" class="mt-3 text-muted small">
+          <%= @financial_plan.startup_costs if @financial_plan.startup_costs.present? %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 d-flex justify-content-between">
+    <button type="button" class="btn btn-secondary" disabled>← Back</button>
+    <button type="submit" class="btn btn-primary">Next →</button>
+  </div>
+</div>
+<script>
+document.addEventListener("ajax:success", function(event) {
+  const [data, status, xhr] = event.detail;
+  if (data.suggestion) {
+    const target = document.getElementById("ai_suggestion_result_startup_costs");
+    if (target) {
+      target.textContent = data.suggestion;
+    }
+  }
+});
+</script>

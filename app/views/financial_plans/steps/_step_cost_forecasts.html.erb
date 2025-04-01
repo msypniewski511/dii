@@ -1,0 +1,31 @@
+<div class="multisteps-form__panel fade" id="cost_forecasts" role="tabpanel">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="financial_plan_cost_forecasts">Cost Forecasts</label>
+        <%= form.text_area :cost_forecasts, class: "form-control", rows: 10, placeholder: "Enter fixed and variable cost estimates, including salaries, rent, materials..." %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow p-3">
+        <p><strong>Need help?</strong> Let AI suggest realistic cost forecasts based on your business model, country, and industry.</p>
+        
+        <%= link_to "💬 Generate with AI", 
+              generate_ai_section_business_idea_financial_plan_path(@business_idea, section: "cost_forecasts"), 
+              method: :post, 
+              data: { turbo: false }, 
+              class: "btn btn-outline-primary w-100 mb-2" %>
+
+        <div id="ai_suggestion_result_cost_forecasts" class="mt-3 text-muted small">
+          <%= @financial_plan.cost_forecasts if @financial_plan.cost_forecasts.present? %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 d-flex justify-content-between">
+    <button type="button" class="btn btn-secondary js-btn-prev">← Back</button>
+    <button type="submit" class="btn btn-primary">Next →</button>
+  </div>
+</div>

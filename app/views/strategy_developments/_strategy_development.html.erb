@@ -45,7 +45,14 @@
                           data: { turbo: false },
                           class: "btn btn-sm btn-outline-info" %>
                       </div>
-
+                      <div class="button-row d-flex mt-4">
+                        <% unless index == 0 %>
+                          <button class="btn btn-sm btn-outline-secondary js-btn-prev" type="button" title="Prev">Previous</button>
+                        <% end %>
+                        <% if index < 8 %>
+                          <button class="btn btn-sm btn-info ms-auto js-btn-next" type="button" title="Next">Next</button>
+                        <% end %>
+                      </div>
                       <%# link_to "Update AI Analysis", generate_ai_section_business_idea_strategy_development_path(@strategy_development.business_idea, attribute), method: :post, class: "btn btn-outline-secondary" %>
                     </div>
                   </div>

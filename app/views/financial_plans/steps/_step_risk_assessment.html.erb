@@ -1,0 +1,28 @@
+<!-- app/views/financial_plans/_step_risk_assessment.html.erb -->
+<div class="multisteps-form__panel p-4 fade" id="risk_assessment" role="tabpanel">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="form-group">
+        <label for="financial_plan_risk_assessment">Risk Assessment</label>
+        <%= form.text_area :risk_assessment, class: "form-control", rows: 10, placeholder: "List major financial risks and how you'll mitigate them." %>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow p-3">
+        <p><strong>Need help?</strong> Let AI assess your financial risks based on your forecasts and strategy.</p>
+        <%= link_to "💬 Generate with AI", generate_ai_section_business_idea_financial_plan_path(@business_idea, section: "risk_assessment"), 
+            method: :post, data: { turbo: false }, class: "btn btn-outline-danger w-100 mb-2" %>
+
+        <div id="ai_suggestion_result_risk_assessment" class="mt-3 text-muted small">
+          <%= @financial_plan.risk_assessment if @financial_plan.risk_assessment.present? %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4 d-flex justify-content-between">
+    <button type="button" class="btn btn-secondary prev-step">← Back</button>
+    <%= form.submit "Next →", class: "btn btn-primary" %>
+  </div>
+</div>
