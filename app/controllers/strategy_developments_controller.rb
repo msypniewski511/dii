@@ -24,20 +24,12 @@ class StrategyDevelopmentsController < ApplicationController
     elsif @business_idea.competitor_analysis.blank? ||
           @business_idea.competitor_analysis.last.competitors.blank? ||
           @business_idea.competitor_analysis.last.competitors.any? { |c| c.five_forces.blank? }
-      puts "KORWA W TYM KORESTWIE"
-      p @business_idea.competitor_analysis.blank?
-      p @business_idea.competitor_analysis.last.competitors.blank?
-      p @business_idea.competitor_analysis.last.competitors.any?
-
       missing_anchor = 'competitor_analysis'
     end
   
     if missing_anchor
       redirect_to business_idea_path(@business_idea, anchor: missing_anchor), notice: "Strategy not updated. Missing required data in #{missing_anchor.humanize}."
     else
-      puts "korwa czego brakuje"
-      puts section
-      puts @business_idea
       ai_text = OpenAI::AiStrategyDevelopmentService.generate(section, @business_idea)
       @strategy_development.update(section => ai_text.strip)
       redirect_to business_idea_path(@business_idea, anchor: 'strategy_development'), notice: "#{section.humanize} generated"

@@ -2,11 +2,57 @@
   <div class="stepper-container">
     <%= render 'business_ideas/stepper' %>
   </div>
+
+
+  <div class="col-md-12">
+    <div class="tab-content-road-map tab-content">
+      <div class="tab-pane-road-map tab-pane fade show active" id="business_idea_definition">
+        <%= render @business_idea.business_idea_definition %>
+      </div>
+
+      <div class="tab-pane-road-map tab-pane fade" id="business_idea_definition">
+        <%= render @business_idea.business_idea_definition %>
+      </div>
+      
+      <div class="tab-pane-road-map tab-pane fade" id="market_research">
+        <%= render @business_idea.market_research %>
+      </div>
+
+      <div class="tab-pane-road-map tab-pane fade" id="competitor_analysis">
+        <%= render @business_idea.competitor_analysis %>
+      </div>
+
+      <div class="tab-pane-road-map tab-pane fade" id="business_model_definition">
+        <%= render @business_idea.business_model_canva %>
+      </div>
+
+      <div class="tab-pane-road-map tab-pane fade" id="strategy_development">
+        <%= render @business_idea.strategy_development %>
+      </div>
+
+      <div class="tab-pane-road-map tab-pane fade" id="financial_planning">
+        <%= render @business_idea.financial_plan %>
+      </div>
+
+      <div class="tab-pane-road-map tab-pane fade" id="legal_&_operations">
+        <%= render @business_idea.market_research %>
+      </div>
+
+      <div class="tab-pane-road-map tab-pane fade" id="business_plan_finalization">
+        <%= render @business_idea.market_research %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-10">
+  <div class="stepper-container">
+    <%= render 'business_ideas/stepper' %>
+  </div>
+
   <div class="col-md-3">
     <%= render 'timeline' %>
   </div>
-
-
   <div class="col-md-9">
     <div class="tab-content-road-map tab-content">
       <div class="tab-pane-road-map tab-pane fade show active" id="business_idea_definition">

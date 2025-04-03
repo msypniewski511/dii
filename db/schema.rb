@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_04_01_004347) do
+ActiveRecord::Schema[7.1].define(version: 2025_04_03_105654) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -294,6 +294,19 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_01_004347) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "smart_goals", force: :cascade do |t|
+    t.bigint "business_idea_id", null: false
+    t.string "title", null: false
+    t.text "description", null: false
+    t.string "category", null: false
+    t.date "start_date"
+    t.date "due_date"
+    t.boolean "milestone", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["business_idea_id"], name: "index_smart_goals_on_business_idea_id"
+  end
+
   create_table "stage_methods", force: :cascade do |t|
     t.integer "method_type"
     t.bigint "stage_id", null: false
@@ -387,6 +400,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_04_01_004347) do
   add_foreign_key "porter_five_forces", "business_ideas"
   add_foreign_key "porters_five_forces", "business_ideas"
   add_foreign_key "pswot_analyses", "users"
+  add_foreign_key "smart_goals", "business_ideas"
   add_foreign_key "stage_methods", "stages"
   add_foreign_key "stages", "business_ideas"
   add_foreign_key "strategy_developments", "business_ideas"
